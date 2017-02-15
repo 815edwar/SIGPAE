@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -56,3 +57,17 @@ class Departamentos(models.Model):
 		choices = DEPARTAMENTOS,
 	)
 
+# Validador para el formato pdf de los archivos a subir.
+def valid_extension(value):
+	if (not value.name.endswith('.pdf')):
+		raise ValidationError("Sólo se permiten archivos en formato PDF.")
+
+class Pdfs(models.Model):
+	# Salva los PDF en /media/uploads/año/mes/día
+	pdf = models.FileField(
+		upload_to = 'uploads/%Y/%m/%d', validators = [valid_extension],
+	)
+
+	# Almacena el string generado por la transformación del PDF
+	text = models.TextField()
+ 
