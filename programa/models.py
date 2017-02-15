@@ -18,7 +18,7 @@ class Periodos(models.Model):
 	)
 
 	periods = models.CharField(
-		max_lenght = 9,
+		max_length = 9,
 		choices = PERIODOS,
 	)
 
@@ -52,7 +52,7 @@ class Departamentos(models.Model):
 	)
 
 	departments = models.CharField(
-		max_lenght = 4,
+		max_length = 4,
 		choices = DEPARTAMENTOS,
 	)
 
