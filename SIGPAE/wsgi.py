@@ -1,5 +1,5 @@
 """
-WSGI config for sigpae project.
+WSGI config for SIGPAE project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sigpae.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "SIGPAE.settings")
 
 application = get_wsgi_application()
