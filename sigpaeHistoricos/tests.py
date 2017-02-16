@@ -9,10 +9,10 @@ from sigpaeHistoricos.models import *
 
 class ModelsTestCase(TestCase):
 	def setUp(self):
-		self.periodo1 = Periodos.objects.create(periods = 'abr-jul')
-		self.periodo2 = Periodos.objects.create(periods = 'ene-mar')
-		self.periodo3 = Periodos.objects.create(periods = 'sep-dic')
-		self.periodo4 = Periodos.objects.create(periods = 'intensivo')
+		self.periodo1 = Periodos.objects.create(periods = 'abr-jul', years = 1999)
+		self.periodo2 = Periodos.objects.create(periods = 'ene-mar', years = 2013)
+		self.periodo3 = Periodos.objects.create(periods = 'sep-dic', years = 1969)
+		self.periodo4 = Periodos.objects.create(periods = 'intensivo', years = 2017)
 		self.departamento1 = Departamentos.objects.create(departments = 'Departamento de Computación y Tecnología de Información')
 		self.departamento2 = Departamentos.objects.create(departments = 'Departamento de Ciencia de los Materiales')
 		self.departamento3 = Departamentos.objects.create(departments = 'Departamento de Física')
@@ -22,9 +22,16 @@ class ModelsTestCase(TestCase):
 	def test_periods(self):
 		""" Se prueba que los campos estén iguales a su inicialización. """
 		self.assertEqual(self.periodo1.periods, 'abr-jul')
+		self.assertEqual(self.periodo1.years, 1999)
+
 		self.assertEqual(self.periodo2.periods, 'ene-mar')
+		self.assertEqual(self.periodo2.years, 2013)
+
 		self.assertEqual(self.periodo3.periods, 'sep-dic')
+		self.assertEqual(self.periodo3.years, 1969)
+
 		self.assertEqual(self.periodo4.periods, 'intensivo')
+		self.assertEqual(self.periodo4.years, 2017)
 
 	def test_departments(self):
 		""" Se prueba que los campos estén iguales a su inicialización. """

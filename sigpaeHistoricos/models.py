@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 # Create your models here.
 # -*- coding: utf-8 -*-
@@ -24,6 +25,17 @@ class Periodos(models.Model):
 	periods = models.CharField(
 		max_length = 9,
 		choices = PERIODOS,
+	)
+
+	YEARS = []
+	for r in range (1969, (datetime.datetime.now().year+1)):
+		YEARS.append((r,r))
+
+	YEARS_CHOICES = tuple(YEARS)
+
+	years = models.IntegerField(
+		max_length = 4,
+		choices = YEARS_CHOICES,
 	)
 
 class Departamentos(models.Model):
