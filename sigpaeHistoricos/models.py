@@ -1,9 +1,8 @@
-from django.db import models
-import datetime
-
 # Create your models here.
 # -*- coding: utf-8 -*-
 
+from django.db import models
+import datetime
 from django.db import models
 from django.core.exceptions import ValidationError
 
