@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<title>SIGPAE</title>
+	<link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/transcribir.css">
+
+</head>
+<body>
+	<div class="row">
+		<div class="col-lg-2"></div>
+		<div class="col-lg-8"> 
+			<div >
+				<img id="header" class="img-responsive" src="../static/images/usb.JPG">
+			</div>
+			<nav id="navbar" class="navbar navbar-inverse">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="#">SIGPAE</a>
+			    </div>
+			    <ul class="nav navbar-nav">
+			      <li><a href="#">Transcribir</a></li>
+			    </ul>
+			    <ul class="nav navbar-nav navbar-right">
+			      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Registrarse</li></a>
+			    </ul>
+			  </div>
+			</nav>
+		</div>
+	</div>
+
+
+	<form class="form-group">
+
+			<div id="formulario" class="form-group">
+		    <label for="exampleInputFile"><h3>Ingrese el archivo que desea covertir</h3></label>
+			<input type="file" id="exampleInputFile">
+			<p class="help-block">Debe ingresar un archivo PDF.</p>
+			<div id = "convertir">
+			    <a href="#" class="btn btn-success btn-lg btn-sm" role="button">Convertir</a>
+			</div>
+			<!--label fot="textarea"--><h3>Texto Extraído</h3>
+			<output><textarea id="textarea" class="form-control"></textarea></output>
+			</div>
+	</form>
+
+	<form class="form-inline" id="bloque2">
+		  	<div class="form-group">
+		    	<label for="codigo"><h5>Código</h5></label>
+		   		<input type="text" class="form-control " id="codigo">
+		   	</div>
+		   	<div class="form-group">
+	    		<label for="titulo"><h5>Título</h5></label>
+		  		<input type="text" class="form-control " id="titulo">
+		  	</div>
+		  	
+	</form>
+	<form class="form-inline" id="bloque3">
+		<div class="form-group id="trim">
+		  		<label for="trimestre"><h5>Trimestre</h5></label>
+		  		<select class="form-control" id="trimestre">
+				  <option>Enero-Marzo</option>
+				  <option>Abril-Julio</option>
+				  <option>Septiembre-Diciembre</option>
+				  <option>Intensivo</option>
+				 </select>
+			</div>
+		<div  class="form-group id="año">
+		  	<label for="year"><h5>Año</h5></label>
+		  	<select class="form-control" id="year">
+			<option>Seleccione año</option>
+			</select>
+		</div>
+		<div  class="form-group id="dpto">
+		  	<label for="year"><h5>Departamento</h5></label>
+		  	<select class="form-control" id="dpto">
+			<option>Seleccione Departamento</option>
+			 </select>
+		</div>
+
+		<div class="form-group">
+	    	<label for="descrip"><h5>Descripción</h5></label>
+		  	<textarea type="text" class="form-control" id="descrip"></textarea>
+		</div>
+	</form>
+
+		</div>
