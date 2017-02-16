@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-
+from programa.views import * 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', HomeView.as_view(), name = "home"),
+    url(r'^programa/', NewPdf.as_view(), name="pdf"),
 ]
