@@ -7,7 +7,7 @@ class PdfForm(forms.ModelForm):
 
     class Meta:
         model = Pdfs
-        fields = ('text', 'dpto' , 'periodo')
+        fields = ('text', 'departmentos' , 'periodo')
 
 
     def __init__(self, *args, **kwargs):
