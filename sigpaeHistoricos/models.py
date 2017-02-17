@@ -72,5 +72,7 @@ class Pdfs(models.Model):
 	)
 
 	# Almacena el string generado por la transformación del PDF
-	text = models.TextField()
+	text = models.TextField(null=True)
+	dpto = models.ForeignKey(Departamentos , null=True)
+	periodo = models.ForeignKey(Periodos, null=True)
  

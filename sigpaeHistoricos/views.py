@@ -16,14 +16,11 @@ class HomeView(TemplateView):
 
 
 class DisplayPDF(TemplateView):
-	template_name = 'display_pdf.html'
+    template_name = 'display_pdf.html'
+    def get_context_data(self, **kwargs):
+        context = super(DisplayPDF, self).get_context_data(**kwargs)
 
-	def get_context_data(self, **kwargs):
-		context = super(DisplayPDF, self).get_context_data(**kwargs)
-
-		context['pdf'] = "a.pdf"
-
-		return context
+        return context
 
 
 class NewPdf(TemplateView):
@@ -32,7 +29,7 @@ class NewPdf(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(NewPdf, self).get_context_data(**kwargs)
-        context['formulario'] = PdfForm()
+        context['formulario'] = AddPdfForm()
 
         return context
 
@@ -40,29 +37,32 @@ class NewPdf(TemplateView):
 
         post_values = request.POST.copy()
 
-        pdfForm = PdfForm(post_values,request.FILES)
+        pdfForm = AddPdfForm(post_values,request.FILES)
+        print(pdfForm)
 
         if pdfForm.is_valid():
             newpdf = pdfForm.save()
-            return HttpResponseRedirect(reverse_lazy('agregar_pdf'))
+            text = extract_text(newpdf.pdf.url)
+            newpdf.text = text.getvalue()
+            newpdf.save()
+            context = {'formulario': PdfForm(instance=newpdf), 'pdf': newpdf}
+            return render_to_response('display_pdf.html', context)
         else:
             context = {'formulario': pdfForm}
 
             return render_to_response('pdf.html', context)
 
-class ExtractTextFromPDF(TemplateView):
-    template_name = "extract_text.html"
 
-    def extract_text(path):
-        pdfFile = open(path,'rb')
-        retstr = io.StringIO()
-        password = ''
-        pagenos = set()
-        maxpages = 0
-        laparams = LAParams()
-        rsrcmgr = PDFResourceManager()
-        device = TextConverter(rsrcmgr, retstr, laparams=laparams)    
-        process_pdf(rsrcmgr, device, pdfFile, pagenos, maxpages=maxpages, password=password, check_extractable=True)
-        device.close()
-        pdfFile.close()
-        return retstr
+def extract_text(path):
+    pdfFile = open(path,'rb')
+    retstr = io.StringIO()
+    password = ''
+    pagenos = set()
+    maxpages = 0
+    laparams = LAParams()
+    rsrcmgr = PDFResourceManager()
+    device = TextConverter(rsrcmgr, retstr, laparams=laparams)
+    process_pdf(rsrcmgr, device, pdfFile, pagenos, maxpages=maxpages, password=password, check_extractable=True)
+    device.close()
+    pdfFile.close()
+    return retstr

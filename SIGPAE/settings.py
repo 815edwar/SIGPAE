@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-
+import sys
+import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%uas6(r@wpk52by@3#dddrstl%t(p!f#2p7+dyt@khu0r-zayr'
+SECRET_KEY = '!ycs@$v$cbmo^#$3_(w=q&0ch#kfgat^3ihw7m^_!eo$as!7(d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -55,7 +56,9 @@ ROOT_URLCONF = 'SIGPAE.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'SIGPAE/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+
+        ,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,13 +117,28 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "SIGPAE/static"),
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
+'''
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'uploads')
+
+MEDIA_URL = '/uploads/'
+'''
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 )
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'SIGPAE/media')
-MEDIA_URL = '/media/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
