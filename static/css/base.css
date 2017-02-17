@@ -1,0 +1,32 @@
+body {
+	height: 100%;
+}
+
+#header {
+	margin: auto;
+}
+
+#navbar {
+	border-radius: 0px;
+	background-color:#a1d3e2 ;
+	color: #000000;
+	font-family: sans-serif;
+	border-color: #ffffff;
+}
+
+#trans {
+	text-align: center;
+}
+
+#caption {
+	margin-left:150px;
+}
+
+.pdfobject-container {
+	height: 100%;
+	width: 100%;
+}
+
+.pdfobject {
+	border: 1px solid #666;
+}
