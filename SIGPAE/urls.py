@@ -24,4 +24,4 @@ urlpatterns = [
     url(r'^$', HomeView.as_view(),name='home'),
     url(r'^historicos/', include('sigpaeHistoricos.urls')),
     url(r'^admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

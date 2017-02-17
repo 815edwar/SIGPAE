@@ -1,14 +1,10 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
 from sigpaeHistoricos.forms import *
-from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import redirect, render_to_response
-from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.shortcuts import render_to_response, redirect
 import io
 from pdfminer.pdfinterp import PDFResourceManager, process_pdf
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
-
 
 
 class HomeView(TemplateView):
@@ -17,14 +13,18 @@ class HomeView(TemplateView):
 
 class DisplayPDF(TemplateView):
     template_name = 'display_pdf.html'
+
     def get_context_data(self, **kwargs):
         context = super(DisplayPDF, self).get_context_data(**kwargs)
 
         return context
 
+    def post(self, request, *args, **kwargs):
+        post_values = request.POST.copy()
+        print(post_values)
+
 
 class NewPdf(TemplateView):
-    
     template_name = 'pdf.html'
 
     def get_context_data(self, **kwargs):
@@ -37,16 +37,17 @@ class NewPdf(TemplateView):
 
         post_values = request.POST.copy()
 
-        pdfForm = AddPdfForm(post_values,request.FILES)
-        print(pdfForm)
+        pdfForm = AddPdfForm(post_values, request.FILES)
 
         if pdfForm.is_valid():
             newpdf = pdfForm.save()
-            text = extract_text(newpdf.pdf.url)
+            print("\n\n\n\n\n" + newpdf.pdf.url + "\n\n\n\n\n")
+            print(newpdf)
+            text = extract_text('SIGPAE/'+newpdf.pdf.url)
             newpdf.text = text.getvalue()
             newpdf.save()
             context = {'formulario': PdfForm(instance=newpdf), 'pdf': newpdf}
-            return render_to_response('display_pdf.html', context)
+            return redirect('DisplayPDF', newpdf.id)
         else:
             context = {'formulario': pdfForm}
 
@@ -54,7 +55,7 @@ class NewPdf(TemplateView):
 
 
 def extract_text(path):
-    pdfFile = open(path,'rb')
+    pdfFile = open(path, 'rb')
     retstr = io.StringIO()
     password = ''
     pagenos = set()
