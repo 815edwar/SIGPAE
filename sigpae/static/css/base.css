@@ -1,0 +1,29 @@
+body{
+	height: 100%;
+}
+
+#header{
+	margin: auto;
+}
+
+#navbar{
+	border-radius: 0px;
+	background-color:#a1d3e2 ;
+	color: #000000;
+	font-family: sans-serif;
+	border-color: #ffffff;
+
+}
+
+#caption{
+	margin-left:580px;
+}
+
+#img{
+	margin-left: 500px;
+	width: 300px;
+	height: 200px;
+
+}
+
+
