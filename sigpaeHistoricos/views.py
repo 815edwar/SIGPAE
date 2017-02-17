@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 from django.views.generic import TemplateView
 from sigpaeHistoricos.forms import *
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render, render_to_response
 import io
 from pdfminer.pdfinterp import PDFResourceManager, process_pdf
 from pdfminer.converter import TextConverter
@@ -19,7 +20,8 @@ class DisplayPDF(TemplateView):
 
         return context
 
-    def post(self, request, *args, **kwargs):
+    @staticmethod
+    def post(request):
         post_values = request.POST.copy()
         print(post_values)
 
@@ -33,25 +35,25 @@ class NewPdf(TemplateView):
 
         return context
 
-    def post(self, request, *args, **kwargs):
+    @staticmethod
+    def post(request):
 
         post_values = request.POST.copy()
 
-        pdfForm = AddPdfForm(post_values, request.FILES)
+        pdf_form = AddPdfForm(post_values, request.FILES)
 
-        if pdfForm.is_valid():
-            newpdf = pdfForm.save()
-            print("\n\n\n\n\n" + newpdf.pdf.url + "\n\n\n\n\n")
-            print(newpdf)
+        if pdf_form.is_valid():
+            newpdf = pdf_form.save()
             text = extract_text('SIGPAE/'+newpdf.pdf.url)
-            newpdf.text = text.getvalue()
+            newpdf.texto = text.getvalue()
             newpdf.save()
             context = {'formulario': PdfForm(instance=newpdf), 'pdf': newpdf}
-            return redirect('DisplayPDF', newpdf.id)
+            return render_to_response('display_pdf.html', context)
         else:
-            context = {'formulario': pdfForm}
+            pdf_form = AddPdfForm(post_values, request.FILES)
+            context = {'formulario': pdf_form}
 
-            return render_to_response('pdf.html', context)
+            return render(request, 'pdf.html', context)
 
 
 def extract_text(path):

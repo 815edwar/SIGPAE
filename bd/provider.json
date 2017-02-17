@@ -1,0 +1,9 @@
+[
+  {
+    "model": "sigpaeHistorico.Periodos",
+    "pk": 1,
+    "fields": {
+      "periods": "sep-dic",
+    }
+  }
+]

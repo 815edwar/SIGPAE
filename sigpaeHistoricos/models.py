@@ -1,15 +1,10 @@
-from django.db import models
-
-# Create your models here.
 # -*- coding: utf-8 -*-
-
 from django.db import models
 from django.core.exceptions import ValidationError
+from datetime import date
 
 
 # Create your models here.
-
-
 
 # Validador para el formato pdf de los archivos a subir.
 def valid_extension(value):
@@ -58,23 +53,35 @@ class Pdfs(models.Model):
         (TERMO_FENOMENOS, 'Departamento de Termodinámica y Fenómenos de Transferencia'),
     )
 
+    anyos = []
+    for i in range(1969, date.today().year + 1):
+        anyos.append((i, str(i)))
+
+    ANYOS = tuple(anyos)
 
     # Salva los PDF en /media/uploads/año/mes/día
     pdf = models.FileField(
-		upload_to='uploads/',
+        upload_to='uploads/',
         validators=[valid_extension],
     )
 
-    # Almacena el string generado por la transformación del PDF
-    text = models.TextField(null=True)
+    titulo = models.CharField('Título', max_length=50, null=True)
 
-    departmentos = models.CharField(
+    # Almacena el string generado por la transformación del PDF
+    texto = models.TextField('Texto', null=True)
+
+    observaciones = models.TextField('Observaciones', null=True)
+
+    departamentos = models.CharField(
+        'Departamento',
         max_length=4,
         null=True,
         choices=DEPARTAMENTOS,
     )
     periodo = models.CharField(
+        'Período',
         max_length=9,
         null=True,
         choices=PERIODOS,
     )
+    ano = models.PositiveIntegerField('Año', choices=ANYOS, null=True)

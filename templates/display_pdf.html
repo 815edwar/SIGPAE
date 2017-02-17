@@ -7,16 +7,17 @@
 		<title>SIGPAE</title>
 
 	    {% block css %}
-			<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+			<link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 			<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
 			<link rel="stylesheet" type="text/css" href="{% static 'css/base.css'%}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/transcriptor.css' %}">
 	    {% endblock css %}
 	{% endblock head %}
 </head>
 <body>
 	<div class="row">
 		<div class="col-lg-6">
-            <div id="pdf"></div>
+            <div id="pdf" class="pdfobject-container"></div>
 		</div>
 
 
@@ -32,9 +33,10 @@
                             <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
                             {{ field.errors }}
                         </div>
+
                     {% endfor %}
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                    <button class="btn" type="submit" value="Registrar" id="button-signup">Transcribir</button>
+                    <!--button class="btn" type="submit" value="Registrar" id="button-signup">Transcribir</button--> 
                 </form>
             </div>
 
