@@ -5,14 +5,14 @@ from django.db import models
 
 from django.db import models
 from django.core.exceptions import ValidationError
-
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 # Create your models here.
 
 class Periodos(models.Model):
-	SEP_DIC = 'sep-dic'
-	ENE_MAR = 'ene-mar'
-	ABR_JUL = 'abr-jul'
-	VERANO = 'intensivo'
+	SEP_DIC = 0
+	ENE_MAR = 1
+	ABR_JUL = 2
+	VERANO = 3
 
 	PERIODOS = (
 		(SEP_DIC, 'Septiembre-Diciembre'),
@@ -24,6 +24,7 @@ class Periodos(models.Model):
 	periods = models.CharField(
 		max_length = 9,
 		choices = PERIODOS,
+		validators=[MinValueValidator(0),MaxValueValidator(3)],
 	)
 
 class Departamentos(models.Model):

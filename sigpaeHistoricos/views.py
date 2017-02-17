@@ -42,6 +42,7 @@ class NewPdf(TemplateView):
 
         if pdfForm.is_valid():
             newpdf = pdfForm.save()
+            print(newpdf.pdf.url)
             text = extract_text(newpdf.pdf.url)
             newpdf.text = text.getvalue()
             newpdf.save()
