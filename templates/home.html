@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+			<div id = trans >
+			      <img src="../static/images/pdftexto.png" alt="pdftexto.png">
+			       <h3>Transcribe el programa de estudio </h3>
+			       <p><a href="{% url 'agregar_pdf' %}" class="btn btn-primary" role="button">Transcribir</a>
+			</div>
+{% endblock %}
+
