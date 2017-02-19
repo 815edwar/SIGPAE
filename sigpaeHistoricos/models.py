@@ -61,7 +61,7 @@ class Pdfs(models.Model):
 
     ANYOS = tuple(anyos)
 
-    # Salva los PDF en /media/uploads/año/mes/día
+    # Salva los PDF en /media/uploads/
     pdf = models.FileField(
         upload_to='uploads/',
         validators=[valid_extension],
