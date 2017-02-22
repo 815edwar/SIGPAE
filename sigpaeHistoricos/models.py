@@ -8,7 +8,9 @@ from datetime import date
 
 # Validador para el formato pdf de los archivos a subir.
 def valid_extension(value):
-    if not value.name.endswith('.pdf'):
+    if not (value.name.endswith('.pdf') or value.name.endswith('.PDF') or value.name.endswith('.Pdf')
+     		or value.name.endswith('.PDf') or value.name.endswith('.pdF') or value.name.endswith('.PdF') 
+     		or value.name.endswith('.pDF') or value.name.endswith('.pDf')):
         raise ValidationError("Sólo se permiten archivos en formato PDF.")
 
 
@@ -59,7 +61,7 @@ class Pdfs(models.Model):
 
     ANYOS = tuple(anyos)
 
-    # Salva los PDF en /media/uploads/año/mes/día
+    # Salva los PDF en /media/uploads/
     pdf = models.FileField(
         upload_to='uploads/',
         validators=[valid_extension],
