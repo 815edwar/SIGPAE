@@ -55,11 +55,11 @@ class Pdfs(models.Model):
         (TERMO_FENOMENOS, 'Departamento de Termodinámica y Fenómenos de Transferencia'),
     )
 
-    anyos = []
+    años = []
     for i in range(1969, date.today().year + 1):
-        anyos.append((i, str(i)))
+        años.append((i, str(i)))
 
-    ANYOS = tuple(anyos)
+    AÑOS = tuple(años)
 
     # Salva los PDF en /media/uploads/
     pdf = models.FileField(
@@ -86,4 +86,4 @@ class Pdfs(models.Model):
         null=True,
         choices=PERIODOS,
     )
-    ano = models.PositiveIntegerField('Año', choices=ANYOS, null=True)
+    año = models.PositiveIntegerField('Año', choices=AÑOS, null=True)

@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import TemplateView
 from sigpaeHistoricos.forms import *
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 import io
 from pdfminer.pdfinterp import PDFResourceManager, process_pdf
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
+import os
+import re
+from django.contrib import messages
+from django.contrib.messages import get_messages
 
 
 class HomeView(TemplateView):
@@ -17,14 +21,24 @@ class DisplayPDF(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DisplayPDF, self).get_context_data(**kwargs)
-
+        messages = get_messages(self.request)
+        for message in messages:
+            pdf_id = int(str(message))
+        messages.used = True
+        pdf = Pdfs.objects.get(id=pdf_id)
+        pdf_form = PdfForm(instance=pdf)
+        context['formulario'] = pdf_form
+        context['pdf'] = pdf
         return context
 
     @staticmethod
     def post(request):
         post_values = request.POST.copy()
-        print(post_values)
-
+        pdf_id = int(post_values['pdf_id'])
+        pdf = Pdfs.objects.get(id=pdf_id)
+        pdf_form = PdfForm(post_values, instance=pdf)
+        pdf_form.save()
+        return redirect('home')
 
 class NewPdf(TemplateView):
     template_name = 'pdf.html'
@@ -40,15 +54,16 @@ class NewPdf(TemplateView):
 
         post_values = request.POST.copy()
 
+
         pdf_form = AddPdfForm(post_values, request.FILES)
 
         if pdf_form.is_valid():
             newpdf = pdf_form.save()
             text = extract_text('SIGPAE/'+newpdf.pdf.url)
-            newpdf.texto = text.getvalue()
+            newpdf.texto = text
             newpdf.save()
-            context = {'formulario': PdfForm(instance=newpdf), 'pdf': newpdf}
-            return render_to_response('display_pdf.html', context)
+            messages.add_message(request, messages.INFO, str(newpdf.id) )
+            return redirect('mostrar_pdf')
         else:
             pdf_form = AddPdfForm(post_values, request.FILES)
             context = {'formulario': pdf_form}
@@ -57,6 +72,15 @@ class NewPdf(TemplateView):
 
 
 def extract_text(path):
+    os.system("pdftotext -layout " + path)
+    filename = re.sub('(p|P)(d|D)(f|F)', 'txt', path)
+    file = open(filename, "r")
+    text = file.read()
+    file.close()
+    os.system("rm " + filename)
+    return text
+
+    '''
     pdfFile = open(path, 'rb')
     retstr = io.StringIO()
     password = ''
@@ -69,3 +93,4 @@ def extract_text(path):
     device.close()
     pdfFile.close()
     return retstr
+    '''

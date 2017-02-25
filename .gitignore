@@ -1,9 +1,9 @@
+*.sqlite3
 .idea/
-*/programa*
-*/sigpae*
-*/static*
-*/templates*
+*/media*
 */migrations*
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
