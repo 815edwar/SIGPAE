@@ -13,6 +13,13 @@ class PdfForm(forms.ModelForm):
         super(PdfForm, self).__init__(*args, **kwargs)
 
         for key in self.fields:
+            if key == 'texto':
+                self.fields[key].widget.attrs['id'] = 'drag1'
+                self.fields[key].widget.attrs['draggable'] = 'true'
+                self.fields[key].widget.attrs['ondragstart'] = 'drag(event)'
+                
+
+
             self.fields[key].widget.attrs['class'] = 'form-control '
             self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
             self.fields[key].required = False

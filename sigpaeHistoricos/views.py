@@ -34,6 +34,25 @@ class PDFList(TemplateView):
         print(context['pdf_names'])
         return context
 
+class ModifyPDF(TemplateView):
+    template_name = 'display_pdf.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ModifyPDF, self).get_context_data(**kwargs)
+        pdf = Pdfs.objects.get(pk=int(kwargs['pk']))
+        pdf_form = PdfForm(instance=pdf)
+        context['formulario'] = pdf_form
+        context['pdf'] = pdf
+        return context
+
+    @staticmethod
+    def post(request, **kwargs):
+        post_values = request.POST.copy()
+        pdf_id = int(post_values['pdf_id'])
+        pdf = Pdfs.objects.get(id=pdf_id)
+        pdf_form = PdfForm(post_values, instance=pdf)
+        pdf_form.save()
+        return redirect('home')
 
 class DisplayPDF(TemplateView):
     template_name = 'display_pdf.html'
@@ -55,7 +74,6 @@ class DisplayPDF(TemplateView):
         post_values = request.POST.copy()
         pdf_id = int(post_values['pdf_id'])
         pdf = Pdfs.objects.get(id=pdf_id)
-        pdf.fecha_modificacion = datetime.datetime.now()
         pdf_form = PdfForm(post_values, instance=pdf)
         pdf_form.save()
         return redirect('home')

@@ -84,5 +84,5 @@ class Pdfs(models.Model):
 
     departamento = models.ForeignKey(Departamento,verbose_name='Departamento', null=True)
 
-    fecha_modificacion = models.DateField(null=True)
+    fecha_modificacion = models.DateTimeField(auto_now=True)
 
