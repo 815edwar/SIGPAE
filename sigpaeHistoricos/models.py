@@ -2,6 +2,8 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from datetime import date
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
+
 
 
 # Create your models here.
@@ -13,6 +15,11 @@ def valid_extension(value):
      		or value.name.endswith('.pDF') or value.name.endswith('.pDf')):
         raise ValidationError("Sólo se permiten archivos en formato PDF.")
 
+class Departamento(models.Model):
+    nombre = models.CharField('Nombre', max_length=100, null=True)
+
+    def __str__(self):
+        return self.nombre
 
 class Pdfs(models.Model):
     SEP_DIC = 'sep-dic'
@@ -21,38 +28,10 @@ class Pdfs(models.Model):
     VERANO = 'intensivo'
 
     PERIODOS = (
-        (SEP_DIC, 'Septiembre-Diciembre'),
-        (ENE_MAR, 'Enero-Marzo'),
-        (ABR_JUL, 'Abril-Julio'),
-        (VERANO, 'Intensivo'),
-    )
-
-    CIENCIA_MATERIALES = 'DCM'
-    CIENCIAS_TIERRA = 'DCT'
-    COMPUTACION_TI = 'DCTI'
-    COMPUTO_CIENTIFICO = 'DCCE'
-    CONVERSION_TRANSPORTE = 'DCTE'
-    ELECTRONICA_CIRCUITOS = 'DEC'
-    FISICA = 'DF'
-    MATEMATICAS = 'DMPA'
-    MECANICA = 'DM'
-    PROCESOS_SISTEMAS = 'DPS'
-    QUIMICA = 'DQ'
-    TERMO_FENOMENOS = 'DTFT'
-
-    DEPARTAMENTOS = (
-        (CIENCIA_MATERIALES, 'Departamento de Ciencia de los Materiales'),
-        (CIENCIAS_TIERRA, 'Departamento de Ciencias de la Tierra'),
-        (COMPUTACION_TI, 'Departamento de Computación y Tecnología de Información'),
-        (COMPUTO_CIENTIFICO, 'Departamento de Cómputo Científico y Estadística'),
-        (CONVERSION_TRANSPORTE, 'Departamento de Conversión y Transporte de Energía'),
-        (ELECTRONICA_CIRCUITOS, 'Departamento de Electrónica y Circuitos'),
-        (FISICA, 'Departamento de Física'),
-        (MATEMATICAS, 'Departamento de Matemáticas Puras y Aplicadas'),
-        (MECANICA, 'Departamento de Mecánica'),
-        (PROCESOS_SISTEMAS, 'Departamento de Procesos y Sistemas'),
-        (QUIMICA, 'Departamento de Química'),
-        (TERMO_FENOMENOS, 'Departamento de Termodinámica y Fenómenos de Transferencia'),
+        (SEP_DIC, SEP_DIC),
+        (ENE_MAR, ENE_MAR),
+        (ABR_JUL, ABR_JUL),
+        (VERANO, VERANO),
     )
 
     años = []
@@ -72,18 +51,38 @@ class Pdfs(models.Model):
     # Almacena el string generado por la transformación del PDF
     texto = models.TextField('Texto', null=True)
 
-    observaciones = models.TextField('Observaciones', null=True)
+    denominacion = models.TextField('Denominación', null= True)
 
-    departamentos = models.CharField(
-        'Departamento',
-        max_length=4,
-        null=True,
-        choices=DEPARTAMENTOS,
-    )
     periodo = models.CharField(
         'Período',
         max_length=9,
         null=True,
         choices=PERIODOS,
     )
+
     año = models.PositiveIntegerField('Año', choices=AÑOS, null=True)
+
+    horas_semanales = models.PositiveIntegerField('Horas Semanales', null=True, validators=[MinValueValidator(0),
+                                                             MaxValueValidator(40)])
+
+    creditos = models.PositiveIntegerField('Créditos', null=True,  validators=[MinValueValidator(0),
+                                                             MaxValueValidator(16)])
+
+    requisitos = models.TextField('Requisitos', null=True)
+
+    objetivos = models.TextField('Objetivos', null=True)
+
+    sinopticos = models.TextField('Contenidos Sinópticos', null=True)
+
+    estrategias_metodologicas = models.TextField('Estrategias Metodológicas', null=True)
+
+    estrategias_evaluacion = models.TextField('Estrategias de Evaluación', null=True)
+
+    ftes_info_recomendadas = models.TextField('Fuentes de Información Recomendadas', null=True)
+
+    observaciones = models.TextField('Observaciones', null=True)
+
+    departamento = models.ForeignKey(Departamento,verbose_name='Departamento', null=True)
+
+    fecha_modificacion = models.DateField(null=True)
+

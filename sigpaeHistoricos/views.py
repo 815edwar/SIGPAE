@@ -10,10 +10,29 @@ import os
 import re
 from django.contrib import messages
 from django.contrib.messages import get_messages
+import datetime
+
 
 
 class HomeView(TemplateView):
     template_name = 'home.html'
+
+class PDFList(TemplateView):
+    template_name = 'transcripciones_en_proceso.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(PDFList, self).get_context_data(**kwargs)
+
+        programas = Pdfs.objects.all()
+        context['programas'] = programas
+        pdf_names = []
+        for programa in programas:
+            nombre_pdf = programa.pdf.url.split('/')[-1]
+            pdf_names.append(nombre_pdf)
+        context['pdf_names'] = pdf_names
+        print("\n\n\n\n\n")
+        print(context['pdf_names'])
+        return context
 
 
 class DisplayPDF(TemplateView):
@@ -36,6 +55,7 @@ class DisplayPDF(TemplateView):
         post_values = request.POST.copy()
         pdf_id = int(post_values['pdf_id'])
         pdf = Pdfs.objects.get(id=pdf_id)
+        pdf.fecha_modificacion = datetime.datetime.now()
         pdf_form = PdfForm(post_values, instance=pdf)
         pdf_form.save()
         return redirect('home')

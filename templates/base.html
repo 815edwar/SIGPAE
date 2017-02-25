@@ -7,16 +7,16 @@
 		<title>SIGPAE</title>
     
 	    {% block css %}
-
 			<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
 			<link rel="stylesheet" type="text/css" href="{% static 'css/base.css'%}">
+
 	    {% endblock css %}
 	{% endblock head %}
 </head>
 <body>
 	<div class="row">
-		<div class="col-lg-2"></div>
-		<div class="col-lg-8"> 
+		<div class="col-lg-2 col-md-2 col-xs-2"></div>
+		<div class="col-lg-8 col-md-8 col-xs-8"> 
 			<div >
 				<img id="header" class="img-responsive" src="{% static 'images/usb.JPG'%}">
 			</div>
@@ -35,19 +35,27 @@
 			</nav>
 		</div>
 			
-		<div class="col-lg-2"></div>
+		<div class="col-lg-2 col-md-2 col-xs-2"></div>
 	</div>
 
 	<div class="row">
-		<div class="col-lg-2"></div>
-		<div class="col-lg-8"> 
+		<div class="col-lg-2 col-md-2 col-xs-2"></div>
+		<div class="col-lg-8 col-md-8 col-xs-8"> 
 	        {% block content %}
 	        {% endblock %}
 		</div>
 			
-		<div class="col-lg-2"></div>
+		<div class="col-lg-2 col-md-2 col-xs-2"></div>
 	</div>
 {% block script %}
+	<script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
+
+{% endblock %}
+
+{% block custom_script %}
+
 {% endblock %}
 </body>
 </html>
