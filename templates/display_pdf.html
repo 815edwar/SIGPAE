@@ -15,12 +15,14 @@
 	{% endblock head %}
 </head>
 <body>
-
-    <button id="config_1" class="btn">Configuracion 1</button>
-    <button id="config_2" class="btn">Configuracion 2</button>
-    <button id="config_3" class="btn">Volver</button>
-
-
+    <div class="col-lg-2 col-md-2 col-xs-2"></div>
+    <div id="panel_config" class="col-lg-8 col-md-8 col-xs-8">
+        <button id="config_1" class="btn btn-primary">Configuracion 1</button>
+        <button id="config_2" class="btn btn-primary">Configuracion 2</button>
+        <button id="config_3" class="btn btn-primary">Configuracion 3 (Beta)</button>
+        <button id="volver" class="btn btn-primary">Volver</button>
+    </div>
+    <div class="col-lg-2 col-md-2 col-xs-2"></div>
 
 	<div class="row">
 		<div id="documento" class="col-lg-6 col-md-6 col-xs-6">
@@ -33,7 +35,7 @@
                     {% for field in formulario %}
                         <div class="control-group" id="{{field.name}}-state">
                             <div class="input-group">
-                                <span class="input-group-addon tags-unete" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                                <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
                             </div>
                             <span class="error" id="{{ field.name }}-icon"></span>
                             <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
@@ -43,7 +45,7 @@
                     {% endfor %}
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                     <input type="hidden" name="pdf_id" value="{{ pdf.id }}">
-                    <button class="btn" type="submit" value="Registrar" id="button-signup">Transcribir</button> 
+                    <button class="btn btn-primary" type="submit" value="Registrar" id="button-signup">Transcribir</button> 
                 </form>
             </div>
             <div class="col-lg-6 col-md-6 col-xs-6 id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="height: 500px">
@@ -62,14 +64,22 @@
             $('#config_1').click(function() {
                 $("#formulario").after($("#documento"));
             });
+            
             $('#config_2').click(function() {
+                $(".can_hide").hide();
+            });
+
+            $('#config_3').click(function() {
                 $("#documento").css('display','none');
                 $("#div1").css('display','block');
             });
-            $('#config_3').click(function() {
+            $('#volver').click(function() {
                 $("#div1").css('display','none');
                 $("#documento").css('display','block');
                 $("#formulario").before($("#documento"));
+                $(".can_hide").show();
+
+
 
             });            
         });

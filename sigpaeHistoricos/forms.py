@@ -17,13 +17,16 @@ class PdfForm(forms.ModelForm):
                 self.fields[key].widget.attrs['id'] = 'drag1'
                 self.fields[key].widget.attrs['draggable'] = 'true'
                 self.fields[key].widget.attrs['ondragstart'] = 'drag(event)'
-                
+                self.fields[key].widget.attrs['class'] = 'form-control '
+                self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
+                self.fields[key].required = False
+                self.fields[key].widget.attrs['required'] = 'False'
 
-
-            self.fields[key].widget.attrs['class'] = 'form-control '
-            self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
-            self.fields[key].required = False
-            self.fields[key].widget.attrs['required'] = 'False'
+            else:
+                self.fields[key].widget.attrs['class'] = 'form-control can_hide '
+                self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
+                self.fields[key].required = False
+                self.fields[key].widget.attrs['required'] = 'False'
 
 
 class AddPdfForm(forms.ModelForm):

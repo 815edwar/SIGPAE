@@ -22,6 +22,9 @@ body {
 	margin-left:150px;
 }
 
+#panel_config {
+	text-align: center;
+}
 .pdfobject-container {
 	height: 600px;
 	width: 100%;
@@ -34,9 +37,10 @@ body {
 .tags-unete{
 	background-color:#a1d3e2 ;
 
-    min-width: 200px;
+    min-width: 295px;
 }
 
 .control-group{
     margin-top: 5px;
 }
+

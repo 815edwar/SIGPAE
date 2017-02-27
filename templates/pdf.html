@@ -14,6 +14,11 @@
                                             {{ field.errors }}
                                         </div>
     {% endfor %}
+        <select name="tipo">
+            <option value="texto">Texto</option>
+            <option value="html">HTML</option>
+        </select>
+
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         <button class="btn btn-primary" type="submit" value="Registrar" id="button-signup">Transcribir</button>
     </form>

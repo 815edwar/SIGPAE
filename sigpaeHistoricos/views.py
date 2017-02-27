@@ -91,13 +91,18 @@ class NewPdf(TemplateView):
     def post(request):
 
         post_values = request.POST.copy()
-
+        print('\n\n\n\n\n\n\n'  )
+        print(post_values['tipo'])
 
         pdf_form = AddPdfForm(post_values, request.FILES)
 
         if pdf_form.is_valid():
             newpdf = pdf_form.save()
-            text = extract_text('SIGPAE/'+newpdf.pdf.url)
+            if post_values['tipo'] == 'texto':
+                text = extract_text('SIGPAE/'+newpdf.pdf.url)
+            else:
+                text = extract_html('SIGPAE/'+newpdf.pdf.url)
+
             newpdf.texto = text
             newpdf.save()
             messages.add_message(request, messages.INFO, str(newpdf.id) )
@@ -118,6 +123,14 @@ def extract_text(path):
     os.system("rm " + filename)
     return text
 
+def extract_html(path):
+    os.system("pdftohtml -s -c " + path)
+    output = re.sub('.(p|P)(d|D)(f|F)', '-html.html', path)
+    file = open(output, "r")
+    text = file.read()
+    file.close()
+    os.system("rm " + output + ' *.png')
+    return text
     '''
     pdfFile = open(path, 'rb')
     retstr = io.StringIO()
