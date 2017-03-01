@@ -14,13 +14,16 @@
                                             {{ field.errors }}
                                         </div>
     {% endfor %}
-        <select name="tipo">
+    <div class = "tipo">
+    <img class ="clip" src="../static/images/pdftexto.png"></img>
+        <select class = "veromazu" name="tipo">
             <option value="texto">Texto</option>
             <option value="html">HTML</option>
         </select>
-
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        <button class="btn btn-primary" type="submit" value="Registrar" id="button-signup">Transcribir</button>
+        <button class="botonTrans2" type="submit" value="Registrar" id="button-signup">Convertir</button>
+    </div>
+
     </form>
 
 {% endblock %}

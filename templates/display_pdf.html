@@ -17,10 +17,10 @@
 <body>
     <div class="col-lg-2 col-md-2 col-xs-2"></div>
     <div id="panel_config" class="col-lg-8 col-md-8 col-xs-8">
-        <button id="config_1" class="btn btn-primary">Configuracion 1</button>
-        <button id="config_2" class="btn btn-primary">Configuracion 2</button>
-        <button id="config_3" class="btn btn-primary">Configuracion 3 (Beta)</button>
-        <button id="volver" class="btn btn-primary">Volver</button>
+        <button id="config_1" class="boton">Configuracion 1</button>
+        <button id="config_2" class="boton">Configuracion 2</button>
+        <button id="config_3" class="boton">Configuracion 3 (Beta)</button>
+        <button id="volver" class="boton" >Volver</button>
     </div>
     <div class="col-lg-2 col-md-2 col-xs-2"></div>
 
@@ -45,7 +45,7 @@
                     {% endfor %}
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                     <input type="hidden" name="pdf_id" value="{{ pdf.id }}">
-                    <button class="btn btn-primary" type="submit" value="Registrar" id="button-signup">Transcribir</button> 
+                    <button class="botonTrans1" type="submit" value="Registrar" id="button-signup">Guardar Cambios</button> 
                 </form>
             </div>
             <div class="col-lg-6 col-md-6 col-xs-6 id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="height: 500px">

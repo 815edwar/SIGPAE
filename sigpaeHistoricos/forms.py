@@ -40,5 +40,5 @@ class AddPdfForm(forms.ModelForm):
         for key in self.fields:
             self.fields[key].widget.attrs['class'] = 'form-control '
             self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
-            self.fields[key].required = False
-            self.fields[key].widget.attrs['required'] = 'False'
+            self.fields[key].required = True
+            self.fields[key].widget.attrs['required'] = 'True'
