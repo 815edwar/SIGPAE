@@ -30,8 +30,6 @@ class PDFList(TemplateView):
             nombre_pdf = programa.pdf.url.split('/')[-1]
             pdf_names.append(nombre_pdf)
         context['pdf_names'] = pdf_names
-        print("\n\n\n\n\n")
-        print(context['pdf_names'])
         return context
 
 class ModifyPDF(TemplateView):
@@ -56,7 +54,7 @@ class ModifyPDF(TemplateView):
             return redirect('home')
         else:
             context = {'formulario': pdf_form, }
-
+            context['pdf'] = pdf
             return render(request, 'display_pdf.html', context)
 
 class DisplayPDF(TemplateView):
@@ -80,8 +78,13 @@ class DisplayPDF(TemplateView):
         pdf_id = int(post_values['pdf_id'])
         pdf = Pdfs.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
-        pdf_form.save()
-        return redirect('home')
+        if pdf_form.is_valid():
+            pdf_form.save()
+            return redirect('home')
+        else:
+            context = {'formulario': pdf_form, }
+            context['pdf'] = pdf
+            return render(request, 'display_pdf.html', context)
 
 class NewPdf(TemplateView):
     template_name = 'pdf.html'
@@ -96,8 +99,6 @@ class NewPdf(TemplateView):
     def post(request):
 
         post_values = request.POST.copy()
-        print('\n\n\n\n\n\n\n'  )
-        print(post_values['tipo'])
 
         pdf_form = AddPdfForm(post_values, request.FILES)
 
