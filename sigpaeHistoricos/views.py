@@ -1,30 +1,87 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import TemplateView
 from sigpaeHistoricos.forms import *
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 import io
 from pdfminer.pdfinterp import PDFResourceManager, process_pdf
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
+import os
+import re
+from django.contrib import messages
+from django.contrib.messages import get_messages
+import datetime
+
 
 
 class HomeView(TemplateView):
     template_name = 'home.html'
 
+class PDFList(TemplateView):
+    template_name = 'transcripciones_en_proceso.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(PDFList, self).get_context_data(**kwargs)
+
+        programas = Pdfs.objects.all()
+        context['programas'] = programas
+        pdf_names = []
+        for programa in programas:
+            nombre_pdf = programa.pdf.url.split('/')[-1]
+            pdf_names.append(nombre_pdf)
+        context['pdf_names'] = pdf_names
+        print("\n\n\n\n\n")
+        print(context['pdf_names'])
+        return context
+
+class ModifyPDF(TemplateView):
+    template_name = 'display_pdf.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ModifyPDF, self).get_context_data(**kwargs)
+        pdf = Pdfs.objects.get(pk=int(kwargs['pk']))
+        pdf_form = PdfForm(instance=pdf)
+        context['formulario'] = pdf_form
+        context['pdf'] = pdf
+        return context
+
+    @staticmethod
+    def post(request, **kwargs):
+        post_values = request.POST.copy()
+        pdf_id = int(post_values['pdf_id'])
+        pdf = Pdfs.objects.get(id=pdf_id)
+        pdf_form = PdfForm(post_values, instance=pdf)
+        if pdf_form.is_valid():
+            pdf_form.save()
+            return redirect('home')
+        else:
+            context = {'formulario': pdf_form, }
+
+            return render(request, 'display_pdf.html', context)
 
 class DisplayPDF(TemplateView):
     template_name = 'display_pdf.html'
 
     def get_context_data(self, **kwargs):
         context = super(DisplayPDF, self).get_context_data(**kwargs)
-
+        messages = get_messages(self.request)
+        for message in messages:
+            pdf_id = int(str(message))
+        messages.used = True
+        pdf = Pdfs.objects.get(id=pdf_id)
+        pdf_form = PdfForm(instance=pdf)
+        context['formulario'] = pdf_form
+        context['pdf'] = pdf
         return context
 
     @staticmethod
     def post(request):
         post_values = request.POST.copy()
-        print(post_values)
-
+        pdf_id = int(post_values['pdf_id'])
+        pdf = Pdfs.objects.get(id=pdf_id)
+        pdf_form = PdfForm(post_values, instance=pdf)
+        pdf_form.save()
+        return redirect('home')
 
 class NewPdf(TemplateView):
     template_name = 'pdf.html'
@@ -39,16 +96,22 @@ class NewPdf(TemplateView):
     def post(request):
 
         post_values = request.POST.copy()
+        print('\n\n\n\n\n\n\n'  )
+        print(post_values['tipo'])
 
         pdf_form = AddPdfForm(post_values, request.FILES)
 
         if pdf_form.is_valid():
             newpdf = pdf_form.save()
-            text = extract_text('SIGPAE/'+newpdf.pdf.url)
-            newpdf.texto = text.getvalue()
+            if post_values['tipo'] == 'texto':
+                text = extract_text('SIGPAE/'+newpdf.pdf.url)
+            else:
+                text = extract_html('SIGPAE/'+newpdf.pdf.url)
+
+            newpdf.texto = text
             newpdf.save()
-            context = {'formulario': PdfForm(instance=newpdf), 'pdf': newpdf}
-            return render_to_response('display_pdf.html', context)
+            messages.add_message(request, messages.INFO, str(newpdf.id) )
+            return redirect('mostrar_pdf')
         else:
             pdf_form = AddPdfForm(post_values, request.FILES)
             context = {'formulario': pdf_form}
@@ -57,6 +120,23 @@ class NewPdf(TemplateView):
 
 
 def extract_text(path):
+    os.system("pdftotext -layout " + path)
+    filename = re.sub('(p|P)(d|D)(f|F)', 'txt', path)
+    file = open(filename, "r")
+    text = file.read()
+    file.close()
+    os.system("rm " + filename)
+    return text
+
+def extract_html(path):
+    os.system("pdftohtml -s -c " + path)
+    output = re.sub('.(p|P)(d|D)(f|F)', '-html.html', path)
+    file = open(output, "r")
+    text = file.read()
+    file.close()
+    os.system("rm " + output + ' *.png')
+    return text
+    '''
     pdfFile = open(path, 'rb')
     retstr = io.StringIO()
     password = ''
@@ -69,3 +149,4 @@ def extract_text(path):
     device.close()
     pdfFile.close()
     return retstr
+    '''

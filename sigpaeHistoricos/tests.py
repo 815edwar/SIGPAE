@@ -4,6 +4,15 @@ from django.test import TestCase
 from sigpaeHistoricos.models import *
 
 # Create your tests here.
+<<<<<<< HEAD
+=======
+# -*- coding: utf-8 -*-
+
+from django.test import TestCase
+from sigpaeHistoricos.models import *
+
+# Create your tests here.
+>>>>>>> 097444a814be4f10d41ee58680e8b78722162861
 
 class PDFTestCase(TestCase):
 	

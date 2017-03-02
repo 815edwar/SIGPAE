@@ -1,9 +1,97 @@
 [
   {
-    "model": "sigpaeHistorico.Periodos",
+    "model": "sigpaeHistoricos.Departamento",
     "pk": 1,
     "fields": {
-      "periods": "sep-dic",
+      "nombre": "Departamento de Ciencia de los Materiales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 2,
+    "fields": {
+      "nombre": "Departamento de Ciencias de la Tierra"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 3,
+    "fields": {
+      "nombre": "Departamento de Computación y Tecnología de Información"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 4,
+    "fields": {
+      "nombre": "Departamento de Cómputo Científico y Estadística"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 5,
+    "fields": {
+      "nombre": "Departamento de Conversión y Transporte de Energía"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 6,
+    "fields": {
+      "nombre": "Departamento de Electrónica y Circuitos"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 7,
+    "fields": {
+      "nombre": "Departamento de Física"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 8,
+    "fields": {
+      "nombre": "Departamento de Matemáticas Puras y Aplicadas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 9,
+    "fields": {
+      "nombre": "Departamento de Mecánica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 10,
+    "fields": {
+      "nombre": "Departamento de Procesos y Sistemas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 11,
+    "fields": {
+      "nombre": "Departamento de Química"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 12,
+    "fields": {
+      "nombre": "Departamento de Termodinámica y Fenómenos de Transferencia"
     }
   }
 ]
