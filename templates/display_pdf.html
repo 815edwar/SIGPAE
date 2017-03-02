@@ -15,19 +15,27 @@
 	{% endblock head %}
 </head>
 <body>
+    <div class="col-lg-2 col-md-2 col-xs-2"></div>
+    <div id="panel_config" class="col-lg-8 col-md-8 col-xs-8">
+        <button id="config_1" class="boton">Configuracion 1</button>
+        <button id="config_2" class="boton">Configuracion 2</button>
+        <button id="config_3" class="boton">Configuracion 3 (Beta)</button>
+        <button id="volver" class="boton" >Volver</button>
+    </div>
+    <div class="col-lg-2 col-md-2 col-xs-2"></div>
+
 	<div class="row">
-		<div class="col-lg-6">
+		<div id="documento" class="col-lg-6 col-md-6 col-xs-6">
             <div id="pdf" class="pdfobject-container"></div>
 		</div>
 
 
-            <div class="col-lg-6">
+            <div id="formulario" class="col-lg-6 col-md-6 col-xs-6 ">
                 <form enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-group" role="form" novalidate>
-                {{ csrf_token }}
                     {% for field in formulario %}
                         <div class="control-group" id="{{field.name}}-state">
                             <div class="input-group">
-                                <span class="input-group-addon tags-unete" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                                <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
                             </div>
                             <span class="error" id="{{ field.name }}-icon"></span>
                             <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
@@ -35,17 +43,62 @@
                         </div>
 
                     {% endfor %}
+                    <input type="hidden" name="pdf_id" value="{{ pdf.id }}">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                    <!--button class="btn" type="submit" value="Registrar" id="button-signup">Transcribir</button--> 
+                    <button class="botonTrans1" type="submit" value="Registrar" id="button-signup">Guardar Cambios</button> 
                 </form>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-6" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="height: 500px">
+            
             </div>
 
     </div>
-{% block script %}
+{% block custom_script %}
     <script type="text/javascript" src="{% static 'js/pdfobject.js' %}"></script>
-    <script>
+    <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 
-        PDFObject.embed("{{ pdf.pdf.url }}" , "#pdf");
+    <script>
+        $(document).ready(function() {
+            $("#drag").css('display','none');
+            PDFObject.embed("{{ pdf.pdf.url }}" , "#pdf");
+            $('#config_1').click(function() {
+                $("#formulario").after($("#documento"));
+            });
+            
+            $('#config_2').click(function() {
+                $(".can_hide").hide();
+            });
+
+            $('#config_3').click(function() {
+                $("#documento").css('display','none');
+                $("#div1").css('display','block');
+            });
+            $('#volver').click(function() {
+                $("#div1").css('display','none');
+                $("#documento").css('display','block');
+                $("#formulario").before($("#documento"));
+                $(".can_hide").show();
+
+
+
+            });            
+        });
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+        }
+
+
+
     </script>
 {% endblock %}
 </body>

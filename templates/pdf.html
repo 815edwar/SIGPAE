@@ -6,16 +6,32 @@
     <form enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-group" role="form" novalidate>
     {% for field in formulario %}
         <div class="control-group" id="{{field.name}}-state">
-                                            <div class="input-group">
-                                                <span class="input-group-addon tags-unete" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
-                                            </div>
-                                            <span class="error" id="{{ field.name }}-icon"></span>
-                                            <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
-                                            {{ field.errors }}
-                                        </div>
+            <div class="input-group">
+                <span class="input-group-addon tags-unete" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+            </div>
+            <span class="error" id="{{ field.name }}-icon"></span>
+            <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
+            {{ field.errors }}
+        </div>
     {% endfor %}
+    <div class = "tipo row">
+        <div class="col-lg-3 col-md-3 col-xs-3"></div>
+        <div class="col-lg-2 col-md-2 col-xs-2">
+            <select class = "selectTrans2" name="tipo">
+                <option value="texto">Texto</option>
+                <option value="html">HTML</option>
+            </select>
+        </div>
+        <div class="col-lg-2 col-md-2 col-xs-2 clip-div">
+            <img class="clip" src="{% static 'images/pdf-icon2.png' %}" alt="pdftexto.png">
+        </div>
+        <div class="col-lg-2 col-md-2 col-xs-2">
+            <button class="botonTrans2" type="submit" value="Registrar" id="button-signup">Convertir</button>
+        </div>
+        <div class="col-lg-3 col-md-3 col-xs-3"></div>
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        <button class="btn btn-primary" type="submit" value="Registrar" id="button-signup">Transcribir</button>
+    </div>
+
     </form>
 
 {% endblock %}

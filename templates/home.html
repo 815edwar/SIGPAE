@@ -2,10 +2,12 @@
 {% load static %}
 
 {% block content %}
-			<div id = trans >
-			      <img src="../static/images/pdftexto.png" alt="pdftexto.png">
+			<div id = "trans" >
+			      <img src="{% static 'images/pdftexto.png' %}" alt="pdftexto.png">
 			       <h3>Transcribe el programa de estudio </h3>
-			       <p><a href="{% url 'agregar_pdf' %}" class="btn btn-primary" role="button">Transcribir</a>
+			</div>
+			<div id = "trans1">
+			       <p type = "submit"><a href="{% url 'agregar_pdf' %}"  class = "botonTrans" role="button">Transcribir</a></p>
 			</div>
 {% endblock %}
 
