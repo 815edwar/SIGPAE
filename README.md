@@ -13,7 +13,7 @@ SPRINT 1:
 SPRINT 2:
     XPDF:
         -Se puede descargar escribiendo en el terminal:
-        sudo apt-get update
+        sudo apt-get update ; 
         sudo apt-get install xpdf
 
 Además,podría ser necesario instalar dj-database-url :
