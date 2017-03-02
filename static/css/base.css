@@ -2,6 +2,9 @@ body {
 	height: 100%;
 }
 
+.row{
+  margin: 0;
+}
 #header {
 	margin: auto;
 }
@@ -20,16 +23,27 @@ body {
   border: solid 2px #2C7856;
   position:relative;
   z-index:999;
+  border-radius: 0;
+}
+
+#navbar a{
+  color:black;
+}
+
+#navbar a:hover{
+  color: gray;
 }
 
 .clip-div {
   text-align: center;
 }
-
 .clip{
   width: 80px;
 }
 
+.content{
+  margin-top: 10px;
+}
 #trans {
 	text-align: center;
 }
@@ -70,6 +84,8 @@ body {
   background-color: #a1d3e2;
   padding: 50px;
   margin-top: 10px;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .bloque{
@@ -192,16 +208,19 @@ body {
   text-decoration: none;
 }
 
-.selectTrans2:hover {
-  background: #c4a3b0;
+/*  background: #c4a3b0;
   background-image: -webkit-linear-gradient(top, #c4a3b0, #3498db);
   background-image: -moz-linear-gradient(top, #c4a3b0, #3498db);
   background-image: -ms-linear-gradient(top, #c4a3b0, #3498db);
   background-image: -o-linear-gradient(top, #c4a3b0, #3498db);
   background-image: linear-gradient(to bottom, #c4a3b0, #3498db);
   text-decoration: none;
-}
+}*/
 
+.selectTrans2 option{
+  background: #FFF;
+  color:#000;
+  }
 
 
 .pdfobject-container {
