@@ -14,6 +14,12 @@ def valid_extension(value):
      		or value.name.endswith('.PDf') or value.name.endswith('.pdF') or value.name.endswith('.PdF') 
      		or value.name.endswith('.pDF') or value.name.endswith('.pDf')):
         raise ValidationError("Sólo se permiten archivos en formato PDF.")
+def valid_hours(hr):
+    if not ((hr>=0) and hr<=40):
+        raise  ValidationError("Máximo de horas semanales es 40.")
+def valid_cr(cr):
+    if not ((cr>=0) and cr<=16):
+        raise  ValidationError("Máximo de créditos válido es 16.")
 
 class Departamento(models.Model):
     nombre = models.CharField('Nombre', max_length=100, null=True)
@@ -62,11 +68,9 @@ class Pdfs(models.Model):
 
     año = models.PositiveIntegerField('Año', choices=AÑOS, null=True)
 
-    horas_semanales = models.PositiveIntegerField('Horas Semanales', null=True, validators=[MinValueValidator(0),
-                                                             MaxValueValidator(40)])
+    horas_semanales = models.PositiveIntegerField('Horas Semanales', null=True, validators=[valid_hours])
 
-    creditos = models.PositiveIntegerField('Créditos', null=True,  validators=[MinValueValidator(0),
-                                                             MaxValueValidator(16)])
+    creditos = models.PositiveIntegerField('Créditos', null=True,  validators=[valid_cr])
 
     requisitos = models.TextField('Requisitos', null=True)
 

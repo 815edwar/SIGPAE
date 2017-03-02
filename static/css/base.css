@@ -6,14 +6,24 @@ body {
 	margin: auto;
 }
 
+
 #navbar {
-	border-radius: 0;
-	background-color:#a1d3e2 ;
-	color:   #000000;
-	font-family: sans-serif;
-	border-color: #ffffff;
-  color: ;
+  width: 100%;
+  color:#FFFFFF;
+  font-family: sans-serif;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 7px 4px ;
+  height: 40px;
+  line-height: 100%;
+  border-radius: 10px;
+  box-shadow: 1px 2px 3px #666666;
+  background: #A1D3E2;
+  border: solid 2px #2C7856;
+  position:relative;
+  z-index:999;
 }
+
+
 
 .clip{
   width: 80px;
@@ -62,7 +72,7 @@ body {
   margin-top: 10px;
 }
 
-.veromazu{
+.bloque{
   text-align: center;
   margin-left: 50px;
   padding: 15px;

@@ -32,15 +32,18 @@
 
             <div id="formulario" class="col-lg-6 col-md-6 col-xs-6 ">
                 <form enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-group" role="form" novalidate>
+                    
                     {% for field in formulario %}
+                    <div class="col-lg-4 col-md-4 col-xs-4 ">
                         <div class="control-group" id="{{field.name}}-state">
-                            <div class="input-group">
-                                <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                            <div class="input-group input-group">
+                                <label><b>{{ field.label }}:</b></label>{{ field }}
                             </div>
                             <span class="error" id="{{ field.name }}-icon"></span>
                             <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
                             {{ field.errors }}
                         </div>
+                    </div>
 
                     {% endfor %}
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
