@@ -51,8 +51,13 @@ class ModifyPDF(TemplateView):
         pdf_id = int(post_values['pdf_id'])
         pdf = Pdfs.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
-        pdf_form.save()
-        return redirect('home')
+        if pdf_form.is_valid():
+            pdf_form.save()
+            return redirect('home')
+        else:
+            context = {'formulario': pdf_form, }
+
+            return render(request, 'display_pdf.html', context)
 
 class DisplayPDF(TemplateView):
     template_name = 'display_pdf.html'
