@@ -43,12 +43,12 @@
                         </div>
 
                     {% endfor %}
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                     <input type="hidden" name="pdf_id" value="{{ pdf.id }}">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                     <button class="botonTrans1" type="submit" value="Registrar" id="button-signup">Guardar Cambios</button> 
                 </form>
             </div>
-            <div class="col-lg-6 col-md-6 col-xs-6 id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="height: 500px">
+            <div class="col-lg-6 col-md-6 col-xs-6" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="height: 500px">
             
             </div>
 
