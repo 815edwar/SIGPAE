@@ -46,7 +46,7 @@ class Pdfs(models.Model):
         validators=[valid_extension],
     )
 
-    titulo = models.CharField('Título', max_length=50, null=True)
+    codigo = models.CharField('Código', max_length=50, null=True)
 
     # Almacena el string generado por la transformación del PDF
     texto = models.TextField('Texto', null=True)
