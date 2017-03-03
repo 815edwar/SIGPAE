@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
-import datetime
+from datetime import datetime, timezone
 from sigpaeHistoricos.models import *
 
 # Create your tests here.
@@ -10,19 +10,19 @@ class PDFTestCase(TestCase):
 	
 	def setUp(self):
 
-		departamento1 = Departamento.objects.create(
+		self.departamento1 = Departamento.objects.create(
 			nombre="Departamento de Física",
 		)
 
-		departamento2 = Departamento.objects.create(
+		self.departamento2 = Departamento.objects.create(
 			nombre="Departamento de Computación y Tecnología de Información",
 		)
 
-		departamento3 = Departamento.objects.create(
+		self.departamento3 = Departamento.objects.create(
 			nombre="Departamento de Termodinámica y Fenómenos de Transferencia",
 		)
 
-		departamento4 = Departamento.objects.create(
+		self.departamento4 = Departamento.objects.create(
 			nombre="Departamento de Electrónica y Circuitos",
 		)
 
@@ -41,8 +41,8 @@ class PDFTestCase(TestCase):
 			estrategias_evaluacion="Ocho exámenes parciales.",
 			ftes_info_recomendadas="Aho, A., Lam, M., Sethi, R., y Ullman, J. Compilers.",
 			observaciones="Primer curso de la cadena de realidad aumentada.",
-			#departamento=departamento1.__str__(),
-			fecha_modificacion=datetime.datetime.now(),
+			departamento=self.departamento1,
+			fecha_modificacion=datetime.now(timezone.utc),
 		)
 
 		self.pdf2 = Pdfs.objects.create(
@@ -60,8 +60,8 @@ class PDFTestCase(TestCase):
 			estrategias_evaluacion="Un trabajo, una exposición y veinte mini-proyectos.",
 			ftes_info_recomendadas="PURCELL. Octava edición.",
 			observaciones="Curso sujeto a cambios.",
-			#departamento=departamento2.__str__(),
-			fecha_modificacion=datetime.datetime.now(),
+			departamento=self.departamento2,
+			fecha_modificacion=datetime.now(timezone.utc),
 		)
 
 		self.pdf3 = Pdfs.objects.create(
@@ -79,8 +79,8 @@ class PDFTestCase(TestCase):
 			estrategias_evaluacion="Un parcial de 100%.",
 			ftes_info_recomendadas="Tanembaum, A. (2000). Redes de computadores.",
 			observaciones="-",
-			#departamento=departamento3.__str__(),
-			fecha_modificacion=datetime.datetime.now(),
+			departamento=self.departamento3,
+			fecha_modificacion=datetime.now(timezone.utc),
 		)
 
 		self.pdf4 = Pdfs.objects.create(
@@ -98,11 +98,13 @@ class PDFTestCase(TestCase):
 			estrategias_evaluacion="Tres parciales de 33,3%. 0,1% por asistencias.",
 			ftes_info_recomendadas="Holy Bible.",
 			observaciones="Nada particular.",
-			#departamento=departamento4.__str__(),
-			fecha_modificacion=datetime.datetime.now(),
+			departamento=self.departamento4,
+			fecha_modificacion=datetime.now(timezone.utc),
 		)
 
 	# PRUEBAS UNITARIAS
+
+	# PRUEBAS DE LA CLASE "Pdfs"
 
 	# Se prueba el campo "titulo" y su correctitud.
 	def test_titulo(self):
@@ -209,20 +211,25 @@ class PDFTestCase(TestCase):
 		self.assertEqual(self.pdf3.observaciones, "-")
 		self.assertEqual(self.pdf4.observaciones, "Nada particular.")
 
-	"""
-	# Se prueba el campo "departamentos" y su correctitud.
-	def test_departamento(self):
-		self.assertEqual(self.pdf1.departamento, "Departamento de Física")
-		self.assertEqual(self.pdf2.departamento, "Departamento de Computación y Tecnología de Información")
-		self.assertEqual(self.pdf3.departamento, "Departamento de Termodinámica y Fenómenos de Transferencia")
-		self.assertEqual(self.pdf4.departamento, "Departamento de Electrónica y Circuitos")
-	"""
-	"""
 	# Se prueba el campo "fecha_modificacion" y su correctitud.
 	def test_fecha_modificacion(self):
-		self.assertGreater(self.pdf1.fecha_modificacion, datetime.datetime.now())
-		self.assertGreater(self.pdf2.fecha_modificacion, datetime.datetime.now())
-		self.assertGreater(self.pdf3.fecha_modificacion, datetime.datetime.now())
-		self.assertGreater(self.pdf4.fecha_modificacion, datetime.datetime.now())
-	"""
-	
+		self.assertLess(self.pdf1.fecha_modificacion, datetime.now(timezone.utc))
+		self.assertLess(self.pdf2.fecha_modificacion, datetime.now(timezone.utc))
+		self.assertLess(self.pdf3.fecha_modificacion, datetime.now(timezone.utc))
+		self.assertLess(self.pdf4.fecha_modificacion, datetime.now(timezone.utc))
+
+	# Se prueba el campo "departamento" y su correctitud.
+	def test_departamento(self):
+		self.assertEqual(self.pdf1.departamento.__str__(), "Departamento de Física")
+		self.assertEqual(self.pdf2.departamento.__str__(), "Departamento de Computación y Tecnología de Información")
+		self.assertEqual(self.pdf3.departamento.__str__(), "Departamento de Termodinámica y Fenómenos de Transferencia")
+		self.assertEqual(self.pdf4.departamento.__str__(), "Departamento de Electrónica y Circuitos")
+
+	# PRUEBAS DE LA CLASE "Departamentos"
+
+	# Se prueba el campo "nombre" y su correctitud.
+	def test_nombre_departamento(self):
+		self.assertEqual(self.departamento1.nombre, "Departamento de Física")
+		self.assertEqual(self.departamento2.nombre, "Departamento de Computación y Tecnología de Información")
+		self.assertEqual(self.departamento3.nombre, "Departamento de Termodinámica y Fenómenos de Transferencia")
+		self.assertEqual(self.departamento4.nombre, "Departamento de Electrónica y Circuitos")
