@@ -31,7 +31,7 @@
 
 
             <div id="formulario" class="col-lg-6 col-md-6 col-xs-6 ">
-                <form enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-group" role="form" novalidate>
+                <form id="form" enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-group" role="form" novalidate>
                     {% for field in formulario %}
                         <div class="control-group" id="{{field.name}}-state">
                             <div class="input-group">
@@ -43,10 +43,32 @@
                         </div>
 
                     {% endfor %}
+                    <div class="control-group" >
+                            <div class="input-group">
+                                <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>Encargado:</b></span>
+                                {% if encargado != None%}
+                                <input aria-describedby="basic-addon1" class="form-control can_hide " value="{{encargado}}" required="False" type="text" readonly>
+                                {% else %}
+                                <input aria-describedby="basic-addon1" class="form-control can_hide " value="" required="False" type="text" readonly>
+                                {% endif %}
+                    </div>
+                    <input type="checkbox" class="encargado" id="Departamento" name="check" value="Departamento"> Departamento
+                    <input type="checkbox" class="encargado" id="Coordinacion" value="Coordinacion" name="check" value="Coordinacion"> Coordinación
+                    
+                    <select id="departamentos" name="departamentos" class="dinamica">
+
+                    </select>
+                    <select id="decanatos" class="dinamica">
+                        
+                    </select>
+
+                    <select id="coordinaciones" name="coordinacion" class="dinamica">
+                        
+                    </select> 
                     <input type="hidden" name="pdf_id" value="{{ pdf.id }}">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                    <button class="botonTrans1" type="submit" value="Registrar" id="button-signup">Guardar Cambios</button> 
                 </form>
+                <button class="botonTrans1" value="Registrar" id="button-signup">Guardar Cambios</button> 
             </div>
             <div class="col-lg-6 col-md-6 col-xs-6" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="height: 500px">
             
@@ -59,6 +81,7 @@
 
     <script>
         $(document).ready(function() {
+            $(".dinamica").hide();
             $("#drag").css('display','none');
             PDFObject.embed("{{ pdf.pdf.url }}" , "#pdf");
             $('#config_1').click(function() {
@@ -82,20 +105,108 @@
 
 
             });            
+         });
+
+        $('#button-signup').click(function(){
+            var inputs = $('.horas');
+            var total = 0;
+            for(var i = 0; i < inputs.length; i++){
+                total = total + parseInt($(inputs[i]).val());
+            }
+            if (parseInt(total) > 40){
+                alert("El número de horas semanales no puede superar las 40 horas.");
+                
+            }
+            else{
+                $('#form').submit();
+            }
+
         });
-        function allowDrop(ev) {
-            ev.preventDefault();
-        }
 
-        function drag(ev) {
-            ev.dataTransfer.setData("text", ev.target.id);
-        }
+        $('input').on('change', function() {
+            $('input').not(this).prop('checked', false);  
+        });
+        $('.encargado').click(function(){
+            if ($(this).attr('id') == 'Departamento'){
+                $('#departamentos').show();
+                $('#decanatos').hide();
+                $('#coordinaciones').hide();
+                
+                $('#departamentos').find('option').remove().end();
 
-        function drop(ev) {
-            ev.preventDefault();
-            var data = ev.dataTransfer.getData("text");
-            ev.target.appendChild(document.getElementById(data));
-        }
+                $.ajax({
+                    url: '{% url "Encargado" %}',
+                    data: {
+                        'encargado' : $(this).attr('id') ,
+                    },
+                    dataType: 'json',
+                    success: function(data){
+                            var tamano = data.departamento.length;
+                            for (var i = 0; i < tamano; i++) {
+                                console.log(data.departamento[i].nombre);
+                                $('#departamentos').append($('<option>', {
+                                    value: data.departamento[i].nombre,
+                                    text: data.departamento[i].nombre
+                                }));
+                                
+                            }
+                    }
+                });
+            }else{
+                $('#decanatos').show();
+                $('#departamentos').hide();
+
+                $('#decanatos').find('option').remove().end();
+                $.ajax({
+                    url: '{% url "Encargado" %}',
+                    data: {
+                        'encargado' : $(this).attr('id') ,
+                    },
+                    dataType: 'json',
+                    success: function(data){
+                            var tamano = data.decanatos.length;
+                            $('#decanatos').append($('<option>', {
+                                value: '---',
+                                text: '---'
+                            }));
+                            for (var i = 0; i < tamano; i++) {
+                                console.log(data.decanatos[i].nombre);
+                                $('#decanatos').append($('<option>', {
+                                    value: data.decanatos[i].id,
+                                    text: data.decanatos[i].nombre
+                                }));
+                                
+                            }
+                    }
+                });
+            }
+        });
+        
+        $('#decanatos').change(function(){
+            $('#coordinaciones').find('option').remove().end();
+            console.log($(this).val());
+            $.ajax({
+                    url: '{% url "Encargado" %}',
+                    data: {
+                        'decanato' : $(this).val() ,
+                    },
+                    dataType: 'json',
+                    success: function(data){
+                            $('#coordinaciones').show();
+                            var tamano = data.coordinaciones.length;
+                            for (var i = 0; i < tamano; i++) {
+                                console.log(data.coordinaciones[i].nombre);
+                                $('#coordinaciones').append($('<option>', {
+                                    value: data.coordinaciones[i].nombre,
+                                    text: data.coordinaciones[i].nombre
+                                }));
+                                
+                            }
+                    }
+                });
+        });
+
+
 
 
 
