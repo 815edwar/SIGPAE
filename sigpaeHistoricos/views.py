@@ -49,7 +49,7 @@ class ModifyPDF(TemplateView):
         return context
 
     @staticmethod
-    def post(request):
+    def post(request, **kwargs):
         post_values = request.POST.copy()
         print(post_values)
         pdf_id = int(post_values['pdf_id'])
@@ -96,11 +96,11 @@ class DisplayPDF(TemplateView):
         pdf_form = PdfForm(post_values, instance=pdf)
         if pdf_form.is_valid():
             if post_values['check'] == 'Departamento':
-                pdf_form.encargado = post_values['departamentos']
-                pdf_form.save()
+                pdf.encargado = post_values['departamentos']
+                pdf.save()
             elif post_values['check'] == 'Coordinacion':
-                pdf_form.encargado = post_values['departamentos']
-                pdf_form.save()
+                pdf.encargado = post_values['coordinacion']
+                pdf.save()
             else:
                 pdf_form.save()
             return redirect('home')

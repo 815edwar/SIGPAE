@@ -135,7 +135,7 @@
                 $('#departamentos').find('option').remove().end();
 
                 $.ajax({
-                    url: '{% url "Encargado" %}',
+                    url: '{% url "encargado" %}',
                     data: {
                         'encargado' : $(this).attr('id') ,
                     },
@@ -158,7 +158,7 @@
 
                 $('#decanatos').find('option').remove().end();
                 $.ajax({
-                    url: '{% url "Encargado" %}',
+                    url: '{% url "encargado" %}',
                     data: {
                         'encargado' : $(this).attr('id') ,
                     },
