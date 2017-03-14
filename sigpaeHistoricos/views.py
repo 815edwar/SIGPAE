@@ -134,8 +134,13 @@ class NewPdf(TemplateView):
 
             print(text)
             newpdf.texto = text
+
             newpdf.save()
             messages.add_message(request, messages.INFO, str(newpdf.id))
+            newpdf.codigo = match_codigo_asig(text)
+            newpdf.save()
+            if newpdf.codigo is not None:
+                match_dpto(newpdf.codigo)
             return redirect('mostrar_pdf')
         else:
             pdf_form = AddPdfForm(post_values, request.FILES)
@@ -212,3 +217,28 @@ def extract_html(path):
     file.close()
     os.system("rm " + output + ' *.png')
     return text
+
+
+def match_codigo_asig(text):
+    expresion = '([A-Z][A-Z](-|\s|)[0-9][0-9][0-9][0-9])|([A-Z][A-Z][A-Z](-|\s|)[0-9][0-9][0-9])'
+    patron = re.compile(expresion)
+    matcher = patron.search(text)
+    if matcher is not None:
+        print("El código asociado al programa es " + matcher.group(0))
+        return matcher.group(0)
+    else:
+        print("No se encontró código")
+        return None
+
+
+def match_dpto(codigo):
+    expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
+    patron = re.compile(expresion)
+    matcher = patron.search(codigo)
+    if matcher is not None:
+        if matcher.group(0) == "CI" or matcher.group(0) == "CIB":
+            print("El dpto es Computacion")
+            return matcher.group(0)
+        else:
+            print("No se consiguó dpto")
+            return None
