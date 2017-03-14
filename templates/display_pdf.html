@@ -186,7 +186,7 @@
             $('#coordinaciones').find('option').remove().end();
             console.log($(this).val());
             $.ajax({
-                    url: '{% url "Encargado" %}',
+                    url: '{% url "encargado" %}',
                     data: {
                         'decanato' : $(this).val() ,
                     },

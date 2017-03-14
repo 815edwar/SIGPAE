@@ -2,8 +2,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from datetime import date
-from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 # Create your models here.
@@ -11,9 +10,10 @@ from django.core.validators import RegexValidator, MinValueValidator, MaxValueVa
 # Validador para el formato pdf de los archivos a subir.
 def valid_extension(value):
     if not (value.name.endswith('.pdf') or value.name.endswith('.PDF') or value.name.endswith('.Pdf')
-     		or value.name.endswith('.PDf') or value.name.endswith('.pdF') or value.name.endswith('.PdF') 
-     		or value.name.endswith('.pDF') or value.name.endswith('.pDf')):
+            or value.name.endswith('.PDf') or value.name.endswith('.pdF') or value.name.endswith('.PdF')
+            or value.name.endswith('.pDF') or value.name.endswith('.pDf')):
         raise ValidationError("Sólo se permiten archivos en formato PDF.")
+
 
 class Departamento(models.Model):
     nombre = models.CharField('Nombre', max_length=100, null=True)
@@ -21,19 +21,20 @@ class Departamento(models.Model):
     def __str__(self):
         return self.nombre
 
+
 class Decanato(models.Model):
     nombre = models.CharField('Nombre', max_length=100, null=True)
 
     def __str__(self):
         return self.nombre
 
+
 class Coordinacion(models.Model):
-    decanato = models.ForeignKey(Decanato,verbose_name='Decanato', null=True)
+    decanato = models.ForeignKey(Decanato, verbose_name='Decanato', null=True)
     nombre = models.CharField('Nombre', max_length=100, null=True)
 
     def __str__(self):
         return self.nombre
-
 
 
 class Pdfs(models.Model):
@@ -66,7 +67,7 @@ class Pdfs(models.Model):
     # Almacena el string generado por la transformación del PDF
     texto = models.TextField('Texto', null=True)
 
-    denominacion = models.TextField('Denominación', null= True)
+    denominacion = models.TextField('Denominación', null=True)
 
     periodo = models.CharField(
         'Período',
@@ -83,8 +84,8 @@ class Pdfs(models.Model):
 
     horas_laboratorio = models.PositiveIntegerField('Horas de laboratorio', null=True, default=0)
 
-    creditos = models.PositiveIntegerField('Créditos', null=True,  validators=[MinValueValidator(0),
-                                                             MaxValueValidator(16)])
+    creditos = models.PositiveIntegerField('Créditos', null=True, validators=[MinValueValidator(0),
+                                                                              MaxValueValidator(16)])
 
     requisitos = models.TextField('Requisitos', null=True)
 
@@ -103,6 +104,7 @@ class Pdfs(models.Model):
     encargado = models.CharField('Encargado', max_length=100, null=True)
 
     fecha_modificacion = models.DateTimeField(auto_now=True, null=True)
+
 
 '''
 class Asignatura(models.Model):
