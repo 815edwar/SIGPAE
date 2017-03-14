@@ -10,3 +10,11 @@
 #formulario{
 	float: right;
 }
+
+.texto, .requisitos{
+	width: 100%;
+	display:block;
+
+}
+
+

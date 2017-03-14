@@ -66,7 +66,7 @@ class Pdfs(models.Model):
     # Almacena el string generado por la transformación del PDF
     texto = models.TextField('Texto', null=True)
 
-    denominacion = models.TextField('Denominación', null= True)
+    denominacion = models.CharField('Denominación', max_length=100,null= True)
 
     periodo = models.CharField(
         'Período',

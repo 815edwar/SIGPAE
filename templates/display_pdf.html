@@ -28,7 +28,7 @@
                 <form id="form" enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-group" role="form" novalidate>
                     {% for field in formulario %}
                         <div class="control-group" id="{{field.name}}-state">
-                            <div class="input-group">
+                            <div class="input-group {{field.name}}">
                                 <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
                             </div>
                             <span class="error" id="{{ field.name }}-icon"></span>
