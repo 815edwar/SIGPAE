@@ -191,7 +191,7 @@ def extract_html(path):
     return text
 
 def match_codigo_asig(text):
-    expresion = '([A-Z][A-Z][0-9][0-9][0-9][0-9])|([A-Z][A-Z][A-Z][0-9][0-9][0-9])'
+    expresion = '([A-Z][A-Z](-|\s|)[0-9][0-9][0-9][0-9])|([A-Z][A-Z][A-Z](-|\s|)[0-9][0-9][0-9])'
     patron=re.compile(expresion)
     matcher = patron.search(text)
     if matcher != None:
@@ -206,13 +206,12 @@ def match_dpto(codigo):
     patron=re.compile(expresion)
     matcher = patron.search(codigo)
     if matcher != None:
-        if matcher.group(0) == "CI":
+        if matcher.group(0) == "CI" or  matcher.group(0) == "CIB":
             print ("El dpto es Computacion")
             return matcher.group(0)
         else:
             print ("No se consiguó dpto")
             return None
-
         
 
     
