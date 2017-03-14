@@ -62,8 +62,8 @@ class ModifyPDF(TemplateView):
                 print('entre')
                 pdf.encargado = post_values['coordinacion']
                 pdf.save()
-            
-            pdf_form.save()
+            else:
+                pdf_form.save()
             return redirect('home')
         else:
             context = {'formulario': pdf_form, }

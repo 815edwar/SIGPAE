@@ -1,0 +1,12 @@
+#documento {
+	position: fixed;
+	margin-top: 50px;
+}
+
+#panel_config {
+	position: fixed;
+}
+
+#formulario{
+	float: right;
+}
