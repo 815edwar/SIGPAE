@@ -2,39 +2,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {% block head %}
-		<meta charset="utf-8">
-		<title>SIGPAE</title>
-
-	    {% block css %}
-			<link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-			<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
-			<link rel="stylesheet" type="text/css" href="{% static 'css/base.css'%}">
-            <link rel="stylesheet" type="text/css" href="{% static 'css/transcriptor.css' %}">
-	    {% endblock css %}
-	{% endblock head %}
+    <meta charset="utf-8">
+	<title>SIGPAE</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/base.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/transcriptor.css' %}">
 </head>
 <body>
-    <div class="col-lg-2 col-md-2 col-xs-2"></div>
-    <div id="panel_config" class="col-lg-8 col-md-8 col-xs-8">
-        <button id="config_1" class="boton">Configuracion 1</button>
+    <div class="row">
+        
+    <div id="panel_config" class="col-lg-5 col-md-5 col-xs-5">
         <button id="config_2" class="boton">Configuracion 2</button>
-        <button id="config_3" class="boton">Configuracion 3 (Beta)</button>
-        <button id="volver" class="boton" >Volver</button>
+        <button id="volver" class="boton" >Configuracion 1</button>
+        <a href="{{request.META.HTTP_REFERER}}"><button id="back" class="boton" >Volver</button></a>
     </div>
-    <div class="col-lg-2 col-md-2 col-xs-2"></div>
+    <div class="col-lg-7 col-md-7 col-xs-7"></div>
+    </div>
 
 	<div class="row">
-		<div id="documento" class="col-lg-6 col-md-6 col-xs-6">
+		<div id="documento" class="col-lg-5 col-md-5 col-xs-5">
             <div id="pdf" class="pdfobject-container"></div>
 		</div>
 
 
-            <div  class="col-lg-6 col-md-6 col-xs-6 " style="height: 600px; overflow-y: auto; overflow-x: hidden">
+            <div  class="col-lg-7 col-md-7 col-xs-7 " id="formulario">
                 <form id="form" enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-group" role="form" novalidate>
                     {% for field in formulario %}
                         <div class="control-group" id="{{field.name}}-state">
-                            <div class="input-group">
+                            <div class="input-group {{field.name}}">
                                 <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
                             </div>
                             <span class="error" id="{{ field.name }}-icon"></span>
@@ -47,9 +42,9 @@
                             <div class="input-group">
                                 <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>Encargado:</b></span>
                                 {% if encargado != None%}
-                                <input aria-describedby="basic-addon1" class="form-control can_hide " value="{{encargado}}" required="False" type="text" readonly>
+                                <input aria-describedby="basic-addon1" class="form-control can_hide " value="{{encargado}}" id="encargado" required="False" type="text" readonly>
                                 {% else %}
-                                <input aria-describedby="basic-addon1" class="form-control can_hide " value="" required="False" type="text" readonly>
+                                <input aria-describedby="basic-addon1" class="form-control can_hide " id="encargado" value="" required="False" type="text" readonly>
                                 {% endif %}
                             </div>
                     </div>
@@ -69,7 +64,7 @@
                     <input type="hidden" name="pdf_id" value="{{ pdf.id }}">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 </form>
-                <button class="botonTrans1" value="Registrar" id="button-signup">Guardar Cambios</button> 
+                <button class="botonTrans1" id="button-signup">Guardar Cambios</button> 
             </div>
             <div class="col-lg-6 col-md-6 col-xs-6" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="height: 500px">
             
@@ -85,18 +80,23 @@
             $(".dinamica").hide();
             $("#drag").css('display','none');
             PDFObject.embed("{{ pdf.pdf.url }}" , "#pdf");
+           
+            /* Estos son configuraciones para el display
+            de los documentos, solo falta agregar los botones
+            es
             $('#config_1').click(function() {
                 $("#formulario").after($("#documento"));
             });
             
-            $('#config_2').click(function() {
-                $(".can_hide").hide();
-            });
-
             $('#config_3').click(function() {
                 $("#documento").css('display','none');
                 $("#div1").css('display','block');
             });
+            */
+            $('#config_2').click(function() {
+                $(".can_hide").hide();
+            });
+
             $('#volver').click(function() {
                 var $documento = $("#documento");
                 $("#div1").css('display','none');
@@ -110,6 +110,7 @@
          });
 
         $('#button-signup').click(function(){
+            event.preventDefault();
             var inputs = $('.horas');
             var total = 0;
             for(var i = 0; i < inputs.length; i++){
