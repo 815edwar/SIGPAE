@@ -16,8 +16,8 @@
                     {% for programa in programas %}
                     <tr>
                         <td>
-                            {% if programa.titulo != None and programa.titulo != "" %}
-                                <a href="{% url 'ModifyPDF' programa.id %}">{{programa.titulo}}</a>
+                            {% if programa.denominacion != None and programa.denominacion != "" %}
+                                <a href="{% url 'ModifyPDF' programa.id %}">{{programa.denominacion}}</a>
                             {% else %}
                                 <a href="{% url 'ModifyPDF' programa.id %}">{{ pdf_names|lookup:forloop.counter0 }}</a>
                             {% endif %}

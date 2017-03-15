@@ -38,7 +38,7 @@ class ModifyPDF(TemplateView):
     template_name = 'display_pdf.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ModifyPDF, self).get_context_data(**kwargs)
+        context = super(ModifyPDF, self).get_context_data()
         pdf = Pdfs.objects.get(pk=int(kwargs['pk']))
         pdf_form = PdfForm(instance=pdf)
         context['formulario'] = pdf_form
@@ -56,15 +56,14 @@ class ModifyPDF(TemplateView):
         pdf = Pdfs.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
         if pdf_form.is_valid():
-            if post_values['check'] == 'Departamento':
+            if 'check' in post_values and post_values['check'] == 'Departamento':
                 pdf.encargado = post_values['departamentos']
                 pdf.save()
-            elif post_values['check'] == 'Coordinacion':
-                print('entre')
+            elif 'check' in post_values and post_values['check'] == 'Coordinacion':
                 pdf.encargado = post_values['coordinacion']
                 pdf.save()
-
-            pdf_form.save()
+            else:
+                pdf_form.save()
             return redirect('home')
         else:
             context = {'formulario': pdf_form, 'pdf': pdf}
@@ -74,8 +73,8 @@ class ModifyPDF(TemplateView):
 class DisplayPDF(TemplateView):
     template_name = 'display_pdf.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(DisplayPDF, self).get_context_data(**kwargs)
+    def get_context_data(self):
+        context = super(DisplayPDF, self).get_context_data()
         msgs = get_messages(self.request)
         pdf_id = -1
         for message in msgs:
@@ -95,10 +94,10 @@ class DisplayPDF(TemplateView):
         pdf = Pdfs.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
         if pdf_form.is_valid():
-            if post_values['check'] == 'Departamento':
+            if 'check' in post_values and post_values['check'] == 'Departamento':
                 pdf.encargado = post_values['departamentos']
                 pdf.save()
-            elif post_values['check'] == 'Coordinacion':
+            elif 'check' in post_values and post_values['check'] == 'Coordinacion':
                 pdf.encargado = post_values['coordinacion']
                 pdf.save()
             else:
