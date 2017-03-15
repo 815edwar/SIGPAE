@@ -11,20 +11,21 @@
 <body>
     <div class="row">
         
-    <div id="panel_config" class="col-lg-6 col-md-6 col-xs-6">
+    <div id="panel_config" class="col-lg-5 col-md-5 col-xs-5">
         <button id="config_2" class="boton">Configuracion 2</button>
-        <button id="volver" class="boton" >Volver</button>
+        <button id="volver" class="boton" >Configuracion 1</button>
+        <a href="{{request.META.HTTP_REFERER}}"><button id="back" class="boton" >Volver</button></a>
     </div>
-    <div class="col-lg-6 col-md-6 col-xs-6"></div>
+    <div class="col-lg-7 col-md-7 col-xs-7"></div>
     </div>
 
 	<div class="row">
-		<div id="documento" class="col-lg-6 col-md-6 col-xs-6">
+		<div id="documento" class="col-lg-5 col-md-5 col-xs-5">
             <div id="pdf" class="pdfobject-container"></div>
 		</div>
 
 
-            <div  class="col-lg-6 col-md-6 col-xs-6 " style="height: 600px; overflow-y: auto; overflow-x: hidden">
+            <div  class="col-lg-7 col-md-7 col-xs-7 " id="formulario">
                 <form id="form" enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-group" role="form" novalidate>
                     {% for field in formulario %}
                         <div class="control-group" id="{{field.name}}-state">
@@ -41,9 +42,9 @@
                             <div class="input-group">
                                 <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>Encargado:</b></span>
                                 {% if encargado != None%}
-                                <input aria-describedby="basic-addon1" class="form-control can_hide " value="{{encargado}}" required="False" type="text" readonly>
+                                <input aria-describedby="basic-addon1" class="form-control can_hide " value="{{encargado}}" id="encargado" required="False" type="text" readonly>
                                 {% else %}
-                                <input aria-describedby="basic-addon1" class="form-control can_hide " value="" required="False" type="text" readonly>
+                                <input aria-describedby="basic-addon1" class="form-control can_hide " id="encargado" value="" required="False" type="text" readonly>
                                 {% endif %}
                             </div>
                     </div>

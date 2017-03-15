@@ -1,4 +1,11 @@
 [
+    {
+    "model": "sigpaeHistoricos.Programa",
+    "pk": 1,
+    "fields": {
+      "codigo": "MA111"
+    }
+  },
   {
     "model": "sigpaeHistoricos.Departamento",
     "pk": 1,
