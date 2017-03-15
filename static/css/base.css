@@ -80,7 +80,7 @@ body {
 
 
 .tipo{
-  background-color: #a1d3e2;
+  background-color: #D3D3D3;
   padding: 50px;
   margin-top: 10px;
   margin-left: 0;
@@ -223,7 +223,7 @@ body {
 
 
 .pdfobject-container {
-	height: 600px;
+	height: 575px;
 	width: 100%;
 	margin-top: 5px;
 }
@@ -232,7 +232,7 @@ body {
 	border: 1px solid #666;
 }
 .tags-unete{
-	background-color:#a1d3e2 ;
+	background-color:#D3D3D3 ;
 
     min-width: 295px;
 }

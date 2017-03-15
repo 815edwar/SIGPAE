@@ -1,0 +1,42 @@
+#documento {
+	position: fixed;
+	margin-top: 50px;
+}
+
+#panel_config {
+	position: fixed;
+}
+
+#formulario{
+	float: right;
+}
+
+.texto, .requisitos, .objetivos, .sinopticos{
+	width: 100%;
+	display:block;
+}
+
+.estrategias_metodologicas, .estrategias_evaluacion{
+	width: 100%;
+	display:block;
+
+}
+
+.ftes_info_recomendadas, .observaciones{
+	width: 100%;
+	display:block;
+
+}
+.input-group .form-control{
+	margin-bottom: 10px; 
+}
+
+
+.form-control{
+	border: solid;
+	border-color:#D3D3D3;
+
+}
+#id_codigo, #id_denominacion, #id_periodo, #id_horas_practica, #id_año, #id_horas_teoria, #id_horas_laboratorio, #id_creditos, #encargado {
+	margin-bottom: 0px; 
+}

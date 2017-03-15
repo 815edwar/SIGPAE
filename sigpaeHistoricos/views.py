@@ -1,25 +1,26 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import TemplateView
 from sigpaeHistoricos.forms import *
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render, redirect
 import io
-from pdfminer.pdfinterp import PDFResourceManager, process_pdf
-from pdfminer.converter import TextConverter
-from pdfminer.layout import LAParams
 import os
 import re
+from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.messages import get_messages
-import datetime
-
+from wand.image import Image
+from PIL import Image as Pi
+import pyocr
+import pyocr.builders
 
 
 class HomeView(TemplateView):
     template_name = 'home.html'
 
+
 class PDFList(TemplateView):
     template_name = 'transcripciones_en_proceso.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super(PDFList, self).get_context_data(**kwargs)
 
@@ -32,6 +33,7 @@ class PDFList(TemplateView):
         context['pdf_names'] = pdf_names
         return context
 
+
 class ModifyPDF(TemplateView):
     template_name = 'display_pdf.html'
 
@@ -41,35 +43,51 @@ class ModifyPDF(TemplateView):
         pdf_form = PdfForm(instance=pdf)
         context['formulario'] = pdf_form
         context['pdf'] = pdf
+        print(pdf.encargado)
+        context['encargado'] = pdf.encargado
+
         return context
 
     @staticmethod
     def post(request, **kwargs):
         post_values = request.POST.copy()
+        print(post_values)
         pdf_id = int(post_values['pdf_id'])
         pdf = Pdfs.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
         if pdf_form.is_valid():
-            pdf_form.save()
+            if post_values['check'] == 'Departamento':
+                pdf.encargado = post_values['departamentos']
+                pdf.save()
+            elif post_values['check'] == 'Coordinacion':
+                print('entre')
+                pdf.encargado = post_values['coordinacion']
+                pdf.save()
+                
+            else:
+                pdf_form.save()
+
             return redirect('home')
         else:
-            context = {'formulario': pdf_form, }
-            context['pdf'] = pdf
+            context = {'formulario': pdf_form, 'pdf': pdf}
             return render(request, 'display_pdf.html', context)
+
 
 class DisplayPDF(TemplateView):
     template_name = 'display_pdf.html'
 
     def get_context_data(self, **kwargs):
         context = super(DisplayPDF, self).get_context_data(**kwargs)
-        messages = get_messages(self.request)
-        for message in messages:
+        msgs = get_messages(self.request)
+        pdf_id = -1
+        for message in msgs:
             pdf_id = int(str(message))
-        messages.used = True
+        msgs.used = True
         pdf = Pdfs.objects.get(id=pdf_id)
         pdf_form = PdfForm(instance=pdf)
         context['formulario'] = pdf_form
         context['pdf'] = pdf
+        context['encargado'] = None
         return context
 
     @staticmethod
@@ -79,12 +97,19 @@ class DisplayPDF(TemplateView):
         pdf = Pdfs.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
         if pdf_form.is_valid():
-            pdf_form.save()
+            if post_values['check'] == 'Departamento':
+                pdf.encargado = post_values['departamentos']
+                pdf.save()
+            elif post_values['check'] == 'Coordinacion':
+                pdf.encargado = post_values['coordinacion']
+                pdf.save()
+            else:
+                pdf_form.save()
             return redirect('home')
         else:
-            context = {'formulario': pdf_form, }
-            context['pdf'] = pdf
+            context = {'formulario': pdf_form, 'pdf': pdf}
             return render(request, 'display_pdf.html', context)
+
 
 class NewPdf(TemplateView):
     template_name = 'pdf.html'
@@ -105,13 +130,19 @@ class NewPdf(TemplateView):
         if pdf_form.is_valid():
             newpdf = pdf_form.save()
             if post_values['tipo'] == 'texto':
-                text = extract_text('SIGPAE/'+newpdf.pdf.url)
+                text = extract_text('SIGPAE/' + newpdf.pdf.url)
             else:
-                text = extract_html('SIGPAE/'+newpdf.pdf.url)
+                text = extract_text_from_image('SIGPAE/' + newpdf.pdf.url)
 
+            print(text)
             newpdf.texto = text
+
             newpdf.save()
-            messages.add_message(request, messages.INFO, str(newpdf.id) )
+            messages.add_message(request, messages.INFO, str(newpdf.id))
+            newpdf.codigo = match_codigo_asig(text)
+            newpdf.save()
+            if newpdf.codigo is not None:
+                match_dpto(newpdf.codigo)
             return redirect('mostrar_pdf')
         else:
             pdf_form = AddPdfForm(post_values, request.FILES)
@@ -129,6 +160,57 @@ def extract_text(path):
     os.system("rm " + filename)
     return text
 
+
+def extract_text_from_image(path):
+    tool = pyocr.get_available_tools()[0]
+    lang = tool.get_available_languages()[0]
+
+    req_image = []
+    final_text = []
+
+    image_pdf = Image(filename=path, resolution=200)
+    image_jpeg = image_pdf.convert('jpeg')
+
+    for img in image_jpeg.sequence:
+        img_page = Image(image=img)
+        req_image.append(img_page.make_blob('jpeg'))
+
+    for img in req_image:
+        txt = tool.image_to_string(Pi.open(io.BytesIO(img)),
+                                   lang=lang,
+                                   builder=pyocr.builders.TextBuilder()
+                                   )
+        final_text.append(txt)
+
+    trancription = ''
+    for i in final_text:
+        trancription += i
+
+    return trancription
+
+
+def encargado(request):
+    responsable = request.GET.get('encargado', None)
+    decanato = request.GET.get('decanato', None)
+    if responsable == 'Departamento':
+        departamentos = list(Departamento.objects.all().values())
+        data = {
+            'departamento': departamentos
+        }
+    elif responsable == "Coordinacion":
+        decanatos = list(Decanato.objects.all().values())
+        data = {
+            'decanatos': decanatos
+        }
+    else:
+        coordinaciones = list(Coordinacion.objects.filter(decanato=int(decanato)).values())
+        data = {
+            'coordinaciones': coordinaciones
+        }
+
+    return JsonResponse(data)
+
+
 def extract_html(path):
     os.system("pdftohtml -s -c " + path)
     output = re.sub('.(p|P)(d|D)(f|F)', '-html.html', path)
@@ -137,17 +219,28 @@ def extract_html(path):
     file.close()
     os.system("rm " + output + ' *.png')
     return text
-    '''
-    pdfFile = open(path, 'rb')
-    retstr = io.StringIO()
-    password = ''
-    pagenos = set()
-    maxpages = 0
-    laparams = LAParams()
-    rsrcmgr = PDFResourceManager()
-    device = TextConverter(rsrcmgr, retstr, laparams=laparams)
-    process_pdf(rsrcmgr, device, pdfFile, pagenos, maxpages=maxpages, password=password, check_extractable=True)
-    device.close()
-    pdfFile.close()
-    return retstr
-    '''
+
+
+def match_codigo_asig(text):
+    expresion = '([A-Z][A-Z](-|\s|)[0-9][0-9][0-9][0-9])|([A-Z][A-Z][A-Z](-|\s|)[0-9][0-9][0-9])'
+    patron = re.compile(expresion)
+    matcher = patron.search(text)
+    if matcher is not None:
+        print("El código asociado al programa es " + matcher.group(0))
+        return matcher.group(0)
+    else:
+        print("No se encontró código")
+        return None
+
+
+def match_dpto(codigo):
+    expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
+    patron = re.compile(expresion)
+    matcher = patron.search(codigo)
+    if matcher is not None:
+        if matcher.group(0) == "CI" or matcher.group(0) == "CIB":
+            print("El dpto es Computacion")
+            return matcher.group(0)
+        else:
+            print("No se consiguó dpto")
+            return None

@@ -1,4 +1,11 @@
 [
+    {
+    "model": "sigpaeHistoricos.Programa",
+    "pk": 1,
+    "fields": {
+      "codigo": "MA111"
+    }
+  },
   {
     "model": "sigpaeHistoricos.Departamento",
     "pk": 1,
@@ -92,6 +99,67 @@
     "pk": 12,
     "fields": {
       "nombre": "Departamento de Termodinámica y Fenómenos de Transferencia"
+    }
+  },
+
+    {
+    "model": "sigpaeHistoricos.Decanato",
+    "pk": 1,
+    "fields": {
+      "nombre": "Decanato de namekusei"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Decanato",
+    "pk": 2,
+    "fields": {
+      "nombre": "Decanato de pajarolandia"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 1,
+    "fields": {
+      "decanato": "1",
+      "nombre": "Coordinacion de Matemáticas Puras y Aplicadas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 2,
+    "fields": {
+      "decanato": "1",
+      "nombre": "Coordinacion de Mecánica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 3,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinacion de Procesos y Sistemas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 4,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinacion de Química"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 5,
+    "fields": {
+      "decanato": "1",
+      "nombre": "Coordinacion de Termodinámica y Fenómenos de Transferencia"
     }
   }
 ]
