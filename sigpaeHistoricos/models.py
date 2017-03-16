@@ -151,6 +151,7 @@ class Programa(models.Model):
     sinoptico = models.TextField('Contenidos Sinópticos', null=True)
 
 
+
     def __str__(self):
 
         return self.contenidos  
