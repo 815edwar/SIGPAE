@@ -108,6 +108,7 @@ class Pdfs(models.Model):
     fecha_modificacion = models.DateTimeField(auto_now=True, null=True)
 
 
+
 class Programa(models.Model):
     SEP_DIC = 'sep-dic'
     ENE_MAR = 'ene-mar'
@@ -127,10 +128,6 @@ class Programa(models.Model):
 
     AÑOS = tuple(años)
 
-    codigo = models.CharField('Código', max_length=50, null=True)
-
-    denominacion = models.CharField('Denominación', max_length=100,null= True)
-
 
     periodo = models.CharField(
         'Período',
@@ -147,9 +144,6 @@ class Programa(models.Model):
 
     horas_laboratorio = models.PositiveIntegerField('Horas de laboratorio', null=True, default=0)
 
-    creditos = models.PositiveIntegerField('Créditos', null=True, validators=[MinValueValidator(0),
-                                                                              MaxValueValidator(16)])
-    requisitos = models.TextField('Requisitos', null=True)
 
     objetivos_generales = models.TextField('Objetivos Generales', null=True)
     objetivos_especificos = models.TextField('Objetivos Específicos', null=True)
@@ -162,10 +156,37 @@ class Programa(models.Model):
 
     ftes_info_recomendadas = models.TextField('Fuentes de Información Recomendadas', null=True)
 
-    encargado = models.CharField('Encargado', max_length=100, null=True)
+    contenidos = models.TextField('Encargado', max_length=100, null=True)
+
+    cronograma = models.TextField('Encargado', max_length=100, null=True)
 
     def __str__(self):
         return self.denominacion    
 
 
 
+class Solicitud (models.Model):
+    coordinacion = models.CharField('Coordinación', max_length=100)
+    fecha_elaboracion = models.DateTimeField(auto_now=True, null=True)
+    codigo = models.CharField('Código',max_length=7)
+    codigo_anterior = models.CharField('Código anterior',max_length=7,null=True)
+    denominacion = models.CharField(max_length=70)
+    creditos = models.PositiveIntegerField()
+    tipo_aula = models.CharField(max_length=20)
+    horas_teoria = models.BooleanField()
+    horas_practica = models.BooleanField()
+    horas_laboratorio = models.BooleanField()
+    trim = models.CharField(max_length=9)
+    año = models.CharField(max_length = 4)
+    carrera = models.CharField(max_length=35)
+    trim_pensum = models.BooleanField()
+    requisitos_cred =  models.BooleanField()
+    permiso_coord = models.BooleanField()
+    tipo_materia = models.CharField(max_length=20)
+    clase_materia = models.CharField(max_length=25)
+    observaciones = models.TextField(null=True)
+    vigente = models.BooleanField()
+    imparticion = models.CharField(max_length=15)
+    decanato = models.CharField(max_length = 50,null=True)
+    obsanul = models.TextField(null=True)
+    programa = models.ForeignKey(Programa)
