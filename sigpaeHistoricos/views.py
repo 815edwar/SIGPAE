@@ -18,6 +18,27 @@ class HomeView(TemplateView):
     template_name = 'home.html'
 
 
+class ProgramaList(TemplateView):
+    template_name = 'programas.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProgramaList, self).get_context_data(**kwargs)
+        programas = Programa.objects.all()
+        context['programas'] = programas
+        return context
+
+class DisplayProgram(TemplateView):
+    template_name = "display_program.html"
+
+    def get_context_data(self,**kwargs):
+        context= super(DisplayProgram,self).get_context_data(**kwargs)
+        programa = Programa.objects.get(pk=kwargs['pk'])
+        horas_semanales = programa.horas_practica + programa.horas_teoria + programa.horas_laboratorio 
+        context['programa'] = programa
+        context['horas_semanales'] = horas_semanales
+        return context
+
+
 class PDFList(TemplateView):
     template_name = 'transcripciones_en_proceso.html'
 
@@ -43,15 +64,13 @@ class ModifyPDF(TemplateView):
         pdf_form = PdfForm(instance=pdf)
         context['formulario'] = pdf_form
         context['pdf'] = pdf
-        print(pdf.encargado)
         context['encargado'] = pdf.encargado
-
+        context['modifying'] = True
         return context
 
     @staticmethod
     def post(request, **kwargs):
         post_values = request.POST.copy()
-        print(post_values)
         pdf_id = int(post_values['pdf_id'])
         pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
@@ -82,6 +101,22 @@ class DisplayPDF(TemplateView):
         msgs.used = True
         pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(instance=pdf)
+        if pdf.codigo != None:
+            expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
+            patron = re.compile(expresion)
+            matcher = patron.search(pdf.codigo)
+            prefijo = Prefijo.objects.filter(siglas = matcher.group(0))
+            if prefijo.exists():
+                prefijo = Prefijo.objects.filter(siglas = matcher.group(0))[0]
+                departamento = Departamento.objects.filter(nombre = prefijo.asociacion) 
+                if departamento.exists():
+                    departamento = departamento[0]
+                    context['departamento'] = departamento
+                else:
+                    context['prefijo'] = prefijo
+            else:
+                context['siglas'] = matcher.group(0)
+                context['departamentos'] = Departamento.objects.all()
         context['formulario'] = pdf_form
         context['pdf'] = pdf
         context['encargado'] = None
@@ -90,6 +125,11 @@ class DisplayPDF(TemplateView):
     @staticmethod
     def post(request):
         post_values = request.POST.copy()
+        if 'siglas' in post_values:    
+            if(post_values['siglas'] != ''):
+                prefijo_nuevo = Prefijo.objects.create(siglas = post_values['siglas'],\
+                    asociacion = post_values['asociacion'], aprobado = False)
+                prefijo_nuevo.save()
         pdf_id = int(post_values['pdf_id'])
         pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
@@ -131,11 +171,11 @@ class NewPdf(TemplateView):
             else:
                 text = extract_text_from_image('SIGPAE/' + newpdf.pdf.url)
 
-            print(text)
             newpdf.texto = text
 
             newpdf.save()
             messages.add_message(request, messages.INFO, str(newpdf.id))
+
             newpdf.codigo = match_codigo_asig(text)
             newpdf.save()
             if newpdf.codigo is not None:
@@ -219,7 +259,7 @@ def extract_html(path):
 
 
 def match_codigo_asig(text):
-    expresion = '([A-Z][A-Z](-|\s|)[0-9][0-9][0-9][0-9])|([A-Z][A-Z][A-Z](-|\s|)[0-9][0-9][0-9])'
+    expresion = '([A-Z][A-Z](-|\s| )[0-9][0-9][0-9][0-9])|([A-Z][A-Z][A-Z](-|\s| )[0-9][0-9][0-9])'
     patron = re.compile(expresion)
     matcher = patron.search(text)
     if matcher is not None:
