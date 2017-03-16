@@ -41,9 +41,18 @@ class ModifyPDF(TemplateView):
         context = super(ModifyPDF, self).get_context_data(**kwargs)
         pdf = Pdfs.objects.get(pk=int(kwargs['pk']))
         pdf_form = PdfForm(instance=pdf)
+
+        expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
+        patron = re.compile(expresion)
+        matcher = patron.search(pdf.codigo)
+        codigo = matcher.group(0)
+
+        prefijo = Prefijo.objects.filter(siglas=codigo)[0]
+        if prefijo != None:
+            print(prefijo.asociacion)
+            context['prefijo'] = prefijo
         context['formulario'] = pdf_form
         context['pdf'] = pdf
-        print(pdf.encargado)
         context['encargado'] = pdf.encargado
 
         return context
@@ -209,6 +218,7 @@ def encargado(request):
         }
 
     return JsonResponse(data)
+
 
 
 def extract_html(path):
