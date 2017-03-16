@@ -8,6 +8,7 @@ from sigpaeHistoricos.models import *
 # Create your tests here.
 
 class PDFTestCase(TestCase):
+
     def setUp(self):
         self.departamento1 = Departamento.objects.create(
             nombre="Departamento de Física",
@@ -232,3 +233,4 @@ class PDFTestCase(TestCase):
         self.assertEqual(self.departamento2.nombre, "Departamento de Computación y Tecnología de Información")
         self.assertEqual(self.departamento3.nombre, "Departamento de Termodinámica y Fenómenos de Transferencia")
         self.assertEqual(self.departamento4.nombre, "Departamento de Electrónica y Circuitos")
+

@@ -18,11 +18,6 @@
       "estrategias_evaluacion":"",
       "ftes_info_recomendadas":"1.Purcel, Varbeg y Rigdon.Cálculo. Editorial Prentice-Hall. Novena edición (2007). Otras referencias:",
       "encargado":"Departamento de Matemáticas Puras y Aplicadas"
-
-
-
-
-
     }
   },
   {
@@ -121,11 +116,130 @@
     }
   },
 
-    {
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 13,
+    "fields": {
+      "nombre": "Departamento de Ciencia y Tecnología del Comportamiento"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 14,
+    "fields": {
+      "nombre": "Departamento de Lengua y Literatura"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 14,
+    "fields": {
+      "nombre": "Departamento de Ciencias Económicas y Administrativas"
+    }
+  }, 
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 15,
+    "fields": {
+      "nombre": "Departamento de Idiomas"
+    }
+  }, 
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 16,
+    "fields": {
+      "nombre": "Departamento de Filosofía"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 17,
+    "fields": {
+      "nombre": "Departamento de Ciencias Sociales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 18,
+    "fields": {
+      "nombre": "Departamento de Diseño, Arquitectura y Artes Plásticas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 19,
+    "fields": {
+      "nombre": "Departamento de Planificación Urbana"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 21,
+    "fields": {
+      "nombre": "Departamento de Biología Celular"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 22,
+    "fields": {
+      "nombre": "Departamento de Estudios Ambientales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 23,
+    "fields": {
+      "nombre": "Departamento de Biología de Organismos"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 24,
+    "fields": {
+      "nombre": "Departamento de Tecnología de Procesos Biológicos y Bioquímicos"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 25,
+    "fields": {
+      "nombre": "Departamento de Tecnología de Servicios"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 26,
+    "fields": {
+      "nombre": "Departamento de Tecnología Industrial"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Departamento",
+    "pk": 27,
+    "fields": {
+      "nombre": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+  {
     "model": "sigpaeHistoricos.Decanato",
     "pk": 1,
     "fields": {
-      "nombre": "Decanato de namekusei"
+      "nombre": "Decanato de Estudios Generales"
     }
   },
 
@@ -133,7 +247,23 @@
     "model": "sigpaeHistoricos.Decanato",
     "pk": 2,
     "fields": {
-      "nombre": "Decanato de pajarolandia"
+      "nombre": "Decanato de Estudios Profesionales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Decanato",
+    "pk": 3,
+    "fields": {
+      "nombre": "Decanato de Estudios Tecnológicos"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Decanato",
+    "pk": 4,
+    "fields": {
+      "nombre": "Decanato de Estudios de Postgrado"
     }
   },
 
@@ -142,7 +272,7 @@
     "pk": 1,
     "fields": {
       "decanato": "1",
-      "nombre": "Coordinacion de Matemáticas Puras y Aplicadas"
+      "nombre": "Coordinación de Ciclo Básico"
     }
   },
 
@@ -151,7 +281,7 @@
     "pk": 2,
     "fields": {
       "decanato": "1",
-      "nombre": "Coordinacion de Mecánica"
+      "nombre": "Coordinación de Ciclo Profesional"
     }
   },
 
@@ -159,8 +289,8 @@
     "model": "sigpaeHistoricos.Coordinacion",
     "pk": 3,
     "fields": {
-      "decanato": "2",
-      "nombre": "Coordinacion de Procesos y Sistemas"
+      "decanato": "1",
+      "nombre": "Coordinación de Formación General"
     }
   },
 
@@ -168,44 +298,1203 @@
     "model": "sigpaeHistoricos.Coordinacion",
     "pk": 4,
     "fields": {
+      "decanato": "1",
+      "nombre": "Coordinación del Ciclo de Iniciación Universitaria"
+    }
+  },
+  
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 5,
+    "fields": {
       "decanato": "2",
-      "nombre": "Coordinacion de Química"
+      "nombre": "Coordinación de Química"
+    }
+  },
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 6,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Matemática"
     }
   },
 
   {
     "model": "sigpaeHistoricos.Coordinacion",
-    "pk": 5,
+    "pk": 7,
     "fields": {
-      "decanato": "1",
-      "nombre": "Coordinacion de Termodinámica y Fenómenos de Transferencia"
+      "decanato": "2",
+      "nombre": "Coordinación de Biología"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 8,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Física"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 9,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Tecnología e Ingeniería Eléctrica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 10,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Tecnología e Ingeniería Electrónica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 11,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Ingeniería Mecánica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 13,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Ingeniería Química"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 14,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Ingeniería de Computación"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 15,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Geofísica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 16,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Ingeniería de Materiales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 17,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Ingeniería de Producción y Organización Empresarial"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 18,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Tecnología Mecánica, Mantenimiento Aeronáutico e Ingeniería de Mantenimiento"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 19,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Ingeniería de Telecomunicaciones"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 20,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Arquitectura"
+    }
+  },
+  
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 21,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Estudios Urbanos"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 22,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Turismo, Hotelería y Hospitalidad"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 23,
+    "fields": {
+      "decanato": "2",
+      "nombre": "Coordinación de Comercio Exterior y Licenciatura en Comercio Internacional"
+    }
+  },
+
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 24,
+    "fields": {
+      "decanato": "3",
+      "nombre": "Coordinación de Tecnología Eléctrica y Electrónica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 25,
+    "fields": {
+      "decanato": "3",
+      "nombre": "Coordinación de Administración Aduanera"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 26,
+    "fields": {
+      "decanato": "3",
+      "nombre": "Coordinación de Comercio Exterior y Licenciatura en Comercio Internacional"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 27,
+    "fields": {
+      "decanato": "3",
+      "nombre": "Coordinación de Administración del Transporte y Organización Empresarial"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 28,
+    "fields": {
+      "decanato": "3",
+      "nombre": "Coordinación de Tecnología Mecánica, Mantenimiento Aeronáutico e Ingeniería de Mantenimiento"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 56,
+    "fields": {
+      "decanato": "3",
+      "nombre": "Coordinacioó de Tecnología e Ingeniería Eléctrica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 57,
+    "fields": {
+      "decanato": "3",
+      "nombre": "Coordinación de Ingeniería de Producción y Organización Empresarial"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 58,
+    "fields": {
+      "decanato": "3",
+      "nombre": "Coordinación de Turismo, Hotelería y Hospitalidad"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 29,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Matemáticas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 30,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Ciencias Biológicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 31,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Ciencias de la Computación"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 32,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de ciencias de los Alimentos y Nutrición"
     }
   },
 
     {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 33,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Física"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 34,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Química"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 35,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Doctorado Interdiciplinario en Ciencias"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 36,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Ciencia Política"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 37,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Desarrollo y Ambiente"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 38,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Educación"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 39,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Estudios Urbanos"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 40,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Filosofía"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 41,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Estudios de Gerencia y Economía"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 42,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Lingûistica Aplicada"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 43,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Literatura"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 44,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de MúsicaPostgrado)"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 45,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Psicología"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 46,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Comercio Exterior y Licenciatura en Comercio Internacional"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 47,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Doctorado en Ingeniería"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 48,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Estadística Computacional"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 49,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Ingeniería Electrónica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 50,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Ingeniería y Tecnología Electrónica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 51,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Geofísica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 52,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Ingeniería Química"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 53,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Ingeniería de Materiales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 54,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Ingeniería de Sistemas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Coordinacion",
+    "pk": 55,
+    "fields": {
+      "decanato": "4",
+      "nombre": "Coordinación de Ingeniería en Telecomunicaciones/Biomédica"
+    }
+  },
+
+
+  {
     "model": "sigpaeHistoricos.Prefijo",
     "pk": 1,
+    "fields": {
+      "siglas": "CO",
+      "asociacion": "Departamento de Computo Científico y Estadística"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 2,
+    "fields": {
+      "siglas": "EP",
+      "asociacion": "Cursos en Cooperación(Carreras Largas)"
+    }
+  },
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 3,
+    "fields": {
+      "siglas": "DFM",
+      "asociacion": "Cursos en Cooperación(Carreras Largas)"
+    }
+  },
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 4,
+    "fields": {
+      "siglas": "ET",
+      "asociacion": "Cursos en Cooperación(Carreras Cortas)"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk":5 ,
     "fields": {
       "siglas": "CI",
       "asociacion": "Departamento de Computación y Tecnología de Información"
     }
   },
 
-    {
+  {
     "model": "sigpaeHistoricos.Prefijo",
-    "pk": 2,
+    "pk": 6,
+    "fields": {
+      "siglas": "CIB",
+      "asociacion": "Departamento de Computación y Tecnología de Información"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 7,
+    "fields": {
+      "siglas": "BC",
+      "asociacion": "Departamento de Biología Celular"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 8,
+    "fields": {
+      "siglas": "BCB",
+      "asociacion": "Departamento de Biología Celular"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 9,
+    "fields": {
+      "siglas": "BO",
+      "asociacion": "Departamento de Biología de Organismos"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 10,
+    "fields": {
+      "siglas": "BOB",
+      "asociacion": "Departamento de Biología de Organismos"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 11,
+    "fields": {
+      "siglas": "MT",
+      "asociacion": "Departamento de Ciencia de los Materiales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 12,
+    "fields": {
+      "siglas": "CMT",
+      "asociacion": "Departamento de Ciencia de los Materiales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 13,
+    "fields": {
+      "siglas": "GC",
+      "asociacion": "Departamento de Ciencias de la Tierra"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 14,
+    "fields": {
+      "siglas": "CE",
+      "asociacion": "Departamento de Ciencias Económicas y Administrativas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 15,
+    "fields": {
+      "siglas": "CEA",
+      "asociacion": "Departamento de Ciencias Económicas y Administrativas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 16,
+    "fields": {
+      "siglas": "CS",
+      "asociacion": "Departamento de Ciencias Sociales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 17,
+    "fields": {
+      "siglas": "CSA",
+      "asociacion": "Departamento de Ciencias Sociales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 18,
+    "fields": {
+      "siglas": "CSX",
+      "asociacion": "Departamento de Ciencias Sociales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 19,
+    "fields": {
+      "siglas": "CSY",
+      "asociacion": "Departamento de Ciencias Sociales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 20,
+    "fields": {
+      "siglas": "CSZ",
+      "asociacion": "Departamento de Ciencias Sociales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 21,
+    "fields": {
+      "siglas": "EGS",
+      "asociacion": "Departamento de Ciencias Sociales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 22,
+    "fields": {
+      "siglas": "CC",
+      "asociacion": "Departamento de Ciencias y Tecnología del Comportamiento"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 23,
+    "fields": {
+      "siglas": "CCE",
+      "asociacion": "Departamento de Ciencias y Tecnología del Comportamiento"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 24,
+    "fields": {
+      "siglas": "CT",
+      "asociacion": "Departamento de Conversión y Transporte de Energía"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 25,
+    "fields": {
+      "siglas": "CTE",
+      "asociacion": "Departamento de Conversión y Transporte de Energía"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 26,
+    "fields": {
+      "siglas": "DA",
+      "asociacion": "Departamento de Diseño, Arquitectura y Artes Plásticas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 27,
+    "fields": {
+      "siglas": "DAP",
+      "asociacion": "Departamento de Diseño, Arquitectura y Artes Plásticas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 28,
+    "fields": {
+      "siglas": "DAA",
+      "asociacion": "Departamento de Diseño, Arquitectura y Artes Plásticas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 29,
+    "fields": {
+      "siglas": "EC",
+      "asociacion": "Departamento de Electrónica y Circuitos"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 30,
+    "fields": {
+      "siglas": "ECY",
+      "asociacion": "Departamento de Electrónica y Circuitos"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 31,
+    "fields": {
+      "siglas": "EA",
+      "asociacion": "Departamento de Estudios Ambientales"
+    }
+  },
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 32,
+    "fields": {
+      "siglas": "EAD",
+      "asociacion": "Departamento de Estudios Ambientales"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 33,
+    "fields": {
+      "siglas": "FF",
+      "asociacion": "Departamento de Filosofía"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 34,
+    "fields": {
+      "siglas": "FL",
+      "asociacion": "Departamento de Filosofía"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 35,
+    "fields": {
+      "siglas": "FS",
+      "asociacion": "Departamento de Física"
+    }
+  },
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 36,
+    "fields": {
+      "siglas": "FSI",
+      "asociacion": "Departamento de Física"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 37,
+    "fields": {
+      "siglas": "FC",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 38,
+    "fields": {
+      "siglas": "FCR",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 39,
+    "fields": {
+      "siglas": "FCA",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 40,
+    "fields": {
+      "siglas": "FCB",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 41,
+    "fields": {
+      "siglas": "FCC",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 42,
+    "fields": {
+      "siglas": "FCE",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 43,
+    "fields": {
+      "siglas": "FCF",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 44,
+    "fields": {
+      "siglas": "FCG",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 45,
+    "fields": {
+      "siglas": "FCH",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 46,
+    "fields": {
+      "siglas": "FCI",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 47,
+    "fields": {
+      "siglas": "FCL",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 48,
+    "fields": {
+      "siglas": "FCX",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 49,
+    "fields": {
+      "siglas": "FCZ",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 50,
+    "fields": {
+      "siglas": "FCW",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 51,
+    "fields": {
+      "siglas": "ID",
+      "asociacion": "Departamento de Idiomas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 52,
+    "fields": {
+      "siglas": "LL",
+      "asociacion": "Departamento de Lengua y Literatura"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 53,
+    "fields": {
+      "siglas": "LLa",
+      "asociacion": "Departamento de Lengua y Literatura"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 54,
+    "fields": {
+      "siglas": "LLB",
+      "asociacion": "Departamento de Lengua y Literatura"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 55,
+    "fields": {
+      "siglas": "LLC",
+      "asociacion": "Departamento de Lengua y Literatura"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 56,
+    "fields": {
+      "siglas": "LLE",
+      "asociacion": "Departamento de Lengua y Literatura"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 57,
+    "fields": {
+      "siglas": "EGL",
+      "asociacion": "Departamento de Lengua y Literatura"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 58,
     "fields": {
       "siglas": "MA",
       "asociacion": "Departamento de Matemáticas Puras y Aplicadas"
     }
   },
 
-    {
+  {
     "model": "sigpaeHistoricos.Prefijo",
-    "pk": 3,
+    "pk": 59,
+    "fields": {
+      "siglas": "MAT",
+      "asociacion": "Departamento de Matemáticas Puras y Aplicadas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 60,
+    "fields": {
+      "siglas": "MC",
+      "asociacion": "Departamento de Mecánica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 61,
+    "fields": {
+      "siglas": "MEC",
+      "asociacion": "Departamento de Mecánica"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 62,
+    "fields": {
+      "siglas": "PL",
+      "asociacion": "Departamento de Planificación Urbana"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 63,
+    "fields": {
+      "siglas": "PLX",
+      "asociacion": "Departamento de Planificación Urbana"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 64,
+    "fields": {
+      "siglas": "PLY",
+      "asociacion": "Departamento de Planificación Urbana"
+    }
+  },
+
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 65,
+    "fields": {
+      "siglas": "PS",
+      "asociacion": "Departamento de Procesos y Sistemas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 66,
+    "fields": {
+      "siglas": "PRS",
+      "asociacion": "Departamento de Procesos y Sistemas"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 67,
+    "fields": {
+      "siglas": "QM",
+      "asociacion": "Departamento de Química"
+    }
+  },
+
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 68,
+    "fields": {
+      "siglas": "QIM",
+      "asociacion": "Departamento de Química"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 69,
+    "fields": {
+      "siglas": "PB",
+      "asociacion": "Departamento de Tecnología de Procesos Biológicos y Bioquímicos"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 70,
+    "fields": {
+      "siglas": "TS",
+      "asociacion": "Departamento de Tecnología de Servicios"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 71,
+    "fields": {
+      "siglas": "TSX",
+      "asociacion": "Departamento de Tecnología de Servicios"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 72,
+    "fields": {
+      "siglas": "TI",
+      "asociacion": "Departamento de Tecnología Industrial"
+    }
+  },
+
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 73,
+    "fields": {
+      "siglas": "TF",
+      "asociacion": "Departamento de Termodinámica y Fenómenos de Transferencia"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 74,
+    "fields": {
+      "siglas": "TFT",
+      "asociacion": "Departamento de Termodinámica y Fenómenos de Transferencia"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 75,
+    "fields": {
+      "siglas": "FC",
+      "asociacion": "Departamento de Formación General y Ciencias Básicas"
+    }
+  },
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 76,
     "fields": {
       "siglas": "PG",
       "asociacion": "Proyecto de Grado"
     }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 77,
+    "fields": {
+      "siglas": "TD",
+      "asociacion": "Tesis Doctoral"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 78,
+    "fields": {
+      "siglas": "TEG",
+      "asociacion": "Trabajo Especial de Grado"
+    }
+  },
+
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 79,
+    "fields": {
+      "siglas": "TG",
+      "asociacion": "Trabajo de Grado"
+    }
+  },
+  {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 80,
+    "fields": {
+      "siglas": "USB",
+      "asociacion": "Trabajo de Grado"
+    }
   }
-]
+ ]
