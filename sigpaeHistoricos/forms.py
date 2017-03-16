@@ -49,3 +49,21 @@ class AddPdfForm(forms.ModelForm):
             self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
             self.fields[key].required = True
             self.fields[key].widget.attrs['required'] = 'True'
+
+
+class PrefijoForm(forms.ModelForm):
+    class Meta:
+        model = Prefijo
+        fields = "__all__"
+
+
+    def __init__(self, *args, **kwargs):
+        super(PrefijoForm, self).__init__(*args, **kwargs)
+
+        self.fields['aprobado'].widget.attrs['class'] = 'aprobado'
+        self.fields['aprobado'].widget.attrs['checked'] = False
+        for key in self.fields:
+            self.fields[key].widget.attrs['class'] = 'form-control '
+            self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
+            self.fields[key].required = True
+            self.fields[key].widget.attrs['required'] = 'True'
