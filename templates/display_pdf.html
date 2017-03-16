@@ -87,7 +87,7 @@
                         {% endif %}
                       </div>
                       <div class="modal-footer"> 
-                        <button id="aceptar" type="button" class="btn btn-default" >Aceptar</button>
+                        <button id="aceptar" type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
                       </div>
@@ -112,8 +112,8 @@
             $('#myModal').modal('toggle');
             $('#myModal').modal('show');
             var asociacion = $('#asociacion').val();
-            $('#aceptar')click(function(){
-             $('#encargado').val(asociacion);
+            $('#aceptar').click(function(){
+              $('#encargado').val(asociacion);
             });
 
 

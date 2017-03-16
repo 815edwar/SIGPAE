@@ -26,7 +26,7 @@ class PDFTestCase(TestCase):
             nombre="Departamento de Electrónica y Circuitos",
         )
 
-        self.pdf1 = Pdfs.objects.create(
+        self.pdf1 = Transcripcion.objects.create(
             titulo="Programa 1",
             texto="Texto de prueba 1",
             denominacion="Primero",
@@ -45,7 +45,7 @@ class PDFTestCase(TestCase):
             fecha_modificacion=datetime.now(timezone.utc),
         )
 
-        self.pdf2 = Pdfs.objects.create(
+        self.pdf2 = Transcripcion.objects.create(
             titulo="Programa 2",
             texto="Texto de prueba 2",
             denominacion="Segundo",
@@ -64,7 +64,7 @@ class PDFTestCase(TestCase):
             fecha_modificacion=datetime.now(timezone.utc),
         )
 
-        self.pdf3 = Pdfs.objects.create(
+        self.pdf3 = Transcripcion.objects.create(
             titulo="Programa 3",
             texto="Texto de prueba 3",
             denominacion="Tercero",
@@ -83,7 +83,7 @@ class PDFTestCase(TestCase):
             fecha_modificacion=datetime.now(timezone.utc),
         )
 
-        self.pdf4 = Pdfs.objects.create(
+        self.pdf4 = Transcripcion.objects.create(
             titulo="Programa 4",
             texto="Texto de prueba 4",
             denominacion="Cuarto",
@@ -104,7 +104,7 @@ class PDFTestCase(TestCase):
 
     # PRUEBAS UNITARIAS
 
-    # PRUEBAS DE LA CLASE "Pdfs"
+    # PRUEBAS DE LA CLASE "Transcripcion"
 
     # Se prueba el campo "titulo" y su correctitud.
     def test_titulo(self):

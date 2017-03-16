@@ -41,7 +41,7 @@ class Coordinacion(models.Model):
         return self.nombre
 
 
-class Pdfs(models.Model):
+class Transcripcion(models.Model):
     SEP_DIC = 'sep-dic'
     ENE_MAR = 'ene-mar'
     ABR_JUL = 'abr-jul'
@@ -66,14 +66,12 @@ class Pdfs(models.Model):
         validators=[valid_extension],
     )
 
-
     # Almacena el string generado por la transformación del PDF
     texto = models.TextField('Texto', null=True)
-    
+
     codigo = models.CharField('Código', max_length=50, null=True)
 
-    denominacion = models.CharField('Denominación', max_length=100,null= True)
-
+    denominacion = models.CharField('Denominación', max_length=100, null=True)
 
     periodo = models.CharField(
         'Período',
@@ -133,8 +131,7 @@ class Programa(models.Model):
 
     codigo = models.CharField('Código', max_length=50, null=True)
 
-    denominacion = models.CharField('Denominación', max_length=100,null= True)
-
+    denominacion = models.CharField('Denominación', max_length=100, null=True)
 
     periodo = models.CharField(
         'Período',
@@ -170,6 +167,3 @@ class Programa(models.Model):
 
     def __str__(self):
         return self.denominacion    
-
-
-
