@@ -169,7 +169,7 @@ class Programa(models.Model):
     encargado = models.CharField('Encargado', max_length=100, null=True)
 
     def __str__(self):
-        return self.denominacion
+        return self.denominacion    
 
 
 
