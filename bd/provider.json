@@ -1,25 +1,4 @@
 [
-    {
-    "model": "sigpaeHistoricos.Programa",
-    "pk": 1,
-    "fields": {
-      "codigo": "MA1111",
-      "denominacion": "Matemáticas 1",
-      "periodo": "sep-dic",
-      "año": "2008",
-      "horas_practica": "2",
-      "horas_teoria": "4",
-      "horas_laboratorio": "0",
-      "creditos": "4",
-      "objetivos_generales": "1.  Propiedades de los números reales. Lógica. Desigualdades. 18.  L’Hôpital para infinito/infinito. Otras formas indeterminadas",
-      "objetivos_especificos":"",
-      "sinopticos":"",
-      "estrategias_metodologicas":"",
-      "estrategias_evaluacion":"",
-      "ftes_info_recomendadas":"1.Purcel, Varbeg y Rigdon.Cálculo. Editorial Prentice-Hall. Novena edición (2007). Otras referencias:",
-      "encargado":"Departamento de Matemáticas Puras y Aplicadas"
-    }
-  },
   {
     "model": "sigpaeHistoricos.Departamento",
     "pk": 1,
@@ -1495,6 +1474,34 @@
     "fields": {
       "siglas": "USB",
       "asociacion": "Trabajo de Grado"
+    }
+  },
+  {
+    "model": "sigpaeHistoricos.CampoAdicional",
+    "pk": 1,
+    "fields": {
+      "nombre": "Requisitos"
+    }
+  },
+  {
+    "model": "sigpaeHistoricos.CampoAdicional",
+    "pk": 2,
+    "fields": {
+      "nombre": "Objetivos"
+    }
+  },
+  {
+    "model": "sigpaeHistoricos.CampoAdicional",
+    "pk": 3,
+    "fields": {
+      "nombre": "Estrategias Metodológicas"
+    }
+  },
+  {
+    "model": "sigpaeHistoricos.CampoAdicional",
+    "pk": 4,
+    "fields": {
+      "nombre": "Estrategias de Evaluación"
     }
   }
  ]

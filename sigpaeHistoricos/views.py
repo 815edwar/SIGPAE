@@ -62,10 +62,13 @@ class ModifyPDF(TemplateView):
         context = super(ModifyPDF, self).get_context_data()
         pdf = Transcripcion.objects.get(pk=int(kwargs['pk']))
         pdf_form = PdfForm(instance=pdf)
+        contenido_form = ContenidoFormSet()
+        context['contenido'] = contenido_form
         context['formulario'] = pdf_form
         context['pdf'] = pdf
         context['encargado'] = pdf.encargado
         context['modifying'] = True
+        context['nombres'] = CampoAdicional.objects.all();
         return context
 
     @staticmethod
@@ -120,6 +123,8 @@ class DisplayPDF(TemplateView):
         context['formulario'] = pdf_form
         context['pdf'] = pdf
         context['encargado'] = None
+        context['nombres'] = CampoAdicional.objects.all();
+        
         return context
 
     @staticmethod

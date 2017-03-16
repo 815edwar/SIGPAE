@@ -114,6 +114,19 @@
                     </div>
                 </div>
                 {% endif %}
+                <div id="formset">
+                    <div class="campos_adicionales">
+                        <select name="nombre_campo">
+                            {% for n in nombres%}
+                            <option value="{{n.nombre}}">{{n.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" name="campo">
+
+                    </div>
+                </div>
+                <a id="agregar">Agregar campo adicional.</a>
+                <a id="agregar_otro">Agregar otro.</a> 
                 </form>
                 <button class="botonTrans1" id="button-signup">Guardar Cambios</button> 
 
@@ -131,7 +144,8 @@
 
     <script>
         $(document).ready(function() {
-
+            $('.campos_adicionales').hide();
+            $('#agregar_otro').hide();
             $('#myModal').modal('toggle');
             $('#myModal').modal('show');
             var asociacion = $('#asociacion').val();
@@ -161,6 +175,27 @@
                 $("#div1").css('display','block');
             });
             */
+
+            var id = 1;
+
+            $('#agregar').click(function(){
+                $('.campos_adicionales').attr('id', 'nombre'+(id).toString());
+                
+                $('.campos_adicionales').show();
+                $('#agregar').hide();
+                $('#agregar_otro').show();
+                
+            });
+
+            $('#agregar_otro').click(function(){
+                id = id +1;
+                $('#agregar_otro').show();
+                $(".campos_adicionales").first().clone().appendTo( "#formset" );
+                $('.campos_adicionales').last().attr('id', 'nombre'+(id).toString());
+                
+            });
+
+
             $('#config_2').click(function() {
                 $(".can_hide").hide();
             });

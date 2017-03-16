@@ -15,9 +15,12 @@ def valid_extension(value):
         raise ValidationError("Sólo se permiten archivos en formato PDF.")
 
 class Prefijo(models.Model):
-    siglas = models.CharField('Prefijo',max_length=3)
+    siglas = models.CharField('Prefijo', max_length=3)
     asociacion = models.CharField('Asociación', null=True, max_length=100)
     aprobado = models.BooleanField(default=True)
+
+
+
 
 class Departamento(models.Model):
     nombre = models.CharField('Nombre', max_length=100, null=True)
@@ -91,15 +94,7 @@ class Transcripcion(models.Model):
     creditos = models.PositiveIntegerField('Créditos', null=True, validators=[MinValueValidator(0),
                                                                               MaxValueValidator(16)])
 
-    requisitos = models.TextField('Requisitos', null=True)
-
-    objetivos = models.TextField('Objetivos', null=True)
-
     sinopticos = models.TextField('Contenidos Sinópticos', null=True)
-
-    estrategias_metodologicas = models.TextField('Estrategias Metodológicas', null=True)
-
-    estrategias_evaluacion = models.TextField('Estrategias de Evaluación', null=True)
 
     ftes_info_recomendadas = models.TextField('Fuentes de Información Recomendadas', null=True)
 
@@ -150,9 +145,11 @@ class Programa(models.Model):
 
     creditos = models.PositiveIntegerField('Créditos', null=True, validators=[MinValueValidator(0),
                                                                               MaxValueValidator(16)])
+
     requisitos = models.TextField('Requisitos', null=True)
 
     objetivos_generales = models.TextField('Objetivos Generales', null=True)
+
     objetivos_especificos = models.TextField('Objetivos Específicos', null=True)
 
     sinopticos = models.TextField('Contenidos Sinópticos', null=True)
@@ -167,3 +164,16 @@ class Programa(models.Model):
 
     def __str__(self):
         return self.denominacion    
+
+
+class CampoAdicional(models.Model):
+    nombre = models.CharField('Nombre', max_length=100)
+
+    def __str__(self):
+        return self.nombre
+
+
+class ContenidoExtra(models.Model):
+    transcripcion = models.ForeignKey(Transcripcion, verbose_name='Transcripcion')
+    campo_adicional = models.ForeignKey(CampoAdicional)
+    contenido = models.TextField('Contenido')
