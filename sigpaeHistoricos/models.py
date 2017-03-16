@@ -108,7 +108,6 @@ class Pdfs(models.Model):
     fecha_modificacion = models.DateTimeField(auto_now=True, null=True)
 
 
-
 class Programa(models.Model):
     SEP_DIC = 'sep-dic'
     ENE_MAR = 'ene-mar'
@@ -129,45 +128,46 @@ class Programa(models.Model):
     AÑOS = tuple(años)
 
 
-    periodo = models.CharField(
+    h_teoria = models.PositiveIntegerField('Horas de teoría', null=True, default=0)
+    h_prac = models.PositiveIntegerField('Horas de práctica', null=True, default=0)
+    h_lab = models.PositiveIntegerField('Horas de laboratorio', null=True, default=0)
+    fecha_vigTrim = models.CharField(
+
         'Período',
         max_length=9,
         null=True,
         choices=PERIODOS,
     )
-
-    año = models.PositiveIntegerField('Año', choices=AÑOS, null=True)
-
-    horas_practica = models.PositiveIntegerField('Horas de práctica', null=True, default=0)
-
-    horas_teoria = models.PositiveIntegerField('Horas de teoría', null=True, default=0)
-
-    horas_laboratorio = models.PositiveIntegerField('Horas de laboratorio', null=True, default=0)
-
-
-    objetivos_generales = models.TextField('Objetivos Generales', null=True)
-    objetivos_especificos = models.TextField('Objetivos Específicos', null=True)
-
-    sinopticos = models.TextField('Contenidos Sinópticos', null=True)
-
-    estrategias_metodologicas = models.TextField('Estrategias Metodológicas', null=True)
-
-    estrategias_evaluacion = models.TextField('Estrategias de Evaluación', null=True)
-
-    ftes_info_recomendadas = models.TextField('Fuentes de Información Recomendadas', null=True)
-
+    fecha_vigAno = models.PositiveIntegerField('Año', choices=AÑOS, null=True)
+    obj_g = models.TextField('Objetivos Generales', null=True)
+    obj_e = models.TextField('Objetivos Específicos', null=True)
     contenidos = models.TextField('Encargado', max_length=100, null=True)
-
+    estrategias = models.TextField('Estrategias Metodológicas', null=True)
+    estrat_eval = models.TextField('Estrategias de Evaluación', null=True)
+    fuentes = models.TextField('Fuentes de Información Recomendadas', null=True)
     cronograma = models.TextField('Encargado', max_length=100, null=True)
+    sinoptico = models.TextField('Contenidos Sinópticos', null=True)
+
 
     def __str__(self):
-        return self.denominacion    
+        return self.contenidos  
 
 
 
 class Solicitud (models.Model):
     coordinacion = models.CharField('Coordinación', max_length=100)
+    porasignar = models.BooleanField()
+    porrevisarD = models.BooleanField()
+    porrevisarP = models.BooleanField()
+    rechazadoC = models.BooleanField()
+    validadoC = models.BooleanField()
+    enviadoD = models.BooleanField()
+    devueltoD = models.BooleanField()
+
     fecha_elaboracion = models.DateTimeField(auto_now=True, null=True)
+    tipo_solicitud = models.CharField(max_length=20)
+    subtipo_solicitud = models.CharField(max_length=30)
+    nivel = models.CharField(max_length=20)
     codigo = models.CharField('Código',max_length=7)
     codigo_anterior = models.CharField('Código anterior',max_length=7,null=True)
     denominacion = models.CharField(max_length=70)
@@ -178,6 +178,7 @@ class Solicitud (models.Model):
     horas_laboratorio = models.BooleanField()
     trim = models.CharField(max_length=9)
     año = models.CharField(max_length = 4)
+    accion = models.CharField(max_length=20)
     carrera = models.CharField(max_length=35)
     trim_pensum = models.BooleanField()
     requisitos_cred =  models.BooleanField()
@@ -186,7 +187,10 @@ class Solicitud (models.Model):
     clase_materia = models.CharField(max_length=25)
     observaciones = models.TextField(null=True)
     vigente = models.BooleanField()
+    validadodace= models.BooleanField()
+    especial = models.BooleanField()
     imparticion = models.CharField(max_length=15)
     decanato = models.CharField(max_length = 50,null=True)
     obsanul = models.TextField(null=True)
     programa = models.ForeignKey(Programa)
+

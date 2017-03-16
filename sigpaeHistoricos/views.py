@@ -24,7 +24,7 @@ class ProgramaList(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProgramaList, self).get_context_data(**kwargs)
-        programas = Programa.objects.all()
+        programas = Solicitud.objects.all()
         context['programas'] = programas
         return context
 
@@ -33,10 +33,12 @@ class DisplayProgram(TemplateView):
 
     def get_context_data(self,**kwargs):
         context= super(DisplayProgram,self).get_context_data(**kwargs)
-        programa = Programa.objects.get(pk=kwargs['pk'])
-        horas_semanales = programa.horas_practica + programa.horas_teoria + programa.horas_laboratorio 
+        solicitud = Solicitud.objects.get(pk=int(kwargs['pk']))
+        programa = solicitud.programa
+        horas_semanales = programa.h_prac + programa.h_teoria + programa.h_lab 
         context['programa'] = programa
         context['horas_semanales'] = horas_semanales
+        context['solicitud'] = solicitud
         return context
 
 
