@@ -39,16 +39,18 @@
 
                     {% endfor %}
                     <div class="control-group" >
-                            <div class="input-group">
-                                <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>Encargado:</b></span>
-                                {% if encargado != None%}
-                                <input aria-describedby="basic-addon1" class="form-control can_hide " value="{{encargado}}" id="encargado" required="False" type="text" readonly>
-                                {% else %}
-                                <input aria-describedby="basic-addon1" class="form-control can_hide " id="encargado" value="" required="False" type="text" readonly>
-                                {% endif %}
-                            </div>
+                        <div class="input-group">
+                            <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>Encargado:</b></span>
+                            {% if encargado != None%}
+                            <input aria-describedby="basic-addon1" class="form-control can_hide " value="{{encargado}}" id="encargado" required="False" type="text" readonly>
+                            {% else %}
+                            <input aria-describedby="basic-addon1" class="form-control can_hide " id="encargado" value="" required="False" type="text" readonly>
+                            {% endif %}
+                        </div>
                     </div>
+
                     <input type="checkbox" class="encargado" id="Departamento" name="check" value="Departamento"> Departamento
+                    
                     <input type="checkbox" class="encargado" id="Coordinacion" value="Coordinacion" name="check" value="Coordinacion"> Coordinación
                     
                     <select id="departamentos" name="departamentos" class="dinamica">
@@ -63,38 +65,59 @@
                     </select> 
                     <input type="hidden" name="pdf_id" value="{{ pdf.id }}">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                
+                {% if not modifying %}
+                <!-- Modal -->
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            {% if pdf.codigo %}
+                                <h4 class="modal-title">Se extrajo este código</h4>
+                            </div>
+                            <div class="modal-body">
+                                <input id="codigo" type="text" name="codigo" value="{{pdf.codigo}}">
+                                {% if departamento  %}
+                                    <h3>Se logró asociar el código al siguiente departamento:</h3> 
+                                    <input id="asociacion" type="text" name="" value="{{departamento.nombre}}">
+                                {% elif prefijo %}
+                                    <h3>No se logro asociar el codigo a un departamento pero si a:</h3>
+                                    <input id="asociacion_sin_dep" type="text" name="" value="{{prefijo.asociacion}}">
+
+                                {% else %}
+                                    <h3>No se pudo asociar el código a ningún departamento, ¿Quiere Proponerlo?</h3>
+                                    <button id="si" type="button" class="btn btn-default">Si</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                    <div id="preForm">
+                                        <input type="text" name="siglas" value="{{siglas}}">
+                                        <select name="asociacion"> 
+                                        <option value="">Ninguno</option>
+                                        {% for d in departamentos %}
+                                            <option value="{{d.nombre}}">{{d.nombre}}</option>
+                                        {% endfor %}
+                                        </select>
+                                    </div>
+                            
+                                {% endif %}
+                            </div>
+                            <div class="modal-footer"> 
+                                <button id="aceptar" type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                            {% else %}
+                                <h3>No se pudo extraer el código</h3>
+                            {% endif %}
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
                 </form>
                 <button class="botonTrans1" id="button-signup">Guardar Cambios</button> 
 
 
-                <!-- Modal -->
-                <div id="myModal" class="modal fade" role="dialog">
-                  <div class="modal-dialog">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Se extrajo este código</h4>
-                      </div>
-                      <div class="modal-body">
-                        <input id="codigo" type="text" name="codigo" value="{{pdf.codigo}}">
-                        {% if prefijo %}
-                            <h3>Se logró asociar el código al siguiente departamento:</h3> 
-                            <input id="asociacion" type="text" name="" value="{{prefijo.asociacion}}">
-                        {% else %}
-                            <h3>No se pudo asociar el código a ningún departamento.</h3>
-                        {% endif %}
-                      </div>
-                      <div class="modal-footer"> 
-                        <button id="aceptar" type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
 
             </div>
 
@@ -115,8 +138,13 @@
             $('#aceptar').click(function(){
               $('#encargado').val(asociacion);
             });
+            $('#preForm').hide();
+            $('#si').click(function() {
+                $('.aprobado').hide();
 
-
+                $('.aprobado').removeAttr( "checked" );
+                $('#preForm').show();
+            });
             $(".dinamica").hide();
             $("#drag").css('display','none');
             PDFObject.embed("{{ pdf.pdf.url }}" , "#pdf");
