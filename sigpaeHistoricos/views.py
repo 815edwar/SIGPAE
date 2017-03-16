@@ -150,7 +150,7 @@ class NewPdf(TemplateView):
 
 def extract_text(path):
     os.system("pdftotext -layout " + path + " extraccion.txt")
-    filename = re.sub('(p|P)(d|D)(f|F)', 'txt', path)
+    #filename = re.sub('(p|P)(d|D)(f|F)', 'txt', path)
     file = open("extraccion.txt", "r")
     text = file.read()
     file.close()
