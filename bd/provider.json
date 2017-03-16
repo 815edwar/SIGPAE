@@ -778,5 +778,32 @@
       "decanato": "4",
       "nombre": "Coordinación de Ingeniería en Telecomunicaciones/Biomédica"
     }
+  },
+
+    {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 1,
+    "fields": {
+      "siglas": "CI",
+      "asociacion": "Departamento de Computación y Tecnología de Información"
+    }
+  },
+
+    {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 2,
+    "fields": {
+      "siglas": "MA",
+      "asociacion": "Departamento de Matemáticas Puras y Aplicadas"
+    }
+  },
+
+    {
+    "model": "sigpaeHistoricos.Prefijo",
+    "pk": 3,
+    "fields": {
+      "siglas": "PG",
+      "asociacion": "Proyecto de Grado"
+    }
   }
  ]

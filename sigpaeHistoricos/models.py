@@ -14,6 +14,10 @@ def valid_extension(value):
             or value.name.endswith('.pDF') or value.name.endswith('.pDf')):
         raise ValidationError("Sólo se permiten archivos en formato PDF.")
 
+class Prefijo(models.Model):
+    siglas = models.CharField('Prefijo',max_length=3)
+    asociacion = models.CharField('Asociación', null=True, max_length=100)
+    aprobado = models.BooleanField(default=True)
 
 class Departamento(models.Model):
     nombre = models.CharField('Nombre', max_length=100, null=True)
@@ -165,7 +169,7 @@ class Programa(models.Model):
     encargado = models.CharField('Encargado', max_length=100, null=True)
 
     def __str__(self):
-        return self.denominacion
+        return self.denominacion    
 
 
 
