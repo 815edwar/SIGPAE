@@ -18,28 +18,6 @@ class HomeView(TemplateView):
     template_name = 'home.html'
 
 
-
-class ProgramaList(TemplateView):
-    template_name = 'programas.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ProgramaList, self).get_context_data(**kwargs)
-        programas = Programa.objects.all()
-        context['programas'] = programas
-        return context
-
-class DisplayProgram(TemplateView):
-    template_name = "display_program.html"
-
-    def get_context_data(self,**kwargs):
-        context= super(DisplayProgram,self).get_context_data(**kwargs)
-        programa = Programa.objects.get(pk=kwargs['pk'])
-        horas_semanales = programa.horas_practica + programa.horas_teoria + programa.horas_laboratorio 
-        context['programa'] = programa
-        context['horas_semanales'] = horas_semanales
-        return context
-
-
 class PDFList(TemplateView):
     template_name = 'transcripciones_en_proceso.html'
 
@@ -63,18 +41,9 @@ class ModifyPDF(TemplateView):
         context = super(ModifyPDF, self).get_context_data()
         pdf = Transcripcion.objects.get(pk=int(kwargs['pk']))
         pdf_form = PdfForm(instance=pdf)
-
-        expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
-        patron = re.compile(expresion)
-        matcher = patron.search(pdf.codigo)
-        codigo = matcher.group(0)
-
-        prefijo = Prefijo.objects.filter(siglas=codigo)[0]
-        if prefijo != None:
-            print(prefijo.asociacion)
-            context['prefijo'] = prefijo
         context['formulario'] = pdf_form
         context['pdf'] = pdf
+        print(pdf.encargado)
         context['encargado'] = pdf.encargado
 
         return context
@@ -157,7 +126,6 @@ class NewPdf(TemplateView):
 
         if pdf_form.is_valid():
             newpdf = pdf_form.save()
-            print(newpdf.pdf.url)
             if post_values['tipo'] == 'texto':
                 text = extract_text('SIGPAE/' + newpdf.pdf.url)
             else:
@@ -181,14 +149,12 @@ class NewPdf(TemplateView):
 
 
 def extract_text(path):
-    os.system("pdftotext -layout " + path)
+    os.system("pdftotext -layout " + path + " extraccion.txt")
     filename = re.sub('(p|P)(d|D)(f|F)', 'txt', path)
-    print(filename)
-    print("\n\n\n\n\n\n")
-    file = open(filename, "r")
+    file = open("extraccion.txt", "r")
     text = file.read()
     file.close()
-    os.system("rm " + filename)
+    os.system("rm extraccion.txt")
     return text
 
 
@@ -242,7 +208,6 @@ def encargado(request):
     return JsonResponse(data)
 
 
-
 def extract_html(path):
     os.system("pdftohtml -s -c " + path)
     output = re.sub('.(p|P)(d|D)(f|F)', '-html.html', path)
@@ -254,7 +219,7 @@ def extract_html(path):
 
 
 def match_codigo_asig(text):
-    expresion = '([A-Z][A-Z][0-9][0-9][0-9][0-9])|([A-Z][A-Z][A-Z](-|\s|)[0-9][0-9][0-9])'
+    expresion = '([A-Z][A-Z](-|\s|)[0-9][0-9][0-9][0-9])|([A-Z][A-Z][A-Z](-|\s|)[0-9][0-9][0-9])'
     patron = re.compile(expresion)
     matcher = patron.search(text)
     if matcher is not None:
