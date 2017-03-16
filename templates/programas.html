@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 ">
+            <table id="tabla" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Período de Entrada en Vigencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for programa in programas %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'ModifyPDF' programa.id %}">{{programa.denominacion}}</a>
+                        </td>
+                        <td>
+                        	{{programa.periodo}} {{programa.año}}  
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

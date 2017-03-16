@@ -18,6 +18,17 @@ class HomeView(TemplateView):
     template_name = 'home.html'
 
 
+
+class ProgramaList(TemplateView):
+    template_name = 'programas.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProgramaList, self).get_context_data(**kwargs)
+        programas = Programa.objects.all()
+        context['programas'] = programas
+        return context
+
+
 class PDFList(TemplateView):
     template_name = 'transcripciones_en_proceso.html'
 
