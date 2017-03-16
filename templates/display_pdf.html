@@ -65,18 +65,58 @@
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 </form>
                 <button class="botonTrans1" id="button-signup">Guardar Cambios</button> 
+
+
+                <!-- Modal -->
+                <div id="myModal" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Se extrajo este código</h4>
+                      </div>
+                      <div class="modal-body">
+                        <input id="codigo" type="text" name="codigo" value="{{pdf.codigo}}">
+                        {% if prefijo %}
+                            <h3>Se logró asociar el código al siguiente departamento:</h3> 
+                            <input id="asociacion" type="text" name="" value="{{prefijo.asociacion}}">
+                        {% else %}
+                            <h3>No se pudo asociar el código a ningún departamento.</h3>
+                        {% endif %}
+                      </div>
+                      <div class="modal-footer"> 
+                        <button id="aceptar" type="button" class="btn btn-default" >Aceptar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
             </div>
-            <div class="col-lg-6 col-md-6 col-xs-6" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="height: 500px">
-            
-            </div>
+
 
     </div>
 {% block custom_script %}
-    <script type="text/javascript" src="{% static 'js/pdfobject.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
+
+    <script type="text/javascript" src="{% static 'js/pdfobject.js' %}"></script>
 
     <script>
         $(document).ready(function() {
+
+            $('#myModal').modal('toggle');
+            $('#myModal').modal('show');
+            var asociacion = $('#asociacion').val();
+            $('#aceptar').click(function(){
+             $('#encargado').val(asociacion);
+            });
+
+
             $(".dinamica").hide();
             $("#drag").css('display','none');
             PDFObject.embed("{{ pdf.pdf.url }}" , "#pdf");
@@ -117,6 +157,7 @@
                 total = total + parseInt($(inputs[i]).val());
             }
             if (parseInt(total) > 40){
+                
                 alert("El número de horas semanales no puede superar las 40 horas.");
                 
             }

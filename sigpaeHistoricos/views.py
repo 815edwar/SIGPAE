@@ -18,6 +18,28 @@ class HomeView(TemplateView):
     template_name = 'home.html'
 
 
+
+class ProgramaList(TemplateView):
+    template_name = 'programas.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProgramaList, self).get_context_data(**kwargs)
+        programas = Programa.objects.all()
+        context['programas'] = programas
+        return context
+
+class DisplayProgram(TemplateView):
+    template_name = "display_program.html"
+
+    def get_context_data(self,**kwargs):
+        context= super(DisplayProgram,self).get_context_data(**kwargs)
+        programa = Programa.objects.get(pk=kwargs['pk'])
+        horas_semanales = programa.horas_practica + programa.horas_teoria + programa.horas_laboratorio 
+        context['programa'] = programa
+        context['horas_semanales'] = horas_semanales
+        return context
+
+
 class PDFList(TemplateView):
     template_name = 'transcripciones_en_proceso.html'
 
@@ -41,9 +63,18 @@ class ModifyPDF(TemplateView):
         context = super(ModifyPDF, self).get_context_data()
         pdf = Transcripcion.objects.get(pk=int(kwargs['pk']))
         pdf_form = PdfForm(instance=pdf)
+
+        expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
+        patron = re.compile(expresion)
+        matcher = patron.search(pdf.codigo)
+        codigo = matcher.group(0)
+
+        prefijo = Prefijo.objects.filter(siglas=codigo)[0]
+        if prefijo != None:
+            print(prefijo.asociacion)
+            context['prefijo'] = prefijo
         context['formulario'] = pdf_form
         context['pdf'] = pdf
-        print(pdf.encargado)
         context['encargado'] = pdf.encargado
 
         return context
@@ -206,6 +237,7 @@ def encargado(request):
         }
 
     return JsonResponse(data)
+
 
 
 def extract_html(path):
