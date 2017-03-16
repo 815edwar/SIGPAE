@@ -16,7 +16,7 @@
                     {% for programa in programas %}
                     <tr>
                         <td>
-                            <a href="{% url 'ModifyPDF' programa.id %}">{{programa.denominacion}}</a>
+                            <a href="{% url 'program_details' programa.id %}">{{programa.denominacion}}</a>
                         </td>
                         <td>
                         	{{programa.periodo}} {{programa.año}}  

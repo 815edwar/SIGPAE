@@ -1,0 +1,13 @@
+
+h1{
+	text-align: center;
+}
+
+.table-programa tr{
+	border: solid #FFF;
+}
+
+.detail{
+	min-width:220px;
+	background: #D3D3D3; 
+}

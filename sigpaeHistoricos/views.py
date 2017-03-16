@@ -28,6 +28,17 @@ class ProgramaList(TemplateView):
         context['programas'] = programas
         return context
 
+class DisplayProgram(TemplateView):
+    template_name = "display_program.html"
+
+    def get_context_data(self,**kwargs):
+        context= super(DisplayProgram,self).get_context_data(**kwargs)
+        programa = Programa.objects.get(pk=kwargs['pk'])
+        horas_semanales = programa.horas_practica + programa.horas_teoria + programa.horas_laboratorio 
+        context['programa'] = programa
+        context['horas_semanales'] = horas_semanales
+        return context
+
 
 class PDFList(TemplateView):
     template_name = 'transcripciones_en_proceso.html'
