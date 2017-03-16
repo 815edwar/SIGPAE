@@ -4,7 +4,7 @@ from django.test import TestCase
 from datetime import datetime, timezone
 from sigpaeHistoricos.models import *
 
-# Create your tests here.
+# Suit de pruebas para los modelos del sistema SIGPAE, junto a sus métodos.
 
 class ModelsTestCase(TestCase):
 	
