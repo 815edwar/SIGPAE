@@ -266,7 +266,7 @@ def extract_html(path):
 
 
 def match_codigo_asig(text):
-    expresion = '([A-Z][A-Z](-|\s| )[0-9][0-9][0-9][0-9])|([A-Z][A-Z][A-Z](-|\s| )[0-9][0-9][0-9])'
+    expresion = '([A-Z][A-Z](-|\s|[^a-z|^A-Z|^0-9]|)[0-9][0-9][0-9][0-9])|([A-Z][A-Z][A-Z](-|\s|[^a-z|^A-Z|^0-9]|)[0-9][0-9][0-9])'
     patron = re.compile(expresion)
     matcher = patron.search(text)
     if matcher is not None:
