@@ -24,7 +24,7 @@ class PDFList(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(PDFList, self).get_context_data(**kwargs)
 
-        programas = Pdfs.objects.all()
+        programas = Transcripcion.objects.all()
         context['programas'] = programas
         pdf_names = []
         for programa in programas:
@@ -39,7 +39,7 @@ class ModifyPDF(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ModifyPDF, self).get_context_data()
-        pdf = Pdfs.objects.get(pk=int(kwargs['pk']))
+        pdf = Transcripcion.objects.get(pk=int(kwargs['pk']))
         pdf_form = PdfForm(instance=pdf)
         context['formulario'] = pdf_form
         context['pdf'] = pdf
@@ -53,7 +53,7 @@ class ModifyPDF(TemplateView):
         post_values = request.POST.copy()
         print(post_values)
         pdf_id = int(post_values['pdf_id'])
-        pdf = Pdfs.objects.get(id=pdf_id)
+        pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
         if pdf_form.is_valid():
             if 'check' in post_values and post_values['check'] == 'Departamento':
@@ -80,7 +80,7 @@ class DisplayPDF(TemplateView):
         for message in msgs:
             pdf_id = int(str(message))
         msgs.used = True
-        pdf = Pdfs.objects.get(id=pdf_id)
+        pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(instance=pdf)
         context['formulario'] = pdf_form
         context['pdf'] = pdf
@@ -91,7 +91,7 @@ class DisplayPDF(TemplateView):
     def post(request):
         post_values = request.POST.copy()
         pdf_id = int(post_values['pdf_id'])
-        pdf = Pdfs.objects.get(id=pdf_id)
+        pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
         if pdf_form.is_valid():
             if 'check' in post_values and post_values['check'] == 'Departamento':

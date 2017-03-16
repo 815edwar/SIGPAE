@@ -9,6 +9,8 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
+                        <th>Periodo</th>
+                        <th>Año</th>
                         <th>Última modificación</th>
                     </tr>
                 </thead>
@@ -21,6 +23,21 @@
                             {% else %}
                                 <a href="{% url 'ModifyPDF' programa.id %}">{{ pdf_names|lookup:forloop.counter0 }}</a>
                             {% endif %}
+                        </td>
+                        <td>
+                            {% if programa.periodo != None %}
+                                {{ programa.periodo }}
+                            {% else %}
+                                No especificado
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if programa.año != None %}
+                                {{ programa.año }}
+                            {% else %}
+                                No especificado
+                            {% endif %}
+
                         </td>
                         <td>
                             {{ programa.fecha_modificacion }}
