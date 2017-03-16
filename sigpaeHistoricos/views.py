@@ -46,7 +46,7 @@ class PDFList(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(PDFList, self).get_context_data(**kwargs)
 
-        programas = Pdfs.objects.all()
+        programas = Transcripcion.objects.all()
         context['programas'] = programas
         pdf_names = []
         for programa in programas:
@@ -60,8 +60,8 @@ class ModifyPDF(TemplateView):
     template_name = 'display_pdf.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ModifyPDF, self).get_context_data(**kwargs)
-        pdf = Pdfs.objects.get(pk=int(kwargs['pk']))
+        context = super(ModifyPDF, self).get_context_data()
+        pdf = Transcripcion.objects.get(pk=int(kwargs['pk']))
         pdf_form = PdfForm(instance=pdf)
 
         expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
@@ -84,20 +84,17 @@ class ModifyPDF(TemplateView):
         post_values = request.POST.copy()
         print(post_values)
         pdf_id = int(post_values['pdf_id'])
-        pdf = Pdfs.objects.get(id=pdf_id)
+        pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
         if pdf_form.is_valid():
-            if post_values['check'] == 'Departamento':
+            if 'check' in post_values and post_values['check'] == 'Departamento':
                 pdf.encargado = post_values['departamentos']
                 pdf.save()
-            elif post_values['check'] == 'Coordinacion':
-                print('entre')
+            elif 'check' in post_values and post_values['check'] == 'Coordinacion':
                 pdf.encargado = post_values['coordinacion']
                 pdf.save()
-                
             else:
                 pdf_form.save()
-
             return redirect('home')
         else:
             context = {'formulario': pdf_form, 'pdf': pdf}
@@ -107,14 +104,14 @@ class ModifyPDF(TemplateView):
 class DisplayPDF(TemplateView):
     template_name = 'display_pdf.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(DisplayPDF, self).get_context_data(**kwargs)
+    def get_context_data(self):
+        context = super(DisplayPDF, self).get_context_data()
         msgs = get_messages(self.request)
         pdf_id = -1
         for message in msgs:
             pdf_id = int(str(message))
         msgs.used = True
-        pdf = Pdfs.objects.get(id=pdf_id)
+        pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(instance=pdf)
         context['formulario'] = pdf_form
         context['pdf'] = pdf
@@ -125,13 +122,13 @@ class DisplayPDF(TemplateView):
     def post(request):
         post_values = request.POST.copy()
         pdf_id = int(post_values['pdf_id'])
-        pdf = Pdfs.objects.get(id=pdf_id)
+        pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
         if pdf_form.is_valid():
-            if post_values['check'] == 'Departamento':
+            if 'check' in post_values and post_values['check'] == 'Departamento':
                 pdf.encargado = post_values['departamentos']
                 pdf.save()
-            elif post_values['check'] == 'Coordinacion':
+            elif 'check' in post_values and post_values['check'] == 'Coordinacion':
                 pdf.encargado = post_values['coordinacion']
                 pdf.save()
             else:
@@ -160,6 +157,7 @@ class NewPdf(TemplateView):
 
         if pdf_form.is_valid():
             newpdf = pdf_form.save()
+            print(newpdf.pdf.url)
             if post_values['tipo'] == 'texto':
                 text = extract_text('SIGPAE/' + newpdf.pdf.url)
             else:
@@ -185,6 +183,8 @@ class NewPdf(TemplateView):
 def extract_text(path):
     os.system("pdftotext -layout " + path)
     filename = re.sub('(p|P)(d|D)(f|F)', 'txt', path)
+    print(filename)
+    print("\n\n\n\n\n\n")
     file = open(filename, "r")
     text = file.read()
     file.close()
@@ -254,7 +254,7 @@ def extract_html(path):
 
 
 def match_codigo_asig(text):
-    expresion = '([A-Z][A-Z](-|\s|)[0-9][0-9][0-9][0-9])|([A-Z][A-Z][A-Z](-|\s|)[0-9][0-9][0-9])'
+    expresion = '([A-Z][A-Z][0-9][0-9][0-9][0-9])|([A-Z][A-Z][A-Z](-|\s|)[0-9][0-9][0-9])'
     patron = re.compile(expresion)
     matcher = patron.search(text)
     if matcher is not None:
