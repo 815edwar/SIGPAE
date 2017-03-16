@@ -153,6 +153,7 @@ class Programa(models.Model):
     requisitos = models.TextField('Requisitos', null=True)
 
     objetivos_generales = models.TextField('Objetivos Generales', null=True)
+    
     objetivos_especificos = models.TextField('Objetivos Específicos', null=True)
 
     sinopticos = models.TextField('Contenidos Sinópticos', null=True)
