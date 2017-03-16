@@ -15,6 +15,10 @@ SPRINT 2:
         -Se puede descargar escribiendo en el terminal:
         sudo apt-get update ; 
         sudo apt-get install xpdf
-
+SPRINT 3:
+  PYOCR y WAND:
+  - Se pueden obtener escribiendo en el terminal:
+  sudo pip3 install pyocr;
+  sudo pip3 install wand;
 Además,podría ser necesario instalar dj-database-url :
   -Escriba en el terminal: sudo pip3 install dj-database-url
