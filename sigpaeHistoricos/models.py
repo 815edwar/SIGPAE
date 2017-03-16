@@ -37,7 +37,7 @@ class Coordinacion(models.Model):
         return self.nombre
 
 
-class Transcripcion(models.Model):
+class Pdfs(models.Model):
     SEP_DIC = 'sep-dic'
     ENE_MAR = 'ene-mar'
     ABR_JUL = 'abr-jul'
@@ -151,7 +151,8 @@ class Programa(models.Model):
                                                                               MaxValueValidator(16)])
     requisitos = models.TextField('Requisitos', null=True)
 
-    objetivos = models.TextField('Objetivos', null=True)
+    objetivos_generales = models.TextField('Objetivos Generales', null=True)
+    objetivos_especificos = models.TextField('Objetivos Específicos', null=True)
 
     sinopticos = models.TextField('Contenidos Sinópticos', null=True)
 
@@ -162,6 +163,9 @@ class Programa(models.Model):
     ftes_info_recomendadas = models.TextField('Fuentes de Información Recomendadas', null=True)
 
     encargado = models.CharField('Encargado', max_length=100, null=True)
+
+    def __str__(self):
+        return self.denominacion
 
 
 
