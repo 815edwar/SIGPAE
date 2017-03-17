@@ -106,7 +106,8 @@ class DisplayPDF(TemplateView):
         msgs.used = True
         pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(instance=pdf)
-        if pdf.codigo != None:
+        if pdf.codigo != None and pdf.codigo != '':
+            print('entre')
             expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
             patron = re.compile(expresion)
             matcher = patron.search(pdf.codigo)
@@ -122,6 +123,9 @@ class DisplayPDF(TemplateView):
             else:
                 context['siglas'] = matcher.group(0)
                 context['departamentos'] = Departamento.objects.all()
+        elif pdf.codigo == '':
+            context['modifying'] = True
+
         context['formulario'] = pdf_form
         context['pdf'] = pdf
         context['encargado'] = None
@@ -136,6 +140,11 @@ class DisplayPDF(TemplateView):
             if(post_values['siglas'] != ''):
                 prefijo_nuevo = Prefijo.objects.create(siglas = post_values['siglas'],\
                     asociacion = post_values['asociacion'], aprobado = False)
+                prefijo_nuevo.save()
+        elif 'siglas2' in post_values:    
+            if(post_values['siglas2'] != ''):
+                prefijo_nuevo = Prefijo.objects.create(siglas = post_values['siglas2'],\
+                    asociacion ="", aprobado = False)
                 prefijo_nuevo.save()
         pdf_id = int(post_values['pdf_id'])
         pdf = Transcripcion.objects.get(id=pdf_id)
@@ -183,10 +192,12 @@ class NewPdf(TemplateView):
             newpdf.save()
             messages.add_message(request, messages.INFO, str(newpdf.id))
 
-            newpdf.codigo = match_codigo_asig(text)
-            newpdf.save()
-            if newpdf.codigo is not None:
-                match_dpto(newpdf.codigo)
+            if post_values['extraer'] == 'si':
+                newpdf.codigo = match_codigo_asig(text)
+                newpdf.save()
+            else:
+                newpdf.codigo = ''
+                newpdf.save()
             return redirect('mostrar_pdf')
         else:
             pdf_form = AddPdfForm(post_values, request.FILES)
@@ -255,6 +266,27 @@ def encargado(request):
     return JsonResponse(data)
 
 
+
+def siglas(request):
+    codigo = request.GET.get('codigo', None)
+    siglas = match_dpto(codigo)
+    print(siglas)
+    try:
+        prefijo = Prefijo.objects.get(siglas=siglas)
+        print(prefijo.asociacion)
+        data = {
+            'respuesta': prefijo.asociacion,
+            'siglas' : siglas
+        }
+    except:
+        data = {
+            'respuesta': '',
+            'siglas' : siglas
+        }
+
+    return JsonResponse(data)
+
+
 def extract_html(path):
     os.system("pdftohtml -s -c " + path)
     output = re.sub('.(p|P)(d|D)(f|F)', '-html.html', path)
@@ -281,10 +313,5 @@ def match_dpto(codigo):
     expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
     patron = re.compile(expresion)
     matcher = patron.search(codigo)
-    if matcher is not None:
-        if matcher.group(0) == "CI" or matcher.group(0) == "CIB":
-            print("El dpto es Computacion")
-            return matcher.group(0)
-        else:
-            print("No se consiguó dpto")
-            return None
+    return matcher.group(0)
+    

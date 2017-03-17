@@ -115,7 +115,7 @@
                                     <button id="si" type="button" class="btn btn-default">Si</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                                     <div id="preForm">
-                                        <input type="text" name="siglas" value="{{siglas}}">
+                                        <input id="siglas" type="text" name="siglas" value="{{siglas}}">
                                         <select name="asociacion"> 
                                         <option value="">Ninguno</option>
                                         {% for d in departamentos %}
@@ -131,12 +131,38 @@
                             {% else %}
                                 <h3>No se pudo extraer el código</h3>
                             {% endif %}
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 {% endif %}
+
+                <!-- Modal -->
+                <div id="confirmacion" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Confirmación</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h3>Este código no se encuentra registrado, en caso de estar seguro de que sea correcto, confírmelo:</h3>
+                                <span>Código</span>
+                                <input id="codigo2" type="text" name="codigo2" value="">
+                                <span>Siglas</span>
+                                <input id="siglas2" type="text" name="siglas2" value="">
+                                   
+                            </div>
+                            <div class="modal-footer"> 
+                                <button  type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                                <button  type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="formset">
                     <div class="campos_adicionales">
                         <select name="nombre_campo" class="form-control form-control-sigpae">
@@ -174,6 +200,9 @@
             var asociacion = $('#asociacion').val();
             $('#aceptar').click(function(){
               $('#encargado').val(asociacion);
+            });
+            $('#close').click(function(){
+              $('#id_codigo').val("");
             });
             $('#preForm').hide();
             $('#si').click(function() {
@@ -335,6 +364,34 @@
                                 text: data.coordinaciones[i].nombre
                             }));
                         }
+                    }
+                });
+        });
+
+
+
+        $('#id_codigo').change(function(){
+            codigo = $(this).val();
+            $.ajax({
+                    url: '{% url "siglas" %}',
+                    data: {
+                        'codigo' : codigo
+                    },
+                    dataType: 'json',
+                    success: function(data){
+                        var respuesta = data.respuesta;
+                        var siglas = data.siglas;
+                        if (respuesta == ""){
+                            $('#confirmacion').modal('toggle');
+                            $('#confirmacion').modal('show');
+                            $('#siglas2').val(siglas);
+                            $('#codigo2').val(codigo);
+
+                        }
+
+                        console.log(respuesta);
+                        
+                        
                     }
                 });
         });
