@@ -56,6 +56,17 @@ class PDFList(TemplateView):
         context['pdf_names'] = pdf_names
         return context
 
+class SiglasList(TemplateView):
+    template_name = 'siglas_por_aprobar.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SiglasList, self).get_context_data(**kwargs)
+
+        prefijos = Prefijo.objects.filter(aprobado=False)
+        context['prefijos'] = prefijos
+
+        return context
+
 
 class ModifyPDF(TemplateView):
     template_name = 'display_pdf.html'
@@ -149,6 +160,8 @@ class DisplayPDF(TemplateView):
         pdf_id = int(post_values['pdf_id'])
         pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
+        print(post_values['encargado1'] )
+        print('\n\n\n\n\n')
         if pdf_form.is_valid():
             if 'check' in post_values and post_values['check'] == 'Departamento':
                 pdf.encargado = post_values['departamentos']
@@ -157,6 +170,7 @@ class DisplayPDF(TemplateView):
                 pdf.encargado = post_values['coordinacion']
                 pdf.save()
             else:
+                pdf.encargado = post_values['encargado1']   
                 pdf_form.save()
             return redirect('home')
         else:
