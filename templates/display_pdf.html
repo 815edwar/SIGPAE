@@ -28,6 +28,9 @@
             <div  class="col-lg-7 col-md-7 col-xs-7 " id="formulario">
                 <form id="form" enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-group" role="form" novalidate>
                     {% for field in formulario %}
+                        {% if field.name == "periodo"%}
+                        <div class= "vigencia-top can_hide">
+                        <h4>Periodo de vigencia</h4>
                         <div class="control-group" id="{{field.name}}-state">
                             <div class="input-group {{field.name}}">
                                 <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
@@ -36,6 +39,26 @@
                             <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
                             {{ field.errors }}
                         </div>
+                        </div>
+                        {% elif field.name == "texto" %}
+                        <div class="control-group" id="{{field.name}}-state">
+                            <div class="input-group {{field.name}}">
+                                <span class="input-group-addon tags-unete" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                            </div>
+                            <span class="error" id="{{ field.name }}-icon"></span>
+                            <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
+                            {{ field.errors }}
+                        </div>
+                        {% else %}
+                        <div class="control-group" id="{{field.name}}-state">
+                            <div class="input-group {{field.name}}">
+                                <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                            </div>
+                            <span class="error" id="{{ field.name }}-icon"></span>
+                            <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
+                            {{ field.errors }}
+                        </div>
+                        {% endif %}
 
                     {% endfor %}
                     <div class="control-group" >
@@ -49,18 +72,18 @@
                         </div>
                     </div>
 
-                    <input type="checkbox" class="encargado" id="Departamento" name="check" value="Departamento"> Departamento
+                    <input type="checkbox" class="encargado can_hide" id="Departamento" name="check" value="Departamento"> <b class="can_hide"> Departamento</b>
                     
-                    <input type="checkbox" class="encargado" id="Coordinacion" value="Coordinacion" name="check" value="Coordinacion"> Coordinación
+                    <input type="checkbox" class="encargado can_hide" id="Coordinacion" value="Coordinacion" name="check" value="Coordinacion"><b class="can_hide"> Coordinación</b>
                     
-                    <select id="departamentos" name="departamentos" class="dinamica">
+                    <select id="departamentos" name="departamentos" class="dinamica form-control">
 
                     </select>
-                    <select id="decanatos" class="dinamica">
+                    <select id="decanatos" class="dinamica form-control">
                         
                     </select>
 
-                    <select id="coordinaciones" name="coordinacion" class="dinamica">
+                    <select id="coordinaciones" name="coordinacion" class="dinamica form-control">
                         
                     </select> 
                     <input type="hidden" name="pdf_id" value="{{ pdf.id }}">
@@ -82,7 +105,7 @@
                                 <input id="codigo" type="text" name="codigo" value="{{pdf.codigo}}">
                                 {% if departamento  %}
                                     <h3>Se logró asociar el código al siguiente departamento:</h3> 
-                                    <input id="asociacion" type="text" name="" value="{{departamento.nombre}}">
+                                    <input id="asociacion" type="text" name="" class="input-sigpae1" value="{{departamento.nombre}}">
                                 {% elif prefijo %}
                                     <h3>No se logro asociar el codigo a un departamento pero si a:</h3>
                                     <input id="asociacion_sin_dep" type="text" name="" value="{{prefijo.asociacion}}">
@@ -116,16 +139,16 @@
                 {% endif %}
                 <div id="formset">
                     <div class="campos_adicionales">
-                        <select name="nombre_campo">
+                        <select name="nombre_campo" class="form-control form-control-sigpae">
                             {% for n in nombres%}
                             <option value="{{n.nombre}}">{{n.nombre}}</option>
                             {% endfor %}
                         </select>
-                        <input type="text" name="campo">
+                        <input type="text" name="campo" class="input-sigpae">
 
                     </div>
                 </div>
-                <a id="agregar">Agregar campo adicional.</a>
+                <a id="agregar" class="can_hide">Agregar campo adicional.</a>
                 <a id="agregar_otro">Agregar otro.</a> 
                 </form>
                 <button class="botonTrans1" id="button-signup">Guardar Cambios</button> 

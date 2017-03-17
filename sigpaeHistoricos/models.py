@@ -62,6 +62,18 @@ class Transcripcion(models.Model):
 
     AÑOS = tuple(años)
 
+    horas = []
+
+    for i in range(0,41):
+        horas.append((i,str(i)))
+    HORAS = tuple(horas)
+
+    creditos = []
+
+    for i in range(0,17):
+        creditos.append((i,str(i)))
+    CREDITOS = tuple(creditos)
+
     # Salva los PDF en /media/uploads/
     pdf = models.FileField(
         upload_to='uploads/',
@@ -84,14 +96,13 @@ class Transcripcion(models.Model):
 
     año = models.PositiveIntegerField('Año', choices=AÑOS, null=True)
 
-    horas_practica = models.PositiveIntegerField('Horas de práctica', null=True, default=0)
+    horas_teoria = models.PositiveIntegerField('Horas de teoría', null=True, choices=HORAS)
 
-    horas_teoria = models.PositiveIntegerField('Horas de teoría', null=True, default=0)
+    horas_practica = models.PositiveIntegerField('Horas de práctica', null=True, choices=HORAS)
+    
+    horas_laboratorio = models.PositiveIntegerField('Horas de laboratorio', null=True, choices=HORAS)
 
-    horas_laboratorio = models.PositiveIntegerField('Horas de laboratorio', null=True, default=0)
-
-    creditos = models.PositiveIntegerField('Créditos', null=True, validators=[MinValueValidator(0),
-                                                                              MaxValueValidator(16)])
+    creditos = models.PositiveIntegerField('Créditos', null=True,choices=CREDITOS)
 
     sinopticos = models.TextField('Contenidos Sinópticos', null=True)
 

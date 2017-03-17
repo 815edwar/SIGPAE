@@ -40,3 +40,30 @@
 #id_codigo, #id_denominacion, #id_periodo, #id_horas_practica, #id_año, #id_horas_teoria, #id_horas_laboratorio, #id_creditos, #encargado {
 	margin-bottom: 0px; 
 }
+
+.form-control-sigpae{
+	width: 35%;
+	display: inline-block;
+}
+
+.input-sigpae1{
+	width: 100%;
+
+}
+.input-sigpae{
+	width: 60%;
+}
+
+.vigencia-top{
+	text-align: center;
+	background: #D3D3D3;  
+}
+
+.vigencia-top h4{
+	padding-top:10px;
+	margin-top: 5px; 
+}
+
+#año-state{
+	margin-top: 0px; 
+}
