@@ -63,6 +63,7 @@ class ModifyPDF(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ModifyPDF, self).get_context_data()
         pdf = Transcripcion.objects.get(pk=int(kwargs['pk']))
+        otro_campo = ContenidoExtra.objects.filter(transcripcion=pdf.id)
         pdf_form = PdfForm(instance=pdf)
         contenido_form = ContenidoFormSet()
         context['contenido'] = contenido_form
@@ -71,6 +72,7 @@ class ModifyPDF(TemplateView):
         context['encargado'] = pdf.encargado
         context['modifying'] = True
         context['nombres'] = CampoAdicional.objects.all();
+        context['campos'] = otro_campo
         return context
 
     @staticmethod
@@ -88,7 +90,28 @@ class ModifyPDF(TemplateView):
                 pdf.save()
             else:
                 pdf_form.save()
+
+            campo = ContenidoExtra.objects.filter(transcripcion=pdf.id)
+            print("\n\n\n\n")
+            for c in campo:
+                print("Entro en for con " + c.campo_adicional.nombre)
+                if c.campo_adicional.nombre in post_values:
+                    print("Entro en if")
+                    c.contenido = post_values[c.campo_adicional.nombre]
+                    c.save()
+
+            if 'campo_adicional' in post_values:
+                campos_adicionales = post_values.pop('campo_adicional')
+                contenido_campos = post_values.pop('contenido_campos')
+                print(campos_adicionales, contenido_campos)
+                for i in range(len(campos_adicionales)):
+                    if campos_adicionales[i] != "" and campos_adicionales[i] != "ninguna":
+                        campo = CampoAdicional.objects.get(nombre=campos_adicionales[i])
+                        ContenidoExtra.objects.create(transcripcion=pdf, campo_adicional=campo, 
+                                                      contenido=contenido_campos[i])
+
             return redirect('home')
+
         else:
             context = {'formulario': pdf_form, 'pdf': pdf}
             return render(request, 'display_pdf.html', context)
@@ -134,8 +157,9 @@ class DisplayPDF(TemplateView):
         post_values = request.POST.copy()
         if 'siglas' in post_values:    
             if(post_values['siglas'] != ''):
-                prefijo_nuevo = Prefijo.objects.create(siglas = post_values['siglas'],\
-                    asociacion = post_values['asociacion'], aprobado = False)
+                prefijo_nuevo = Prefijo.objects.create(siglas = post_values['siglas'],
+                                                       asociacion = post_values['asociacion'], 
+                                                       aprobado = False)
                 prefijo_nuevo.save()
         pdf_id = int(post_values['pdf_id'])
         pdf = Transcripcion.objects.get(id=pdf_id)
@@ -149,7 +173,19 @@ class DisplayPDF(TemplateView):
                 pdf.save()
             else:
                 pdf_form.save()
+
+            if 'campo_adicional' in post_values:
+                campos_adicionales = post_values.pop('campo_adicional')
+                contenido_campos = post_values.pop('contenido_campos')
+                print(campos_adicionales, contenido_campos)
+                for i in range(len(campos_adicionales)):
+                    if campos_adicionales[i] != "" and campos_adicionales[i] != "ninguna":
+                        campo = CampoAdicional.objects.get(nombre=campos_adicionales[i])
+                        ContenidoExtra.objects.create(transcripcion=pdf, campo_adicional=campo, 
+                                                      contenido=contenido_campos[i])
+
             return redirect('home')
+
         else:
             context = {'formulario': pdf_form, 'pdf': pdf}
             return render(request, 'display_pdf.html', context)
@@ -231,6 +267,30 @@ def extract_text_from_image(path):
         trancription += i
 
     return trancription
+
+
+def crearCampo(request):
+    campo = request.GET.get('campo', None)
+
+    campos_actuales = CampoAdicional.objects.all()
+
+    for c in campos_actuales:
+        if campo.lower().replace(" ", "") == c.nombre.lower().replace(" ", ""):
+            print("\n\n\n\n\n")
+            print("Entro")
+            print("\n\n\n\n\n")
+            data = {
+                'creado' : False
+            }
+            return JsonResponse(data)
+
+    CampoAdicional.objects.create(nombre=campo)
+    data = {
+        'creado' : True,
+        'nombre' : campo
+    }
+
+    return JsonResponse(data)
 
 
 def encargado(request):
