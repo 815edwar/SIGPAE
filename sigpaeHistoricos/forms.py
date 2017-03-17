@@ -24,7 +24,7 @@ class PdfForm(forms.ModelForm):
 
             elif key == 'horas_practica' or key == 'horas_teoria' or key == 'horas_laboratorio':
 
-                self.fields[key].widget.attrs['class'] = 'form-control horas'+" "+ key
+                self.fields[key].widget.attrs['class'] = 'form-control horas can_hide'+" "+ key 
                 self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
                 self.fields[key].required = False
                 self.fields[key].widget.attrs['required'] = 'False'
