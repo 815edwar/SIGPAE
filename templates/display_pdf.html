@@ -23,121 +23,94 @@
 		<div id="documento" class="col-lg-5 col-md-5 col-xs-5">
             <div id="pdf" class="pdfobject-container"></div>
 		</div>
-
-
-            <div  class="col-lg-7 col-md-7 col-xs-7 " id="formulario">
-                <form id="form" enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-group" role="form" novalidate>
-                    {% for field in formulario %}
-                        {% if field.name == "periodo"%}
-                        <div class= "vigencia-top can_hide">
-                        <h4>Periodo de vigencia</h4>
-                        <div class="control-group" id="{{field.name}}-state">
-                            <div class="input-group {{field.name}}">
-                                <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
-                            </div>
-                            <span class="error" id="{{ field.name }}-icon"></span>
-                            <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
-                            {{ field.errors }}
+        <div  class="col-lg-7 col-md-7 col-xs-7 " id="formulario">
+            <form id="form" enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-group" role="form" novalidate>
+                {% for field in formulario %}
+                    {% if field.name == "periodo"%}
+                    <div class= "vigencia-top can_hide">
+                    <h4>Periodo de vigencia</h4>
+                    <div class="control-group" id="{{field.name}}-state">
+                        <div class="input-group {{field.name}}">
+                            <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
                         </div>
-                        </div>
-                        {% elif field.name == "texto" %}
-                        <div class="control-group" id="{{field.name}}-state">
-                            <div class="input-group {{field.name}}">
-                                <span class="input-group-addon tags-unete" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
-                            </div>
-                            <span class="error" id="{{ field.name }}-icon"></span>
-                            <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
-                            {{ field.errors }}
-                        </div>
-                        {% else %}
-                        <div class="control-group" id="{{field.name}}-state">
-                            <div class="input-group {{field.name}}">
-                                <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
-                            </div>
-                            <span class="error" id="{{ field.name }}-icon"></span>
-                            <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
-                            {{ field.errors }}
-                        </div>
-                        {% endif %}
-
-                    {% endfor %}
-                    <div class="control-group" >
-                        <div class="input-group">
-                            <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>Encargado:</b></span>
-                            {% if encargado != None%}
-                            <input aria-describedby="basic-addon1" class="form-control can_hide " value="{{encargado}}" id="encargado" required="False" type="text"  readonly>
-                            {% else %}
-                            <input aria-describedby="basic-addon1" class="form-control can_hide " id="encargado" value="" required="False" type="text" name="encargado1" readonly>
-                            {% endif %}
-                        </div>
+                        <span class="error" id="{{ field.name }}-icon"></span>
+                        <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
+                        {{ field.errors }}
                     </div>
-
-                    <input type="checkbox" class="encargado can_hide" id="Departamento" name="check" value="Departamento"> <b class="can_hide"> Departamento</b>
-                    
-                    <input type="checkbox" class="encargado can_hide" id="Coordinacion" value="Coordinacion" name="check" value="Coordinacion"><b class="can_hide"> Coordinación</b>
-                    
-                    <select id="departamentos" name="departamentos" class="dinamica form-control">
-
-                    </select>
-                    <select id="decanatos" class="dinamica form-control">
-                        
-                    </select>
-
-                    <select id="coordinaciones" name="coordinacion" class="dinamica form-control">
-                        
-                    </select> 
-                    <input type="hidden" name="pdf_id" value="{{ pdf.id }}">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                
-                {% if not modifying %}
-                <!-- Modal -->
-                <div id="myModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            {% if pdf.codigo %}
-                                <h4 class="modal-title">Se extrajo este código</h4>
-                            </div>
-                            <div class="modal-body">
-                                <input id="codigo" type="text" name="codigo" value="{{pdf.codigo}}">
-                                {% if departamento  %}
-                                    <h3>Se logró asociar el código al siguiente departamento:</h3> 
-                                    <input id="asociacion" type="text" name="" class="input-sigpae1" value="{{departamento.nombre}}">
-                                {% elif prefijo %}
-                                    <h3>No se logro asociar el codigo a un departamento pero si a:</h3>
-                                    <input id="asociacion_sin_dep" type="text" name="" value="{{prefijo.asociacion}}">
-
-                                {% else %}
-                                    <h3>No se pudo asociar el código a ningún departamento, ¿Quiere Proponerlo?</h3>
-                                    <button id="si" type="button" class="btn btn-default">Si</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                                    <div id="preForm">
-                                        <input id="siglas" type="text" name="siglas" value="{{siglas}}">
-                                        <select name="asociacion"> 
-                                        <option value="">Ninguno</option>
-                                        {% for d in departamentos %}
-                                            <option value="{{d.nombre}}">{{d.nombre}}</option>
-                                        {% endfor %}
-                                        </select>
-                                    </div>
-                            
-                                {% endif %}
-                            </div>
-                            <div class="modal-footer"> 
-                                <button id="aceptar" type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
-                            {% else %}
-                                <h3>No se pudo extraer el código</h3>
-                            {% endif %}
-                                <button id="close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
+                    </div>
+                    {% elif field.name == "texto" %}
+                    <div class="control-group" id="{{field.name}}-state">
+                        <div class="input-group {{field.name}}">
+                            <span class="input-group-addon tags-unete" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
                         </div>
+                        <span class="error" id="{{ field.name }}-icon"></span>
+                        <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
+                        {{ field.errors }}
+                    </div>
+                    {% else %}
+                    <div class="control-group" id="{{field.name}}-state">
+                        <div class="input-group {{field.name}}">
+                            <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                        </div>
+                        <span class="error" id="{{ field.name }}-icon"></span>
+                        <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
+                        {{ field.errors }}
+                    </div>
+                    {% endif %}
+
+                {% endfor %}
+                <div class="control-group" >
+                    <div class="input-group">
+                        <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>Encargado:</b></span>
+                        {% if encargado != None %}
+                        <input aria-describedby="basic-addon1" class="form-control can_hide " value="{{encargado}}" id="encargado" required="False" type="text" readonly>
+                        {% else %}
+                        <input aria-describedby="basic-addon1" name="encargado1" class="form-control can_hide " id="encargado" value="" required="False" type="text" readonly>
+                        {% endif %}
+                    </div>
+                    <span class="error" id="{{ field.name }}-icon"></span>
+                    <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
+                    {{ field.errors }}
+                </div>
+
+                <input type="checkbox" class="encargado can_hide" id="Departamento" name="check" value="Departamento"> <b class="can_hide"> Departamento</b>
+                
+                <input type="checkbox" class="encargado can_hide" id="Coordinacion" value="Coordinacion" name="check" value="Coordinacion"><b class="can_hide"> Coordinación</b>
+                
+                <select id="departamentos" name="departamentos" class="dinamica form-control"></select>
+
+                <select id="decanatos" class="dinamica form-control"></select>
+
+                <select id="coordinaciones" name="coordinacion" class="dinamica form-control"></select> 
+                
+                <input type="hidden" name="pdf_id" value="{{ pdf.id }}">
+                
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                
+                {% for field in campos %}
+                    <div class="control-group" id="{{field.name}}-state">
+                        <div class="input-group {{field.campo_adicional}}">
+                            <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.campo_adicional }}:</b></span>
+                        </div>
+                        <input name="{{field.campo_adicional}}" aria-describedby="basic-addon1" class="form-control can_hide " value="{{field.contenido}}" required="False" type="text">
+                    </div>
+                {% endfor %}
+                
+                <div id="formset">
+                    <div class="campos_adicionales">
+                        <select name="campo_adicional" class="nombre_campo form-control form-control-sigpae">
+                            <option value="">------------</option>
+                            <option value="ninguna">Otro Campo</option>
+                            {% for n in nombres%}
+                            <option value="{{n.nombre}}">{{n.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                        <input class='campo input-sigpae' type="text" class="input-sigpae" name="contenido_campos">
                     </div>
                 </div>
-                {% endif %}
-
+                <a id="agregar" class="can_hide">Agregar campo adicional.</a>
+                <a id="agregar_otro">Agregar otro.</a> 
+                
                 <!-- Modal -->
                 <div id="confirmacion" class="modal fade" role="dialog">
                     <div class="modal-dialog">
@@ -163,56 +136,143 @@
                         </div>
                     </div>
                 </div>
-                <div id="formset">
-                    <div class="campos_adicionales">
-                        <select name="nombre_campo" class="form-control form-control-sigpae">
-                            {% for n in nombres%}
-                            <option value="{{n.nombre}}">{{n.nombre}}</option>
-                            {% endfor %}
-                        </select>
-                        <input type="text" name="campo" class="input-sigpae">
+                            
+                {% if not modifying %}
+                <!-- Modal de extraccion de codigo -->
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
 
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            {% if pdf.codigo %}
+                                <h4 class="modal-title">Se extrajo este código</h4>
+                            </div>
+                            <div class="modal-body">
+                                <input id="codigo" type="text" name="codigo" value="{{pdf.codigo}}">
+                                {% if departamento  %}
+                                    <h3>Se logró asociar el código al siguiente departamento:</h3> 
+                                    <input id="asociacion" type="text" name="" class="input-sigpae1" value="{{departamento.nombre}}">
+                                {% elif prefijo %}
+                                    <h3>No se logro asociar el codigo a un departamento pero si a:</h3>
+                                    <input id="asociacion_sin_dep" type="text" name="" value="{{prefijo.asociacion}}">
+
+                                {% else %}
+                                    <h3>No se pudo asociar el código a ningún departamento, ¿Quiere Proponerlo?</h3>
+                                    <button id="si" type="button" class="btn btn-default">Si</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                    <div id="preForm">
+                                        <input type="text" name="siglas" value="{{siglas}}">
+                                        <select name="asociacion"> 
+                                        <option value="">Ninguno</option>
+                                        {% for d in departamentos %}
+                                            <option value="{{d.nombre}}">{{d.nombre}}</option>
+                                        {% endfor %}
+                                        </select>
+                                    </div>
+                            
+                                {% endif %}
+                            </div>
+                            <div class="modal-footer"> 
+                                <button id="aceptar" type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                            {% else %}
+                                <h3>No se pudo extraer el código</h3>
+                            {% endif %}
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <a id="agregar" class="can_hide">Agregar campo adicional.</a>
-                <a id="agregar_otro">Agregar otro.</a> 
-                </form>
-                <button class="botonTrans1" id="button-signup">Guardar Cambios</button> 
+                {% endif %}
 
+            </form>
+            <div id="nuevo_campo" class="modal fade" role="dialog">
+                <div class="modal-dialog">
 
-
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Escriba el nuevo campo que desea agregar</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input id="newEntry" type="text" name="newEntry">
+                        </div>
+                        <div class="modal-footer"> 
+                            <button id="aceptarNewEntry" type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            <div id="falloCreado" class="modal fade" role="dialog">
+                <div class="modal-dialog">
 
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">El Campo Adicional ya se encuentra en la lista de campos actual</h4>
+                        </div>
+                        <div class="modal-footer"> 
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="botonTrans1" id="button-signup">Guardar Cambios</button>
+        </div>
     </div>
+
+
+
 {% block custom_script %}
     <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
-
     <script type="text/javascript" src="{% static 'js/pdfobject.js' %}"></script>
-
     <script>
+
         $(document).ready(function() {
+            
+            $(document).on('change', 'select[name="campo_adicional"]', function(){
+                alert('JAJA');
+                if ($(this).val() == "ninguna") {
+                    $('#nuevo_campo').modal('toggle');
+                    $('#nuevo_campo').modal('show');
+                };
+            });
+            
             $('.campos_adicionales').hide();
+            
             $('#agregar_otro').hide();
+            
             $('#myModal').modal('toggle');
+            
             $('#myModal').modal('show');
+            
             var asociacion = $('#asociacion').val();
             $('#aceptar').click(function(){
               $('#encargado').val(asociacion);
             });
+
             $('#close').click(function(){
               $('#id_codigo').val("");
             });
+            
             $('#preForm').hide();
+
             $('#si').click(function() {
                 $('.aprobado').hide();
-
                 $('.aprobado').removeAttr( "checked" );
                 $('#preForm').show();
             });
+
             $(".dinamica").hide();
+            
             $("#drag").css('display','none');
+
             PDFObject.embed("{{ pdf.pdf.url }}" , "#pdf");
            
             /* Estos son configuraciones para el display
@@ -232,7 +292,6 @@
 
             $('#agregar').click(function(){
                 $('.campos_adicionales').attr('id', 'nombre'+(id).toString());
-                
                 $('.campos_adicionales').show();
                 $('#agregar').hide();
                 $('#agregar_otro').show();
@@ -243,6 +302,7 @@
                 id = id +1;
                 $('#agregar_otro').show();
                 $(".campos_adicionales").first().clone().appendTo( "#formset" );
+                $('.campo').last().val('');
                 $('.campos_adicionales').last().attr('id', 'nombre'+(id).toString());
                 
             });
@@ -258,11 +318,43 @@
                 $documento.css('display','block');
                 $("#formulario").before($documento);
                 $(".can_hide").show();
+            });
+        });
+            /*$('.nombre_campo').on('change', function() {
+                if ($(this).val() == "ninguna") {
+                    $('#nuevo_campo').modal('toggle');
+                    $('#nuevo_campo').modal('show');
+                };
 
+            });*/
 
-
-            });            
-         });
+            $('#aceptarNewEntry').click(function() {
+                $.ajax({
+                    url: '{% url "crearCampo" %}',
+                    data: {
+                        'campo' : $('#newEntry').val()
+                    },
+                    dataType: 'json',
+                    success: function(data){
+                            if(data.creado) {
+                                $('.nombre_campo').each(function() {
+                                    var option = $(this).val();
+                                    $(this).append($('<option>', {
+                                    value: data.nombre,
+                                    text: data.nombre
+                                    }));
+                                    if( option == "ninguna" ) {
+                                        $(this).val(data.nombre);
+                                    }
+                                });
+                            }
+                            else{
+                                $('#falloCreado').modal('toggle');
+                                $('#falloCreado').modal('show');                            
+                            }
+                    }
+                });
+            });       
 
         $('#button-signup').click(function(){
             event.preventDefault();
@@ -279,12 +371,12 @@
             else{
                 $('#form').submit();
             }
-
         });
 
         $('input').on('change', function() {
             $('input').not(this).prop('checked', false);  
         });
+
         $('.encargado').click(function(){
             if ($(this).attr('id') == 'Departamento'){
                 var $departamentos = $('#departamentos');
@@ -303,7 +395,6 @@
                     success: function(data){
                             var tamano = data.departamento.length;
                             for (var i = 0; i < tamano; i++) {
-                                console.log(data.departamento[i].nombre);
                                 $('#departamentos').append($('<option>', {
                                     value: data.departamento[i].nombre,
                                     text: data.departamento[i].nombre
@@ -312,7 +403,8 @@
                             }
                     }
                 });
-            }else{
+            }
+            else{
                 var $decanatos = $('#decanatos');
                 $decanatos.show();
                 $('#departamentos').hide();
@@ -369,7 +461,6 @@
         });
 
 
-
         $('#id_codigo').change(function(){
             codigo = $(this).val();
             $.ajax({
@@ -395,10 +486,6 @@
                     }
                 });
         });
-
-
-
-
 
     </script>
 {% endblock %}
