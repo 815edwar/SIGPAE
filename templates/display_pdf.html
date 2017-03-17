@@ -237,7 +237,6 @@
         $(document).ready(function() {
             
             $(document).on('change', 'select[name="campo_adicional"]', function(){
-                alert('JAJA');
                 if ($(this).val() == "ninguna") {
                     $('#nuevo_campo').modal('toggle');
                     $('#nuevo_campo').modal('show');
@@ -424,7 +423,6 @@
                                 text: '---'
                             }));
                             for (var i = 0; i < tamano; i++) {
-                                console.log(data.decanatos[i].nombre);
                                 $decanatos.append($('<option>', {
                                     value: data.decanatos[i].id,
                                     text: data.decanatos[i].nombre
@@ -438,7 +436,6 @@
         
         $('#decanatos').change(function(){
             $('#coordinaciones').find('option').remove().end();
-            console.log($(this).val());
             $.ajax({
                     url: '{% url "encargado" %}',
                     data: {
