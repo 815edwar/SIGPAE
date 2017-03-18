@@ -8,18 +8,18 @@
             <table id="tabla" class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Período de Entrada en Vigencia</th>
+                        <th>Sigla</th>
+                        <th>Encargado</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for programa in programas %}
+                    {% for p in prefijos %}
                     <tr>
                         <td>
-                            <a href="{% url 'program_details' programa.id %}">{{programa.denominacion}}</a>
+                            {{p.siglas}}
                         </td>
                         <td>
-                        	{{programa.trim}} {{programa.año}}  
+                        	{{p.asociacion}}
                         </td>
 
                     </tr>

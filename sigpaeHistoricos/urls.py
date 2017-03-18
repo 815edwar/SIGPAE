@@ -7,7 +7,11 @@ urlpatterns = [
     url(r'^agregar_pdf/$', NewPdf.as_view(), name='agregar_pdf'),
     url(r'^pdf_list/$', PDFList.as_view(), name='pdf_list'),
     url(r'^programa_list/$', ProgramaList.as_view(), name='programa_list'),
+    url(r'^aprobar_siglas/$', SiglasList.as_view(), name='siglas_list'),
+
     url(r'^ajax/encargado/$', views.encargado, name='encargado'),
+    url(r'^ajax/crearCampo/$', views.crearCampo, name='crearCampo'),
+    url(r'^ajax/siglas/$', views.siglas, name='siglas'),
     url(r'^program_detail/(?P<pk>\d+)/$', DisplayProgram.as_view(), name="program_details")
 
 ]

@@ -23,7 +23,7 @@ class ProgramaList(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProgramaList, self).get_context_data(**kwargs)
-        programas = Programa.objects.all()
+        programas = Solicitud.objects.all()
         context['programas'] = programas
         return context
 
@@ -32,10 +32,12 @@ class DisplayProgram(TemplateView):
 
     def get_context_data(self,**kwargs):
         context= super(DisplayProgram,self).get_context_data(**kwargs)
-        programa = Programa.objects.get(pk=kwargs['pk'])
-        horas_semanales = programa.horas_practica + programa.horas_teoria + programa.horas_laboratorio 
+        solicitud = Solicitud.objects.get(pk=int(kwargs['pk']))
+        programa = solicitud.programa
+        horas_semanales = programa.h_prac + programa.h_teoria + programa.h_lab 
         context['programa'] = programa
         context['horas_semanales'] = horas_semanales
+        context['solicitud'] = solicitud
         return context
 
 
@@ -54,6 +56,17 @@ class PDFList(TemplateView):
         context['pdf_names'] = pdf_names
         return context
 
+class SiglasList(TemplateView):
+    template_name = 'siglas_por_aprobar.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SiglasList, self).get_context_data(**kwargs)
+
+        prefijos = Prefijo.objects.filter(aprobado=False)
+        context['prefijos'] = prefijos
+
+        return context
+
 
 class ModifyPDF(TemplateView):
     template_name = 'display_pdf.html'
@@ -61,11 +74,16 @@ class ModifyPDF(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ModifyPDF, self).get_context_data()
         pdf = Transcripcion.objects.get(pk=int(kwargs['pk']))
+        otro_campo = ContenidoExtra.objects.filter(transcripcion=pdf.id)
         pdf_form = PdfForm(instance=pdf)
+        contenido_form = ContenidoFormSet()
+        context['contenido'] = contenido_form
         context['formulario'] = pdf_form
         context['pdf'] = pdf
         context['encargado'] = pdf.encargado
         context['modifying'] = True
+        context['nombres'] = CampoAdicional.objects.all();
+        context['campos'] = otro_campo
         return context
 
     @staticmethod
@@ -83,7 +101,28 @@ class ModifyPDF(TemplateView):
                 pdf.save()
             else:
                 pdf_form.save()
+
+            campo = ContenidoExtra.objects.filter(transcripcion=pdf.id)
+            print("\n\n\n\n")
+            for c in campo:
+                print("Entro en for con " + c.campo_adicional.nombre)
+                if c.campo_adicional.nombre in post_values:
+                    print("Entro en if")
+                    c.contenido = post_values[c.campo_adicional.nombre]
+                    c.save()
+
+            if 'campo_adicional' in post_values:
+                campos_adicionales = post_values.pop('campo_adicional')
+                contenido_campos = post_values.pop('contenido_campos')
+                print(campos_adicionales, contenido_campos)
+                for i in range(len(campos_adicionales)):
+                    if campos_adicionales[i] != "" and campos_adicionales[i] != "ninguna":
+                        campo = CampoAdicional.objects.get(nombre=campos_adicionales[i])
+                        ContenidoExtra.objects.create(transcripcion=pdf, campo_adicional=campo, 
+                                                      contenido=contenido_campos[i])
+
             return redirect('home')
+
         else:
             context = {'formulario': pdf_form, 'pdf': pdf}
             return render(request, 'display_pdf.html', context)
@@ -101,7 +140,8 @@ class DisplayPDF(TemplateView):
         msgs.used = True
         pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(instance=pdf)
-        if pdf.codigo != None:
+        if pdf.codigo != None and pdf.codigo != '':
+            print('entre')
             expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
             patron = re.compile(expresion)
             matcher = patron.search(pdf.codigo)
@@ -117,9 +157,14 @@ class DisplayPDF(TemplateView):
             else:
                 context['siglas'] = matcher.group(0)
                 context['departamentos'] = Departamento.objects.all()
+        elif pdf.codigo == '':
+            context['modifying'] = True
+
         context['formulario'] = pdf_form
         context['pdf'] = pdf
         context['encargado'] = None
+        context['nombres'] = CampoAdicional.objects.all();
+        
         return context
 
     @staticmethod
@@ -127,12 +172,20 @@ class DisplayPDF(TemplateView):
         post_values = request.POST.copy()
         if 'siglas' in post_values:    
             if(post_values['siglas'] != ''):
-                prefijo_nuevo = Prefijo.objects.create(siglas = post_values['siglas'],\
-                    asociacion = post_values['asociacion'], aprobado = False)
+                prefijo_nuevo = Prefijo.objects.create(siglas = post_values['siglas'],
+                                                       asociacion = post_values['asociacion'], 
+                                                       aprobado = False)
+                prefijo_nuevo.save()
+        elif 'siglas2' in post_values:    
+            if(post_values['siglas2'] != ''):
+                prefijo_nuevo = Prefijo.objects.create(siglas = post_values['siglas2'],\
+                    asociacion ="", aprobado = False)
                 prefijo_nuevo.save()
         pdf_id = int(post_values['pdf_id'])
         pdf = Transcripcion.objects.get(id=pdf_id)
         pdf_form = PdfForm(post_values, instance=pdf)
+        print(post_values['encargado1'] )
+        print('\n\n\n\n\n')
         if pdf_form.is_valid():
             if 'check' in post_values and post_values['check'] == 'Departamento':
                 pdf.encargado = post_values['departamentos']
@@ -141,8 +194,21 @@ class DisplayPDF(TemplateView):
                 pdf.encargado = post_values['coordinacion']
                 pdf.save()
             else:
+                pdf.encargado = post_values['encargado1']   
                 pdf_form.save()
+
+            if 'campo_adicional' in post_values:
+                campos_adicionales = post_values.pop('campo_adicional')
+                contenido_campos = post_values.pop('contenido_campos')
+                print(campos_adicionales, contenido_campos)
+                for i in range(len(campos_adicionales)):
+                    if campos_adicionales[i] != "" and campos_adicionales[i] != "ninguna":
+                        campo = CampoAdicional.objects.get(nombre=campos_adicionales[i])
+                        ContenidoExtra.objects.create(transcripcion=pdf, campo_adicional=campo, 
+                                                      contenido=contenido_campos[i])
+
             return redirect('home')
+
         else:
             context = {'formulario': pdf_form, 'pdf': pdf}
             return render(request, 'display_pdf.html', context)
@@ -176,10 +242,12 @@ class NewPdf(TemplateView):
             newpdf.save()
             messages.add_message(request, messages.INFO, str(newpdf.id))
 
-            newpdf.codigo = match_codigo_asig(text)
-            newpdf.save()
-            if newpdf.codigo is not None:
-                match_dpto(newpdf.codigo)
+            if post_values['extraer'] == 'si':
+                newpdf.codigo = match_codigo_asig(text)
+                newpdf.save()
+            else:
+                newpdf.codigo = ''
+                newpdf.save()
             return redirect('mostrar_pdf')
         else:
             pdf_form = AddPdfForm(post_values, request.FILES)
@@ -226,6 +294,30 @@ def extract_text_from_image(path):
     return trancription
 
 
+def crearCampo(request):
+    campo = request.GET.get('campo', None)
+
+    campos_actuales = CampoAdicional.objects.all()
+
+    for c in campos_actuales:
+        if campo.lower().replace(" ", "") == c.nombre.lower().replace(" ", ""):
+            print("\n\n\n\n\n")
+            print("Entro")
+            print("\n\n\n\n\n")
+            data = {
+                'creado' : False
+            }
+            return JsonResponse(data)
+
+    CampoAdicional.objects.create(nombre=campo)
+    data = {
+        'creado' : True,
+        'nombre' : campo
+    }
+
+    return JsonResponse(data)
+
+
 def encargado(request):
     responsable = request.GET.get('encargado', None)
     decanato = request.GET.get('decanato', None)
@@ -243,6 +335,27 @@ def encargado(request):
         coordinaciones = list(Coordinacion.objects.filter(decanato=int(decanato)).values())
         data = {
             'coordinaciones': coordinaciones
+        }
+
+    return JsonResponse(data)
+
+
+
+def siglas(request):
+    codigo = request.GET.get('codigo', None)
+    siglas = match_dpto(codigo)
+    print(siglas)
+    try:
+        prefijo = Prefijo.objects.get(siglas=siglas)
+        print(prefijo.asociacion)
+        data = {
+            'respuesta': prefijo.asociacion,
+            'siglas' : siglas
+        }
+    except:
+        data = {
+            'respuesta': '',
+            'siglas' : siglas
         }
 
     return JsonResponse(data)
@@ -274,10 +387,5 @@ def match_dpto(codigo):
     expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
     patron = re.compile(expresion)
     matcher = patron.search(codigo)
-    if matcher is not None:
-        if matcher.group(0) == "CI" or matcher.group(0) == "CIB":
-            print("El dpto es Computacion")
-            return matcher.group(0)
-        else:
-            print("No se consiguó dpto")
-            return None
+    return matcher.group(0)
+    

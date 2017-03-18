@@ -11,22 +11,22 @@
 			
 			<table class="table table-programa">
 				<thead>
-					<h1>Detalles del programa de {{programa.denominacion}}</h1>
+					<h1>Detalles del programa de {{solicitud.denominacion}}</h1>
 				</thead>
 				<tr>
 					<td class="detail"> Código de la materia:</td>
 
-					<td class="content">{{programa.codigo}}</td>
+					<td class="content">{{solicitud.codigo}}</td>
 				</tr>
 				<tr>
 					<td class="detail"> Período de entrada en vigencia:</td>
 
-					<td class="content">{{programa.periodo}} {{programa.año}}</td>
+					<td class="content">{{programa.fecha_vigTrim}} {{programa.fecha_vigAno}}</td>
 				</tr>
 				<tr>
-					<td class="detail"> Requisitos: </td>
-					{% if programa.requisitos != None %}
-						<td class="content">{{programa.requisitos}}</td>
+					<td class="detail"> Requisitos de créditos: </td>
+					{% if solicitud.requisitos_cred  %}
+						<td class="content">Si tiene</td>
 					{% else %}
 						<td class="content">No tiene requisitos</td>
 					{% endif %}
@@ -34,13 +34,13 @@
 				<tr>
 					<td class="detail">Objetivos Generales:</td>
 
-					<td class="content">{{programa.objetivos_generales}}</td>
+					<td class="content">{{programa.obj_g}}</td>
 				</tr>
 				<tr>
 					<td class="detail"> Objetivos Específicos:</td>
-					{% if programa.objetivos_especificos != "" %}
+					{% if programa.obj_e != "" %}
 
-						<td class="content">{{programa.objetivos_especificos}}</td>
+						<td class="content">{{programa.obj_e}}</td>
 					{% else %}
 						<td>No han sido detallados los objetivos específicos</td>
 					{% endif %}
@@ -48,17 +48,17 @@
 				<tr>
 					<td class="detail"> Horas de teoría:</td>
 
-					<td class="content">{{programa.horas_teoria}}</td>
+					<td class="content">{{programa.h_teoria}}</td>
 				</tr>
 				<tr>
 					<td class="detail"> Horas de práctica:</td>
 
-					<td class="content">{{programa.horas_practica}}</td>
+					<td class="content">{{programa.h_prac}}</td>
 				</tr>
 				<tr>
 					<td class="detail"> Horas de laboratorio:</td>
 
-					<td class="content">{{programa.horas_laboratorio}}</td>
+					<td class="content">{{programa.h_lab}}</td>
 				</tr>
 				<tr>
 					<td class="detail"> Total de horas semanales:</td>
@@ -68,22 +68,37 @@
 				<tr>
 					<td class="detail"> Contenidos Sinópticos:</td>
 
-					<td class="content">{{programa.sinopticos}}</td>
+					<td class="content">{{programa.sinoptico}}</td>
 				</tr>
 				<tr>
 					<td class="detail"> Estrategias Metodológicas:</td>
 
-					<td class="content">{{programa.estrategias_metodologicas}}</td>
+					<td class="content">{{programa.estrategias}}</td>
 				</tr>
 				<tr>
 					<td class="detail"> Estrategias de Evaluación:</td>
 
-					<td class="content">{{programa.estrategias_evaluacion}}</td>
+					<td class="content">{{programa.estrat_eval}}</td>
 				</tr>
 				<tr>
 					<td class="detail"> Fuentes de Información</td>
 
-					<td class="content">{{programa.ftes_info_recomendadas}}</td>
+					<td class="content">{{programa.fuentes}}</td>
+				</tr>
+				<tr>
+					<td class="detail"> Coordinacion: </td>
+
+					<td class="content">{{solicitud.coordinacion}}</td>
+				</tr>
+				<tr>
+					<td class="detail"> Créditos: </td>
+
+					<td class="content">{{solicitud.creditos}}</td>
+				</tr>
+				<tr>
+					<td class="detail"> Decanato: </td>
+
+					<td class="content">{{solicitud.decanato}}</td>
 				</tr>
 
 
