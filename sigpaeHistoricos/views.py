@@ -142,7 +142,7 @@ class DisplayPDF(TemplateView):
         pdf_form = PdfForm(instance=pdf)
         if pdf.codigo != None and pdf.codigo != '':
             print('entre')
-            expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
+            expresion = '[A-Z][A-Z][A-Z]|[A-Z][A-Z]'
             patron = re.compile(expresion)
             matcher = patron.search(pdf.codigo)
             prefijo = Prefijo.objects.filter(siglas = matcher.group(0))
@@ -268,7 +268,7 @@ def extract_text(path):
 
 def extract_text_from_image(path):
     tool = pyocr.get_available_tools()[0]
-    lang = tool.get_available_languages()[0]
+    lang = tool.get_available_languages()[2]
 
     req_image = []
     final_text = []
