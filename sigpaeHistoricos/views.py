@@ -142,7 +142,7 @@ class DisplayPDF(TemplateView):
         pdf_form = PdfForm(instance=pdf)
         if pdf.codigo != None and pdf.codigo != '':
             print('entre')
-            expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
+            expresion = '[A-Z][A-Z][A-Z]|[A-Z][A-Z]'
             patron = re.compile(expresion)
             matcher = patron.search(pdf.codigo)
             prefijo = Prefijo.objects.filter(siglas = matcher.group(0))
@@ -384,7 +384,7 @@ def match_codigo_asig(text):
 
 
 def match_dpto(codigo):
-    expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
+    expresion = '[A-Z][A-Z][A-Z]|[A-Z][A-Z]'
     patron = re.compile(expresion)
     matcher = patron.search(codigo)
     return matcher.group(0)
