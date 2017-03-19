@@ -15,8 +15,8 @@ Para poder correr el proyecto es necesario contar con:
         - sudo apt-get update  
         - sudo apt-get install xpdf
 - SPRINT 3: 
-  - pyocr y wand para python3
-  - Librería psycop2 para python3
+		- pyocr y wand para python3; 
+		- Librería psycop2 para python3
         
 - Además,podría ser necesario instalar dj-database-url :
 - Escriba en el terminal: sudo pip3 install dj-database-url
