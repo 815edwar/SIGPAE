@@ -384,7 +384,7 @@ def match_codigo_asig(text):
 
 
 def match_dpto(codigo):
-    expresion = '[A-Z][A-Z]|[A-Z][A-Z][A-Z]'
+    expresion = '[A-Z][A-Z][A-Z]|[A-Z][A-Z]'
     patron = re.compile(expresion)
     matcher = patron.search(codigo)
     return matcher.group(0)
