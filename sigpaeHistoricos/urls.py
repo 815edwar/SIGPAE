@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^mod_programa/(?P<pk>\d+)/$', ModifyPDF.as_view(), name='ModifyPDF'),
 
     url(r'^ajax/encargado/$', views.encargado, name='encargado'),
-    url(r'^ajax/crearCampo/$', views.crearCampo, name='crearCampo'),
+    url(r'^ajax/crearCampo/$', views.crear_campo, name='crearCampo'),
     url(r'^ajax/siglas/$', views.siglas, name='siglas')
 
 
