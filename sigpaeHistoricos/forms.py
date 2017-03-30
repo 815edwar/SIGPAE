@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from sigpaeHistoricos.models import *
-from django.forms import modelformset_factory
+
 
 class PdfForm(forms.ModelForm):
     class Meta:
@@ -17,20 +17,20 @@ class PdfForm(forms.ModelForm):
                 self.fields[key].widget.attrs['id'] = 'drag1'
                 self.fields[key].widget.attrs['draggable'] = 'true'
                 self.fields[key].widget.attrs['ondragstart'] = 'drag(event)'
-                self.fields[key].widget.attrs['class'] = 'form-control' +" "+ key
+                self.fields[key].widget.attrs['class'] = 'form-control' + " " + key
                 self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
                 self.fields[key].required = False
                 self.fields[key].widget.attrs['required'] = 'False'
 
             elif key == 'horas_practica' or key == 'horas_teoria' or key == 'horas_laboratorio':
 
-                self.fields[key].widget.attrs['class'] = 'form-control horas can_hide'+" "+ key 
+                self.fields[key].widget.attrs['class'] = 'form-control horas can_hide' + " " + key
                 self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
                 self.fields[key].required = False
                 self.fields[key].widget.attrs['required'] = 'False'
 
             else:
-                self.fields[key].widget.attrs['class'] = 'form-control can_hide '+" "+ key
+                self.fields[key].widget.attrs['class'] = 'form-control can_hide ' + " " + key
                 self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
                 self.fields[key].required = False
                 self.fields[key].widget.attrs['required'] = 'False'
@@ -64,9 +64,3 @@ class ContenidoExtraForm(forms.ModelForm):
             self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
             self.fields[key].required = True
             self.fields[key].widget.attrs['required'] = 'True'
-        
-
-
-
-ContenidoFormSet = modelformset_factory(ContenidoExtra, form=ContenidoExtraForm ,  extra=3 )
-

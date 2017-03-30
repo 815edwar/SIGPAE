@@ -6,7 +6,13 @@ body {
   margin: 0;
 }
 #header {
-	margin: auto;
+  margin: auto;
+  width: 100%;
+}
+
+#header-container {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 #navbar {
@@ -83,8 +89,6 @@ body {
   background-color: #D3D3D3;
   padding: 50px;
   margin-top: 10px;
-  margin-left: 0;
-  margin-right: 0;
 }
 
 .bloque{

@@ -14,26 +14,32 @@
                 {{ field.errors }}
             </div>
         {% endfor %}
-        <div class = "tipo row">
-            <div class="col-lg-3 col-md-3 col-xs-3"></div>
-            <div class="col-lg-2 col-md-2 col-xs-2">
-                <select class = "selectTrans2" name="tipo">
-                    <option value="texto">Texto</option>
-                    <option value="html">Imagen</option>
-                </select>
-                <select class = "selectTrans2" name="extraer">
-                    <option value="">Extraer</option>
-                    <option value="si">Código y depto.</option>
-                </select>
+        <div class="container-fluid tipo">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <img class="img-responsive" src="{% static 'images/pdf.png' %}" alt="pdftexto.png">
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <select class = "selectTrans2" name="tipo" data-toggle="tooltip" title="Escoge Texto si el programa a transcribir proviene de un pdf de texto. Si es un programa escaneado, escoge Imagen.">
+                        <option value="texto">Texto</option>
+                        <option value="html">Imagen</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <select class = "selectTrans2" name="extraer" data-toggle="tooltip" title="Escoge la posibilidad de que el sistema extraiga de manera automática información del programa.">
+                        <option value="">Extraer</option>
+                        <option value="si">Código y depto.</option>
+                    </select>
+                </div>
 
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+
+                <div class="col-lg-2 col-md-2 col-xs-2">
+                    <button class="botonTrans2" type="submit" value="Registrar" id="button-signup">Convertir</button>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
             </div>
-            <div class="col-lg-2 col-md-2 col-xs-2 clip-div">
-                <img class="clip" src="{% static 'images/pdf-icon2.png' %}" alt="pdftexto.png">
-            </div>
-            <div class="col-lg-2 col-md-2 col-xs-2">
-                <button class="botonTrans2" type="submit" value="Registrar" id="button-signup">Convertir</button>
-            </div>
-            <div class="col-lg-3 col-md-3 col-xs-3"></div>
+
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         </div>
     </form>

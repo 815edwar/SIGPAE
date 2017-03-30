@@ -1,4 +1,5 @@
-"""SIGPAE URL Configuration
+"""
+SIGPAE URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
@@ -24,5 +25,4 @@ urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^historicos/', include('sigpaeHistoricos.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^mod_programa/(?P<pk>\d+)/$', ModifyPDF.as_view(), name='ModifyPDF'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

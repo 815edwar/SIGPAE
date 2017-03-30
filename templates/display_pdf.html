@@ -11,7 +11,7 @@
 <body>
     <div class="row">
         
-    <div id="panel_config" class="col-lg-5 col-md-5 col-xs-5">
+    <div id="panel_config" class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
         <button id="config_2" class="boton">Configuracion 2</button>
         <button id="volver" class="boton" >Configuracion 1</button>
         <a href="{{request.META.HTTP_REFERER}}"><button id="back" class="boton" >Volver</button></a>
@@ -237,7 +237,6 @@
         $(document).ready(function() {
             
             $(document).on('change', 'select[name="campo_adicional"]', function(){
-                alert('JAJA');
                 if ($(this).val() == "ninguna") {
                     $('#nuevo_campo').modal('toggle');
                     $('#nuevo_campo').modal('show');
@@ -424,7 +423,6 @@
                                 text: '---'
                             }));
                             for (var i = 0; i < tamano; i++) {
-                                console.log(data.decanatos[i].nombre);
                                 $decanatos.append($('<option>', {
                                     value: data.decanatos[i].id,
                                     text: data.decanatos[i].nombre
@@ -438,7 +436,6 @@
         
         $('#decanatos').change(function(){
             $('#coordinaciones').find('option').remove().end();
-            console.log($(this).val());
             $.ajax({
                     url: '{% url "encargado" %}',
                     data: {
