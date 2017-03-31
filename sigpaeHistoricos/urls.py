@@ -13,7 +13,10 @@ urlpatterns = [
 
     url(r'^ajax/encargado/$', views.encargado, name='encargado'),
     url(r'^ajax/crearCampo/$', views.crear_campo, name='crearCampo'),
-    url(r'^ajax/siglas/$', views.siglas, name='siglas')
+    url(r'^ajax/proponerTranscripcion/$', views.ProponerTranscripcion, name='ProponerTranscripcion'),
+    url(r'^ajax/siglas/$', views.siglas, name='siglas'),
+
+    
 
 
 ]

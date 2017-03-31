@@ -105,13 +105,14 @@ class PDFList(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(PDFList, self).get_context_data(**kwargs)
 
-        programas = Transcripcion.objects.all()
+        programas = Transcripcion.objects.filter(propuesto=False)
         context['programas'] = programas
         pdf_names = []
         for programa in programas:
             nombre_pdf = programa.pdf.url.split('/')[-1]
             pdf_names.append(nombre_pdf)
         context['pdf_names'] = pdf_names
+        context['tform'] = TranscriptorForm()
         return context
 
 
@@ -223,7 +224,20 @@ class ModifyPDF(TemplateView):
                         ContenidoExtra.objects.create(transcripcion=pdf, campo_adicional=campo,
                                                       contenido=contenido_campos[i])
 
+            if (pdf.codigo != "" and pdf.encargado!="" and pdf.denominacion!="" and pdf.periodo!=""
+                and pdf.año!= "" and pdf.horas_practica!="" and pdf.horas_teoria!=" "
+                and pdf.horas_laboratorio!= "" and pdf.sinopticos!= "" and pdf.ftes_info_recomendadas!= "" and
+                pdf.codigo != None and pdf.encargado!=None and pdf.denominacion!=None and pdf.periodo!=None
+                and pdf.año!= None and pdf.horas_practica!=None and pdf.horas_teoria!=" "
+                and pdf.horas_laboratorio!= None and pdf.sinopticos!= None and pdf.ftes_info_recomendadas!= None):
+                print("Codigo no vacio\n\n\n")
+                pdf.pasa = True
+                pdf.save()
+            else :
+                pdf.pasa = False
+                pdf.save()
             return redirect('home')
+
 
         else:
             context = {'formulario': pdf_form, 'pdf': pdf}
@@ -631,3 +645,44 @@ def match_dpto(codigo):
     patron = re.compile(expresion)
     matcher = patron.search(codigo)
     return matcher.group(0)
+
+#  Función que dado unos datos de transcriptor los introduce a la base y 
+#  propone la transcripcion para sigpae
+#  @date [29/03/2017]
+#
+#  @author [PowerSoft]
+#
+#  @param [String] request: La informacion de la peticion del usuario
+#
+#  @returns Diccionario con booleano para informar si el transcriptor fue creado o no 
+
+def ProponerTranscripcion(request):
+
+    nombre = request.GET.get('nombre', None)
+    apellido = request.GET.get('apellido', None)
+    correo = request.GET.get('correo', None)
+    tlf = request.GET.get('tlf', None)
+    transcripcion = request.GET.get('programa',None)
+
+    programa = Transcripcion.objects.get(id=transcripcion)
+
+    transcriptor = Transcriptor.objects.create()
+    transcriptor.nombre = nombre
+    transcriptor.apellido = apellido 
+    transcriptor.correo = correo
+    transcriptor.telefono = tlf
+
+    programa.propuesto = True
+
+    transcriptor.save()
+    programa.save()
+
+    propuesto = propuestos.objects.create(transcriptor=transcriptor,programa=programa)
+
+    propuesto.save()
+
+    data = {
+        'creado': True,
+    }
+
+    return JsonResponse(data)
