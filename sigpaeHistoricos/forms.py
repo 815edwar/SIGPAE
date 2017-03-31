@@ -7,7 +7,7 @@ from sigpaeHistoricos.models import *
 class PdfForm(forms.ModelForm):
     class Meta:
         model = Transcripcion
-        exclude = ['pdf', 'encargado']
+        exclude = ['pdf', 'encargado','pasa','propuesto']
 
     def __init__(self, *args, **kwargs):
         super(PdfForm, self).__init__(*args, **kwargs)
@@ -71,3 +71,22 @@ class ContenidoExtraForm(forms.ModelForm):
             self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
             self.fields[key].required = True
             self.fields[key].widget.attrs['required'] = 'True'
+
+
+class TranscriptorForm(forms.ModelForm):
+   
+    class Meta:
+        model = Transcriptor 
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(TranscriptorForm,self).__init__(*args, **kwargs)
+
+        for key in self.fields:
+            self.fields[key].widget.attrs['class'] = 'form-control '
+            self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
+            self.fields[key].required = True
+            self.fields[key].widget.attrs['required'] = 'True'
+        self.fields['correo'].widget.attrs['placeholder'] = 'Ej: correo@correo.com'
+        self.fields['telefono'].widget.attrs['placeholder'] = 'Ej: 0414-0001122'
+           

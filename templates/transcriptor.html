@@ -1,0 +1,24 @@
+{% for programa in programas%}
+<div class="modal fade" id="contactModal{{programa.id}}" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Datos del Transcriptor</h3>
+      </div>
+      <div class="modal-body">
+        <label>Nombres: <input id="nombre" type="text" name="nombre"></label>
+        <label>Apellidos: <input id="apellido" type="text" name="apellido"></label>
+        <label> Correo: <input id="correo" type="text" name="correo"></label>
+          <label>Telefono: <input id="tlf" type="text" name="tlf"></label>
+ 
+      </div>
+    <div class="modal-footer">
+        <button id="Transcriptor" type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+        <button type="button" data-dismiss="modal">No</button>
+    </div>
+    </div>
+  </div>
+</div>
+{% endfor%}
