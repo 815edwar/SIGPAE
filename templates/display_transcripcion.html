@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block custom_css %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/display_program.css' %}">
+{% endblock %}
+{% block content%}
+
+		<div class="row">
+		<div class="table-responsive">
+			
+			<table class="table table-programa">
+				<thead>
+					<h1>Detalles del transcripcion de {{transcripcion.denominacion}}</h1>
+				</thead>
+				<tr>
+					<td class="detail"> Código de la materia:</td>
+
+					<td class="content">{{transcripcion.codigo}}</td>
+				</tr>
+				<tr>
+					<td class="detail"> Período de entrada en vigencia:</td>
+
+					<td class="content">{{transcripcion.periodo}} {{transcripcion.año}}</td>
+				</tr>
+				<!-- <tr>
+					<td class="detail">Objetivos Generales:</td>
+
+					<td class="content">{{transcripcion.obj_g}}</td>
+				</tr>
+				<tr>
+					<td class="detail"> Objetivos Específicos:</td>
+					{% if transcripcion.obj_e != "" %}
+
+						<td class="content">{{transcripcion.obj_e}}</td>
+					{% else %}
+						<td>No han sido detallados los objetivos específicos</td>
+					{% endif %}
+				</tr> -->
+				<tr>
+					<td class="detail"> Horas de teoría:</td>
+
+					<td class="content">{{transcripcion.horas_teoria}}</td>
+				</tr>
+				<tr>
+					<td class="detail"> Horas de práctica:</td>
+
+					<td class="content">{{transcripcion.horas_practica}}</td>
+				</tr>
+				<tr>
+					<td class="detail"> Horas de laboratorio:</td>
+
+					<td class="content">{{transcripcion.horas_laboratorio}}</td>
+				</tr>
+				<tr>
+					<td class="detail"> Contenidos Sinópticos:</td>
+
+					<td class="content">{{transcripcion.sinopticos}}</td>
+				</tr>
+				<tr>
+					<td class="detail"> Fuentes de Información</td>
+
+					<td class="content">{{transcripcion.ftes_info_recomendadas}}</td>
+				</tr>
+				<tr>
+					<td class="detail"> Encargado </td>
+
+					<td class="content">{{transcripcion.encargado}}</td>
+				</tr>
+				<tr>
+					<td class="detail"> Créditos: </td>
+
+					<td class="content">{{transcripcion.creditos}}</td>
+				</tr>
+				
+
+
+			</table>
+
+		</div>
+		</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 ">
+            <table id="tabla" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Periodo</th>
+                        <th>Año</th>
+                        <th>Última modificación</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for programa in programas %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'Transcripcion_details' programa.id %}">{{programa.denominacion}}</a>
+                            
+                        </td>
+                        <td>
+                            {% if programa.periodo != None %}
+                                {{ programa.periodo }}
+                            {% else %}
+                                No especificado
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if programa.año != None %}
+                                {{ programa.año }}
+                            {% else %}
+                                No especificado
+                            {% endif %}
+
+                        </td>
+                        <td>
+                            {{ programa.fecha_modificacion }}
+                        </td>
+                        <td>
+                            
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block custom_script %}
+    
+
+    <script>
+        var tabla = $('#tabla').DataTable({
+            "language": {
+                "sProcessing":    "Procesando...",
+                "sLengthMenu":    "Mostrar _MENU_ registros",
+                "sZeroRecords":   "No se encontraron resultados",
+                "sEmptyTable":    "Ningún dato disponible en esta tabla",
+                "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":   "",
+                "sSearch":        "Buscar: ",
+                "sUrl":           "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":    "Último",
+                    "sNext":    "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            "bPaginate": false,
+            "columnDefs": [
+                { "width": "20%", "targets": 0 },
+                { "width": "20%", "targets": 1 }
+
+            ]
+
+
+        });
+    </script>
+{% endblock%}

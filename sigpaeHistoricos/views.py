@@ -50,6 +50,26 @@ class ProgramaList(TemplateView):
         context['programas'] = programas
         return context
 
+class PasaList(TemplateView):
+    template_name = 'pasa.html'
+
+    #  Permite obtener el contexto necesario para renderizar la vista
+    #
+    #  @date [13/03/2017]
+    #
+    #  @author [PowerSoft]
+    #
+    #  @param [**kwargs] Diccionario con datos pasados en el template
+    #
+    #  @returns Diccionario con el conjunto de programas guardados en SIGPAE
+    #
+    def get_context_data(self, **kwargs):
+        context = super(PasaList, self).get_context_data(**kwargs)
+        programas = Transcripcion.objects.filter(propuesto=True)
+        context['programas'] = programas
+        return context
+        
+
 
 # Vista que muestra un programa de SIGPAE
 #
@@ -79,6 +99,26 @@ class DisplayProgram(TemplateView):
         context['programa'] = programa
         context['horas_semanales'] = horas_semanales
         context['solicitud'] = solicitud
+        return context
+
+class DisplayTranscripcion(TemplateView):
+    template_name = "display_transcripcion.html"
+
+    #  Permite obtener el contexto necesario para renderizar la vista
+    #
+    #  @date [13/03/2017]
+    #
+    #  @author [PowerSoft]
+    #
+    #  @param [**kwargs] Diccionario con datos pasados en el template
+    #
+    #  @returns Diccionario con el programa de SIGPAE que se va a mostrar
+    #           y los datos extra del programa que se mostraran en la vista.
+    #
+    def get_context_data(self, **kwargs):
+        context = super(DisplayTranscripcion, self).get_context_data(**kwargs)
+        transcripcion = Transcripcion.objects.get(pk=int(kwargs['pk']))
+        context['transcripcion'] = transcripcion
         return context
 
 
