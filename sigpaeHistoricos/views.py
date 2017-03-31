@@ -703,7 +703,10 @@ def ProponerTranscripcion(request):
     transcripcion = request.GET.get('programa',None)
 
     if (nombre!="" and apellido!="" and correo!="" and tlf!=''):
-        completo = True
+        if (re.match('[^@]+@[^@]+\.[^@]+',correo) and re.match('[0-9]{11}',tlf)):
+            completo = True
+        else:   
+            completo = False
     else:   
         completo = False
 

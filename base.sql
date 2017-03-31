@@ -1,22 +1,22 @@
-	INSERT INTO "sigpaeHistoricos_programa" VALUES(1,'3','1','3','abr-jul','2001','Al finalizar
-	el curso los estudiantes tendrán un conocimiento básico sobre la noción de protocolo de comunicación, la 
-	estructura de software/hardware de redes locales, las funciones principales de las capas de software en el modelo TCP/IP y 
-	algunos modelos de programación en redes, en especial el modelo cliente­servidor.','','TEMA 1: Conceptos básicos. Internet. Redes locales, de área ancha, etc. Protocolos de uso e implementación de 
-	servicios. Estructuración de software de red por capas. Modelos TCP/IP y OSI. Protocolos basados en pregunta­
-	respuesta. Servicios de red.
-	TEMA 2: Introducción a Internet (oredesIP). Identificadores de máquimas: dirección “física” y dirección IP. Espacio 
-	de direcciones IP: dominios y máquinas. Nombres nemónicos: servicio DNS. Asociación número IP <­> nombre DNS.
-	TEMA 3: Introducción a la capa de transporte. Interfaz de programación en redes. Sockets: par de pares (dirección IP, 
-	puerto).
-	TEMA 4: Estudios de casos de protocolo estándares sobre capas de transpote, tales como RFC822, POP, HTTP.
-	','Estrategias del curso','Estrategias de evaluación','- Petterson, L. Y Davie, B. “Computer Networks: A Systems Approach”,Morgan Kaufmann Publishers, Inc, 199
-	- Tanembaum, A. “Computer Networks”, Tercera edición, Prentice Hall, 1996
-	','Ver en la pagina web del curso','Es una materia teorico-practica para que los estudiantes adquieran conocimientos basicos sobre la comunicación en redes');
+INSERT INTO "sigpaeHistoricos_programa" VALUES(1,'3','1','3','abr-jul','2001','Al finalizar
+el curso los estudiantes tendrán un conocimiento básico sobre la noción de protocolo de comunicación, la 
+estructura de software/hardware de redes locales, las funciones principales de las capas de software en el modelo TCP/IP y 
+algunos modelos de programación en redes, en especial el modelo cliente­servidor.','','TEMA 1: Conceptos básicos. Internet. Redes locales, de área ancha, etc. Protocolos de uso e implementación de 
+servicios. Estructuración de software de red por capas. Modelos TCP/IP y OSI. Protocolos basados en pregunta­
+respuesta. Servicios de red.
+TEMA 2: Introducción a Internet (oredesIP). Identificadores de máquimas: dirección “física” y dirección IP. Espacio 
+de direcciones IP: dominios y máquinas. Nombres nemónicos: servicio DNS. Asociación número IP <­> nombre DNS.
+TEMA 3: Introducción a la capa de transporte. Interfaz de programación en redes. Sockets: par de pares (dirección IP, 
+puerto).
+TEMA 4: Estudios de casos de protocolo estándares sobre capas de transpote, tales como RFC822, POP, HTTP.
+','Estrategias del curso','Estrategias de evaluación','- Petterson, L. Y Davie, B. “Computer Networks: A Systems Approach”,Morgan Kaufmann Publishers, Inc, 199
+- Tanembaum, A. “Computer Networks”, Tercera edición, Prentice Hall, 1996
+','Ver en la pagina web del curso','Es una materia teorico-practica para que los estudiantes adquieran conocimientos basicos sobre la comunicación en redes');
 
 
 INSERT INTO "sigpaeHistoricos_solicitud" VALUES(1,'Coordinación de Computación','f','t','f','f','f','f','f','1999-07-02','Creacion','','Pregrado',
 'CI4835','','Redes I','5','Cortinas','t','t','t','Ene-Mar','1999','i','Ingeniería de Computación','f','f','f',
-'Obligatoria','Pregrado Regular','','f','f','f','Presencial','dpost',1);
+'Obligatoria','Pregrado Regular','','f','f','f','Presencial','dpost','',1);
 
 -- PROGRAMA DE: Laboratorio de Algoritmos y Estructuras I VIGENTE
 INSERT INTO "sigpaeHistoricos_programa"  VALUES(2,'3','1','3','abr-jul','2001','Al finalizar
