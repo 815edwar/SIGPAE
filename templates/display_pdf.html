@@ -7,6 +7,11 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/base.css'%}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/transcriptor.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/datepicker.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/datepicker3.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.standalone.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/datepicker3.standalone.min.css' %}">
 </head>
 <body>
     <div class="row">
@@ -232,6 +237,9 @@
     <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
     <script type="text/javascript" src="{% static 'js/pdfobject.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datepicker.es.min.js' %}"></script>
     <script>
 
         $(document).ready(function() {
@@ -361,6 +369,7 @@
             var total = 0;
             for(var i = 0; i < inputs.length; i++){
                 total = total + parseInt($(inputs[i]).val());
+                console.log(total);
             }
             if (parseInt(total) > 40){
                 
@@ -456,6 +465,67 @@
                     }
                 });
         });
+
+        $('#id_año').datepicker({
+                minViewMode: 2,
+                maxViewMode: 2,
+                format: 'yyyy',
+                autoclose: true,
+                language: 'es'
+            })
+        $('#id_fecha_elaboracion').datepicker({
+                minViewMode: 0,
+                maxViewMode: 2,
+                format: 'yyyy/mm/dd',
+                autoclose: true,
+                language: 'es'
+            })
+
+        $('#id_fecha_elaboracion').change(function(){
+            var fecha = new Date($(this).val());
+            if (fecha.getMonth() == '0'){
+                $('#id_periodo').val('ene-mar');
+                $('#id_año').val(fecha.getFullYear());
+
+            }else if (fecha.getMonth() == '1' || fecha.getMonth() == '2' || (fecha.getMonth() == '3' && fecha.getDate() <= 15) ){
+                $('#id_periodo').val('abr-jul');
+                $('#id_año').val(fecha.getFullYear());
+            }else if(( fecha.getMonth() >=4 && fecha.getMonth()<=8) || fecha.getMonth() == '3' && fecha.getDate() > 15){
+                $('#id_periodo').val('sep-dic');
+                $('#id_año').val(fecha.getFullYear());
+            }else{
+                $('#id_periodo').val('ene-mar');
+                $('#id_año').val(fecha.getFullYear()+1);
+            }
+   
+
+        });
+        $('#id_periodo').change(function(){
+            var periodo = $(this).val();
+            var fecha = new Date($("#id_fecha_elaboracion").val());
+            console.log(fecha.getMonth() in [1,9,10,11]);
+            console.log(fecha.getMonth());
+            if (periodo == 'ene-mar' && ((fecha.getMonth() != 0) && (fecha.getMonth() != 9) && (fecha.getMonth() != 10) && (fecha.getMonth() != 11))){
+                $(this).css('background-color','#ea1737');
+                $("#id_fecha_elaboracion").css('background-color','#ea1737');
+
+            }else if (periodo == 'abr-jul' && ((fecha.getMonth() != 1) && (fecha.getMonth() != 2) && ((fecha.getMonth() != 3 || fecha.getDate() > 15)) )){
+                $(this).css('background-color','#ea1737');
+                $("#id_fecha_elaboracion").css('background-color','#ea1737');
+
+            }else if (periodo == 'sep-dic' && (( fecha.getMonth() < 4 || fecha.getMonth() > 8) && (fecha.getMonth() != '3' || fecha.getDate() <= 15))){
+                $(this).css('background-color','#ea1737');
+                $("#id_fecha_elaboracion").css('background-color','#ea1737');
+
+            }else{
+                $(this).css('background-color','#fff');
+                $("#id_fecha_elaboracion").css('background-color','#fff');
+            }
+
+            });
+
+
+
 
 
         $('#id_codigo').change(function(){
