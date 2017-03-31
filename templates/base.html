@@ -43,6 +43,21 @@
     <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dataTables.js' %}"></script>
     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
+    <script type="text/javascript">
+        $(window).resize(function(){
+         if($(window).width()<992){
+          $('body').removeClass('container');
+         }
+         else if ($(window).width()>992){
+          $('body').addClass('container');
+         }
+        });
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip(); 
+        });
+        
+    </script>
+
 
 {% endblock %}
 

@@ -7,13 +7,18 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/base.css'%}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/transcriptor.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/datepicker.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/datepicker3.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.standalone.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/datepicker3.standalone.min.css' %}">
 </head>
 <body>
     <div class="row">
-        <div id="panel_config" class="col-lg-5 col-md-5 col-xs-5">
+        <div id="panel_config" class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <button id="config_2" class="boton">Configuracion 2</button>
             <button id="volver" class="boton" >Configuracion 1</button>
-            <a href="{{request.META.HTTP_REFERER}}"><button id="back" class="boton">Volver</button></a>
+            <a href="{{request.META.HTTP_REFERER}}"><button id="back" class="boton" >Volver</button></a>
         </div>
         <div class="col-lg-7 col-md-7 col-xs-7"></div>
     </div>
@@ -225,6 +230,9 @@
     <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
     <script type="text/javascript" src="{% static 'js/pdfobject.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datepicker.es.min.js' %}"></script>
     <script>
 
         $(document).ready(function() {
@@ -271,19 +279,6 @@
             $("#drag").css('display','none');
 
             PDFObject.embed("{{ pdf.pdf.url }}" , "#pdf");
-           
-            /* Estos son configuraciones para el display
-            de los documentos, solo falta agregar los botones
-            es
-            $('#config_1').click(function() {
-                $("#formulario").after($("#documento"));
-            });
-            
-            $('#config_3').click(function() {
-                $("#documento").css('display','none');
-                $("#div1").css('display','block');
-            });
-            */
 
             var id = 1;
 
@@ -317,42 +312,35 @@
                 $(".can_hide").show();
             });
         });
-            /*$('.nombre_campo').on('change', function() {
-                if ($(this).val() == "ninguna") {
-                    $('#nuevo_campo').modal('toggle');
-                    $('#nuevo_campo').modal('show');
-                };
 
-            });*/
-
-            $('#aceptarNewEntry').click(function() {
-                $.ajax({
-                    url: '{% url "crearCampo" %}',
-                    data: {
-                        'campo' : $('#newEntry').val()
-                    },
-                    dataType: 'json',
-                    success: function(data){
-                            if(data.creado) {
-                                $('.nombre_campo').each(function() {
-                                    var option = $(this).val();
-                                    $(this).append($('<option>', {
-                                    value: data.nombre,
-                                    text: data.nombre
-                                    }));
-                                    if( option == "ninguna" ) {
-                                        $(this).val(data.nombre);
-                                    }
-                                });
-                            }
-                            else{
-                                var $falloCreado = $('#falloCreado');
-                                $falloCreado.modal('toggle');
-                                $falloCreado.modal('show');
-                            }
-                    }
-                });
-            });       
+        $('#aceptarNewEntry').click(function() {
+            $.ajax({
+                url: '{% url "crearCampo" %}',
+                data: {
+                    'campo' : $('#newEntry').val()
+                },
+                dataType: 'json',
+                success: function(data){
+                        if(data.creado) {
+                            $('.nombre_campo').each(function() {
+                                var option = $(this).val();
+                                $(this).append($('<option>', {
+                                value: data.nombre,
+                                text: data.nombre
+                                }));
+                                if( option == "ninguna" ) {
+                                    $(this).val(data.nombre);
+                                }
+                            });
+                        }
+                        else{
+                            var $falloCreado = $('#falloCreado');
+                            $falloCreado.modal('toggle');
+                            $falloCreado.modal('show');
+                        }
+                }
+            });
+        });       
 
         $('#button-signup').click(function(){
             event.preventDefault();
@@ -360,6 +348,7 @@
             var total = 0;
             for(var i = 0; i < inputs.length; i++){
                 total = total + parseInt($(inputs[i]).val());
+                console.log(total);
             }
             if (parseInt(total) > 40){
                 
@@ -436,52 +425,120 @@
         $('#decanatos').change(function(){
             $('#coordinaciones').find('option').remove().end();
             $.ajax({
-                    url: '{% url "encargado" %}',
-                    data: {
-                        'decanato' : $(this).val()
-                    },
-                    dataType: 'json',
-                    success: function(data){
-                        var $coordinaciones = $('#coordinaciones');
-                        $coordinaciones.show();
-                        var tamano = data.coordinaciones.length;
-                        for (var i = 0; i < tamano; i++) {
-                            console.log(data.coordinaciones[i].nombre);
-                            $coordinaciones.append($('<option>', {
-                                value: data.coordinaciones[i].nombre,
-                                text: data.coordinaciones[i].nombre
-                            }));
-                        }
+                url: '{% url "encargado" %}',
+                data: {
+                    'decanato' : $(this).val()
+                },
+                dataType: 'json',
+                success: function(data){
+                    var $coordinaciones = $('#coordinaciones');
+                    $coordinaciones.show();
+                    var tamano = data.coordinaciones.length;
+                    for (var i = 0; i < tamano; i++) {
+                        console.log(data.coordinaciones[i].nombre);
+                        $coordinaciones.append($('<option>', {
+                            value: data.coordinaciones[i].nombre,
+                            text: data.coordinaciones[i].nombre
+                        }));
                     }
-                });
+                }
+            });
         });
 
+        var min_date = new Date("1969/1/1");
+        var max_date = new Date();
+
+        $('#id_año').datepicker({
+                minViewMode: 2,
+                maxViewMode: 2,
+                format: 'yyyy',
+                autoclose: true,
+                language: 'es',
+                startDate: min_date,
+                endDate: max_date
+        });
+        
+
+        $('#id_fecha_elaboracion').datepicker({
+                minViewMode: 0,
+                maxViewMode: 2,
+                format: 'yyyy/mm/dd',
+                autoclose: true,
+                language: 'es',
+                startDate: min_date,
+                endDate: max_date
+        });
+
+        $('#id_fecha_elaboracion').change(function(){
+            var fecha = new Date($(this).val());
+            $("#id_periodo").css('background-color','#fff');
+            $(this).css('background-color','#fff');
+            
+            if (fecha.getMonth() == '0'){
+                $('#id_periodo').val('ene-mar');
+                $('#id_año').val(fecha.getFullYear());
+
+            }
+            else if (fecha.getMonth() == '1' || fecha.getMonth() == '2' || (fecha.getMonth() == '3' && fecha.getDate() <= 15) ){
+                $('#id_periodo').val('abr-jul');
+                $('#id_año').val(fecha.getFullYear());
+            }
+            else if(( fecha.getMonth() >=4 && fecha.getMonth()<=8) || fecha.getMonth() == '3' && fecha.getDate() > 15){
+                $('#id_periodo').val('sep-dic');
+                $('#id_año').val(fecha.getFullYear());
+            }
+            else{
+                $('#id_periodo').val('ene-mar');
+                $('#id_año').val(fecha.getFullYear()+1);
+            }
+        });
+
+        $('#id_periodo').change(function(){
+            var periodo = $(this).val();
+            var fecha = new Date($("#id_fecha_elaboracion").val());
+            if (periodo == 'ene-mar' && ((fecha.getMonth() != 0) && (fecha.getMonth() != 9) && (fecha.getMonth() != 10) && (fecha.getMonth() != 11))){
+                $(this).css('background-color','#ea1737');
+                $("#id_fecha_elaboracion").css('background-color','#ea1737');
+
+            }
+            else if (periodo == 'abr-jul' && ((fecha.getMonth() != 1) && (fecha.getMonth() != 2) && ((fecha.getMonth() != 3 || fecha.getDate() > 15)) )){
+                $(this).css('background-color','#ea1737');
+                $("#id_fecha_elaboracion").css('background-color','#ea1737');
+
+            }
+            else if (periodo == 'sep-dic' && (( fecha.getMonth() < 4 || fecha.getMonth() > 8) && (fecha.getMonth() != '3' || fecha.getDate() <= 15))){
+                $(this).css('background-color','#ea1737');
+                $("#id_fecha_elaboracion").css('background-color','#ea1737');
+
+            }
+            else{
+                $(this).css('background-color','#fff');
+                $("#id_fecha_elaboracion").css('background-color','#fff');
+            }
+
+        });
 
         $('#id_codigo').change(function(){
             var codigo = $(this).val();
             $.ajax({
-                    url: '{% url "siglas" %}',
-                    data: {
-                        'codigo' : codigo
-                    },
-                    dataType: 'json',
-                    success: function(data){
-                        var respuesta = data.respuesta;
-                        var siglas = data.siglas;
-                        if (respuesta == ""){
-                            var $confirmacion = $('#confirmacion');
-                            $confirmacion.modal('toggle');
-                            $confirmacion.modal('show');
-                            $('#siglas2').val(siglas);
-                            $('#codigo2').val(codigo);
+                url: '{% url "siglas" %}',
+                data: {
+                    'codigo' : codigo
+                },
+                dataType: 'json',
+                success: function(data){
+                    var respuesta = data.respuesta;
+                    var siglas = data.siglas;
+                    if (respuesta == ""){
+                        var $confirmacion = $('#confirmacion');
+                        $confirmacion.modal('toggle');
+                        $confirmacion.modal('show');
+                        $('#siglas2').val(siglas);
+                        $('#codigo2').val(codigo);
 
-                        }
-
-                        console.log(respuesta);
-                        
-                        
                     }
-                });
+                }
+            });
         });
 
     </script>
