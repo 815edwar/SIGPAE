@@ -1476,33 +1476,5 @@
       "siglas": "USB",
       "asociacion": "Trabajo de Grado"
     }
-  },
-  {
-    "model": "sigpaeHistoricos.CampoAdicional",
-    "pk": 1,
-    "fields": {
-      "nombre": "Requisitos"
-    }
-  },
-  {
-    "model": "sigpaeHistoricos.CampoAdicional",
-    "pk": 2,
-    "fields": {
-      "nombre": "Objetivos"
-    }
-  },
-  {
-    "model": "sigpaeHistoricos.CampoAdicional",
-    "pk": 3,
-    "fields": {
-      "nombre": "Estrategias Metodológicas"
-    }
-  },
-  {
-    "model": "sigpaeHistoricos.CampoAdicional",
-    "pk": 4,
-    "fields": {
-      "nombre": "Estrategias de Evaluación"
-    }
   }
  ]
