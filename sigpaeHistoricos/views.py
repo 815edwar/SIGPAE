@@ -270,7 +270,6 @@ class ModifyPDF(TemplateView):
                 pdf.codigo != None and pdf.encargado!=None and pdf.denominacion!=None and pdf.periodo!=None
                 and pdf.año!= None and pdf.horas_practica!=None and pdf.horas_teoria!=" "
                 and pdf.horas_laboratorio!= None and pdf.sinopticos!= None and pdf.ftes_info_recomendadas!= None):
-                print("Codigo no vacio\n\n\n")
                 pdf.pasa = True
                 pdf.save()
             else :
@@ -383,7 +382,6 @@ class DisplayPDF(TemplateView):
             if 'campo_adicional' in post_values:
                 campos_adicionales = post_values.pop('campo_adicional')
                 contenido_campos = post_values.pop('contenido_campos')
-                print(campos_adicionales, contenido_campos)
                 for i in range(len(campos_adicionales)):
                     if campos_adicionales[i] != "" and campos_adicionales[i] != "ninguna":
                         campo = CampoAdicional.objects.get(nombre=campos_adicionales[i])
@@ -704,25 +702,43 @@ def ProponerTranscripcion(request):
     tlf = request.GET.get('tlf', None)
     transcripcion = request.GET.get('programa',None)
 
+    if (nombre!="" and apellido!="" and correo!="" and tlf!=''):
+        completo = True
+    else:   
+        completo = False
+
     programa = Transcripcion.objects.get(id=transcripcion)
 
-    transcriptor = Transcriptor.objects.create()
-    transcriptor.nombre = nombre
-    transcriptor.apellido = apellido 
-    transcriptor.correo = correo
-    transcriptor.telefono = tlf
+    busqueda = propuestos.objects.filter(programa__denominacion=programa.denominacion,programa__periodo=programa.periodo,programa__año=programa.año)
+    if busqueda.exists(): 
+        data = {
+        'creado': False,
+        'completo': completo
+        }
+    else:
+        if completo:
 
-    programa.propuesto = True
+            transcriptor = Transcriptor.objects.create()
+            transcriptor.nombre = nombre
+            transcriptor.apellido = apellido 
+            transcriptor.correo = correo
+            transcriptor.telefono = tlf
+            programa.propuesto = True
+            transcriptor.save()
+            programa.save()
+            propuesto = propuestos.objects.create(transcriptor=transcriptor,programa=programa)
+            propuesto.save()
+            data = {
+                'creado': True,
+                'completo': completo
+            }
+        else:
+            data = {
+                'creado': False,
+                'completo': completo
+            }
 
-    transcriptor.save()
-    programa.save()
 
-    propuesto = propuestos.objects.create(transcriptor=transcriptor,programa=programa)
-
-    propuesto.save()
-
-    data = {
-        'creado': True,
-    }
+    
 
     return JsonResponse(data)
