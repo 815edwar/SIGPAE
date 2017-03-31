@@ -45,6 +45,8 @@ class ModelsTestCase(TestCase):
             observaciones="Primer curso de la cadena de realidad aumentada.",
             encargado="Departamento de Computación y Tecnología de la Información",
             fecha_modificacion=datetime.now(timezone.utc),
+            pasa = True,
+            propuesto = True,
         )
 
         self.transcripcion2 = Transcripcion.objects.create(
@@ -62,6 +64,8 @@ class ModelsTestCase(TestCase):
             observaciones="Curso sujeto a cambios.",
             encargado="Departamento de Computación y Tecnología de la Información",
             fecha_modificacion=datetime.now(timezone.utc),
+            pasa = False,
+            propuesto = False,
         )
 
         self.transcripcion3 = Transcripcion.objects.create(
@@ -79,6 +83,8 @@ class ModelsTestCase(TestCase):
             observaciones="-",
             encargado="Departamento de Computación y Tecnología de la Información",
             fecha_modificacion=datetime.now(timezone.utc),
+            pasa = True,
+            propuesto = False,
         )
 
         self.transcripcion4 = Transcripcion.objects.create(
@@ -96,6 +102,8 @@ class ModelsTestCase(TestCase):
             observaciones="Nada particular.",
             encargado="Departamento de Computación y Tecnología de la Información",
             fecha_modificacion=datetime.now(timezone.utc),
+            pasa = False,
+            propuesto = True,
         )
 
         # Programas de prueba.
@@ -337,6 +345,98 @@ class ModelsTestCase(TestCase):
             programa=self.programa1,
         )
 
+        self.solicitud2 = Solicitud.objects.create(
+            coordinacion="Coordinación de Matemáticas Aplicadas",
+            porasignar=True,
+            porrevisarD=False,
+            porrevisarP=False,
+            rechazadoC=True,
+            validadoC=True,
+            enviadoD=False,
+            devueltoD=True,
+            fecha_elaboracion=datetime.now(timezone.utc),
+            tipo_solicitud="Especial",
+            subtipo_solicitud="Pasantía Larga",
+            nivel="Medio",
+            codigo="MA1113",
+            codigo_anterior="-",
+            denominacion="Matemáticas III",
+            creditos=4,
+            tipo_aula="Grande",
+            horas_teoria=False,
+            horas_practica=False,
+            horas_laboratorio=False,
+            trim="sep-dic",
+            año="2017",
+            accion="Envío",
+            carrera="Ingeniería de materiales.",
+            trim_pensum=False,
+            requisitos_cred=True,
+            permiso_coord=True,
+            tipo_materia="Teórico",
+            clase_materia="Básico",
+            observaciones="Ninguna.",
+            vigente=False,
+            validadodace=True,
+            especial=True,
+            imparticion="Luis León",
+            decanato="No adscrito.",
+            obsanul="-",
+            programa=self.programa3,
+        )
+
+        # Transcriptores de prueba.
+
+        self.transcriptor1 = Transcriptor.objects.create(
+            nombre="Adalberto",
+            apellido="Peñaranda",
+            correo="ap10@vinotinto.com",
+            telefono="04143105440",
+        )
+
+        self.transcriptor2 = Transcriptor.objects.create(
+            nombre="Zlatan",
+            apellido="Ibrahimovic",
+            correo="theZlatan@cocky.com",
+            telefono="04241111090",
+        )  
+
+        self.transcriptor3 = Transcriptor.objects.create(
+            nombre="Lara",
+            apellido="Croft",
+            correo="tomb_raider@eidos.com",
+            telefono="04168915370",
+        )  
+
+        self.transcriptor4 = Transcriptor.objects.create(
+            nombre="Carolina",
+            apellido="Chang",
+            correo="cchang@usb.ve",
+            telefono="04128947214",
+        )
+
+        # Propuestos de prueba
+
+        self.propuesto1 = propuestos.objects.create(
+            transcriptor = self.transcriptor1,
+            programa = self.transcripcion1,
+        )
+
+        self.propuesto2 = propuestos.objects.create(
+            transcriptor = self.transcriptor2,
+            programa = self.transcripcion2,
+        )  
+
+        self.propuesto3 = propuestos.objects.create(
+            transcriptor = self.transcriptor3,
+            programa = self.transcripcion3,
+        )  
+
+        self.propuesto4 = propuestos.objects.create(
+            transcriptor = self.transcriptor4,
+            programa = self.transcripcion4,
+        )         
+
     # PRUEBAS UNITARIAS
 
     # PRUEBAS DE LA CLASE "Transcripcion"
@@ -480,6 +580,50 @@ class ModelsTestCase(TestCase):
         self.assertLess(self.transcripcion2.fecha_modificacion, datetime.now(timezone.utc))
         self.assertLess(self.transcripcion3.fecha_modificacion, datetime.now(timezone.utc))
         self.assertLess(self.transcripcion4.fecha_modificacion, datetime.now(timezone.utc))
+
+    # Se prueba el campo "pasa" y su correctitud.
+    def test_pasa(self):
+        if self.transcripcion1.pasa:
+            self.assertEqual(self.transcripcion1.pasa, True)
+        else:
+            self.assertEqual(self.transcripcion1.pasa, False)
+
+        if self.transcripcion2.pasa:
+            self.assertEqual(self.transcripcion2.pasa, True)
+        else:
+            self.assertEqual(self.transcripcion2.pasa, False)
+
+        if self.transcripcion3.pasa:
+            self.assertEqual(self.transcripcion3.pasa, True)
+        else:
+            self.assertEqual(self.transcripcion3.pasa, False)
+
+        if self.transcripcion4.pasa:
+            self.assertEqual(self.transcripcion4.pasa, True)
+        else:
+            self.assertEqual(self.transcripcion4.pasa, False)
+
+    # Se prueba el campo "propuesto" y su correctitud.
+    def test_propuesto(self):
+        if self.transcripcion1.propuesto:
+            self.assertEqual(self.transcripcion1.propuesto, True)
+        else:
+            self.assertEqual(self.transcripcion1.propuesto, False)
+
+        if self.transcripcion2.propuesto:
+            self.assertEqual(self.transcripcion2.propuesto, True)
+        else:
+            self.assertEqual(self.transcripcion2.propuesto, False)
+
+        if self.transcripcion3.propuesto:
+            self.assertEqual(self.transcripcion3.propuesto, True)
+        else:
+            self.assertEqual(self.transcripcion3.propuesto, False)
+
+        if self.transcripcion4.propuesto:
+            self.assertEqual(self.transcripcion4.propuesto, True)
+        else:
+            self.assertEqual(self.transcripcion4.propuesto, False)
 
     """
     # Se prueba el campo "departamento" y su correctitud.
@@ -771,6 +915,7 @@ class ModelsTestCase(TestCase):
     # Se prueba el campo "coordinacion" y su correctitud.
     def test_coord_sol(self):
         self.assertEqual(self.solicitud1.coordinacion, "Coordinación de Matemáticas Aplicadas")
+        self.assertEqual(self.solicitud2.coordinacion, "Coordinación de Matemáticas Aplicadas")
 
     # Se prueba el campo "porasignar" y su correctitud.
     def test_porasig_sol(self):
@@ -779,12 +924,22 @@ class ModelsTestCase(TestCase):
         else:
             self.assertEqual(self.solicitud1.porasignar, False)
 
+        if self.solicitud2.porasignar:
+            self.assertEqual(self.solicitud2.porasignar, True)
+        else:
+            self.assertEqual(self.solicitud2.porasignar, False)
+
     # Se prueba el campo "porrevisarD" y su correctitud.
     def test_porrevisarD_sol(self):
         if self.solicitud1.porrevisarD:
             self.assertEqual(self.solicitud1.porrevisarD, True)
         else:
             self.assertEqual(self.solicitud1.porrevisarD, False)
+
+        if self.solicitud2.porrevisarD:
+            self.assertEqual(self.solicitud2.porrevisarD, True)
+        else:
+            self.assertEqual(self.solicitud2.porrevisarD, False)
 
     # Se prueba el campo "porrevisarP" y su correctitud.
     def test_porrevisarP_sol(self):
@@ -793,12 +948,22 @@ class ModelsTestCase(TestCase):
         else:
             self.assertEqual(self.solicitud1.porrevisarP, False)
 
+        if self.solicitud2.porrevisarP:
+            self.assertEqual(self.solicitud2.porrevisarP, True)
+        else:
+            self.assertEqual(self.solicitud2.porrevisarP, False)
+
     # Se prueba el campo "rechazadoC" y su correctitud.
     def test_rechazadoC_sol(self):
         if self.solicitud1.rechazadoC:
             self.assertEqual(self.solicitud1.rechazadoC, True)
         else:
             self.assertEqual(self.solicitud1.rechazadoC, False)
+
+        if self.solicitud2.rechazadoC:
+            self.assertEqual(self.solicitud2.rechazadoC, True)
+        else:
+            self.assertEqual(self.solicitud2.rechazadoC, False)
 
     # Se prueba el campo "validadoC" y su correctitud.
     def test_validadoC_sol(self):
@@ -807,12 +972,22 @@ class ModelsTestCase(TestCase):
         else:
             self.assertEqual(self.solicitud1.validadoC, False)
 
+        if self.solicitud2.validadoC:
+            self.assertEqual(self.solicitud2.validadoC, True)
+        else:
+            self.assertEqual(self.solicitud2.validadoC, False)
+
     # Se prueba el campo "enviadoD" y su correctitud.
     def test_enviadoD_sol(self):
         if self.solicitud1.enviadoD:
             self.assertEqual(self.solicitud1.enviadoD, True)
         else:
             self.assertEqual(self.solicitud1.enviadoD, False)
+
+        if self.solicitud2.enviadoD:
+            self.assertEqual(self.solicitud2.enviadoD, True)
+        else:
+            self.assertEqual(self.solicitud2.enviadoD, False)
 
     # Se prueba el campo "devueltoD" y su correctitud.
     def test_devueltoD_sol(self):
@@ -821,41 +996,55 @@ class ModelsTestCase(TestCase):
         else:
             self.assertEqual(self.solicitud1.devueltoD, False)
 
+        if self.solicitud2.devueltoD:
+            self.assertEqual(self.solicitud2.devueltoD, True)
+        else:
+            self.assertEqual(self.solicitud2.devueltoD, False)
+
     # Se prueba el campo "fecha_elaboracion" y su correctitud.
     def test_fecha_elaboracion_sol(self):
         self.assertLess(self.solicitud1.fecha_elaboracion, datetime.now(timezone.utc))
+        self.assertLess(self.solicitud2.fecha_elaboracion, datetime.now(timezone.utc))
 
     # Se prueba el campo "tipo_solicitud" y su correctitud.
     def test_tipo_solicitud_sol(self):
         self.assertEqual(self.solicitud1.tipo_solicitud, "Normal")
+        self.assertEqual(self.solicitud2.tipo_solicitud, "Especial")
 
     # Se prueba el campo "subtipo_solicitud" y su correctitud.
     def test_subtipo_solicitud_sol(self):
         self.assertEqual(self.solicitud1.subtipo_solicitud, "Graduación")
+        self.assertEqual(self.solicitud2.subtipo_solicitud, "Pasantía Larga")
 
     # Se prueba el campo "nivel" y su correctitud.
     def test_nivel_sol(self):
         self.assertEqual(self.solicitud1.nivel, "Alto")
+        self.assertEqual(self.solicitud2.nivel, "Medio")
 
     # Se prueba el campo "codigo" y su correctitud.
     def test_codigo_sol(self):
         self.assertEqual(self.solicitud1.codigo, "PS1111")
+        self.assertEqual(self.solicitud2.codigo, "MA1113")
 
     # Se prueba el campo "codigo_anterior" y su correctitud.
     def test_codigo_anterior_sol(self):
         self.assertEqual(self.solicitud1.codigo_anterior, "-")
+        self.assertEqual(self.solicitud2.codigo_anterior, "-")
 
     # Se prueba el campo "denominacion" y su correctitud.
     def test_denominacion_sol(self):
         self.assertEqual(self.solicitud1.denominacion, "Modelos lineales I")
+        self.assertEqual(self.solicitud2.denominacion, "Matemáticas III")
 
     # Se prueba el campo "creditos" y su correctitud.
     def test_creditos_sol(self):
         self.assertEqual(self.solicitud1.creditos, 4)
+        self.assertEqual(self.solicitud2.creditos, 4)
 
     # Se prueba el campo "tipo_aula" y su correctitud.
     def test_tipo_aula_sol(self):
         self.assertEqual(self.solicitud1.tipo_aula, "Grande")
+        self.assertEqual(self.solicitud2.tipo_aula, "Grande")
 
     # Se prueba el campo "horas_teoria" y su correctitud.
     def test_horas_teoria_sol(self):
@@ -864,12 +1053,22 @@ class ModelsTestCase(TestCase):
         else:
             self.assertEqual(self.solicitud1.horas_teoria, False)
 
+        if self.solicitud2.horas_teoria:
+            self.assertEqual(self.solicitud2.horas_teoria, True)
+        else:
+            self.assertEqual(self.solicitud2.horas_teoria, False)
+
     # Se prueba el campo "horas_practica" y su correctitud.
     def test_horas_practica_sol(self):
         if self.solicitud1.horas_practica:
             self.assertEqual(self.solicitud1.horas_practica, True)
         else:
             self.assertEqual(self.solicitud1.horas_practica, False)
+
+        if self.solicitud2.horas_practica:
+            self.assertEqual(self.solicitud2.horas_practica, True)
+        else:
+            self.assertEqual(self.solicitud2.horas_practica, False)
 
     # Se prueba el campo "horas_laboratorio" y su correctitud.
     def test_horas_laboratorio_sol(self):
@@ -878,21 +1077,30 @@ class ModelsTestCase(TestCase):
         else:
             self.assertEqual(self.solicitud1.horas_laboratorio, False)
 
+        if self.solicitud2.horas_laboratorio:
+            self.assertEqual(self.solicitud2.horas_laboratorio, True)
+        else:
+            self.assertEqual(self.solicitud2.horas_laboratorio, False)
+
     # Se prueba el campo "trim" y su correctitud.
     def test_trim_sol(self):
         self.assertEqual(self.solicitud1.trim, "ene-mar")
+        self.assertEqual(self.solicitud2.trim, "sep-dic")
 
     # Se prueba el campo "año" y su correctitud.
     def test_año_sol(self):
         self.assertEqual(self.solicitud1.año, "1983")
+        self.assertEqual(self.solicitud2.año, "2017")
 
     # Se prueba el campo "accion" y su correctitud.
     def test_accion_sol(self):
+        self.assertEqual(self.solicitud1.accion, "Envío")
         self.assertEqual(self.solicitud1.accion, "Envío")
 
     # Se prueba el campo "carrera" y su correctitud.
     def test_carrera_sol(self):
         self.assertEqual(self.solicitud1.carrera, "Ingeniería de computación.")
+        self.assertEqual(self.solicitud2.carrera, "Ingeniería de materiales.")
 
     # Se prueba el campo "trim_pensum" y su correctitud.
     def test_trim_pensum_sol(self):
@@ -901,12 +1109,22 @@ class ModelsTestCase(TestCase):
         else:
             self.assertEqual(self.solicitud1.trim_pensum, False)
 
+        if self.solicitud2.trim_pensum:
+            self.assertEqual(self.solicitud2.trim_pensum, True)
+        else:
+            self.assertEqual(self.solicitud2.trim_pensum, False)
+
     # Se prueba el campo "requisitos_cred" y su correctitud.
     def test_requisitos_cred_sol(self):
         if self.solicitud1.requisitos_cred:
             self.assertEqual(self.solicitud1.requisitos_cred, True)
         else:
             self.assertEqual(self.solicitud1.requisitos_cred, False)
+
+        if self.solicitud2.requisitos_cred:
+            self.assertEqual(self.solicitud2.requisitos_cred, True)
+        else:
+            self.assertEqual(self.solicitud2.requisitos_cred, False)
 
     # Se prueba el campo "permiso_coord" y su correctitud.
     def test_permiso_coord_sol(self):
@@ -915,17 +1133,25 @@ class ModelsTestCase(TestCase):
         else:
             self.assertEqual(self.solicitud1.permiso_coord, False)
 
+        if self.solicitud2.permiso_coord:
+            self.assertEqual(self.solicitud2.permiso_coord, True)
+        else:
+            self.assertEqual(self.solicitud2.permiso_coord, False)
+
     # Se prueba el campo "tipo_materia" y su correctitud.
     def test_tipo_materia_sol(self):
         self.assertEqual(self.solicitud1.tipo_materia, "Teórico-práctica")
+        self.assertEqual(self.solicitud2.tipo_materia, "Teórico")
 
     # Se prueba el campo "clase_materia" y su correctitud.
     def test_clase_materia_sol(self):
         self.assertEqual(self.solicitud1.clase_materia, "Profesional")
+        self.assertEqual(self.solicitud2.clase_materia, "Básico")
 
     # Se prueba el campo "observaciones" y su correctitud.
     def test_observaciones_sol(self):
         self.assertEqual(self.solicitud1.observaciones, "Ninguna.")
+        self.assertEqual(self.solicitud2.observaciones, "Ninguna.")
 
     # Se prueba el campo "vigente" y su correctitud.
     def test_vigente_sol(self):
@@ -934,12 +1160,22 @@ class ModelsTestCase(TestCase):
         else:
             self.assertEqual(self.solicitud1.vigente, False)
 
+        if self.solicitud2.vigente:
+            self.assertEqual(self.solicitud2.vigente, True)
+        else:
+            self.assertEqual(self.solicitud2.vigente, False)
+
     # Se prueba el campo "validadodace" y su correctitud.
     def test_validadodace_sol(self):
         if self.solicitud1.validadodace:
             self.assertEqual(self.solicitud1.validadodace, True)
         else:
             self.assertEqual(self.solicitud1.validadodace, False)
+
+        if self.solicitud2.validadodace:
+            self.assertEqual(self.solicitud2.validadodace, True)
+        else:
+            self.assertEqual(self.solicitud2.validadodace, False)
 
     # Se prueba el campo "especial" y su correctitud.
     def test_permiso_coord_sol_dos(self):
@@ -948,18 +1184,80 @@ class ModelsTestCase(TestCase):
         else:
             self.assertEqual(self.solicitud1.especial, False)
 
+        if self.solicitud2.especial:
+            self.assertEqual(self.solicitud2.especial, True)
+        else:
+            self.assertEqual(self.solicitud2.especial, False)
+
     # Se prueba el campo "imparticion" y su correctitud.
     def test_imparticion_sol(self):
         self.assertEqual(self.solicitud1.imparticion, "Ana Borges")
+        self.assertEqual(self.solicitud2.imparticion, "Luis León")
 
     # Se prueba el campo "decanato" y su correctitud.
     def test_decanato_sol(self):
         self.assertEqual(self.solicitud1.decanato, "No adscrito.")
+        self.assertEqual(self.solicitud2.decanato, "No adscrito.")
 
     # Se prueba el campo "obsanul" y su correctitud.
     def test_obsanul_sol(self):
         self.assertEqual(self.solicitud1.obsanul, "-")
+        self.assertEqual(self.solicitud2.obsanul, "-")
 
     # Se prueba el campo "programa", el cual es una referencia a los programas, y su correctitud.
     def test_programa_sol(self):
         self.assertEqual(self.solicitud1.programa, self.programa1)
+        self.assertEqual(self.solicitud2.programa, self.programa3)
+
+    # PRUEBAS DE LA CLASE "Transcriptor".
+
+    # Se prueba el campo "nombre" y su correctitud.
+    def test_nombre_trans(self):
+        self.assertEqual(self.transcriptor1.nombre, "Adalberto")
+        self.assertEqual(self.transcriptor2.nombre, "Zlatan")
+        self.assertEqual(self.transcriptor3.nombre, "Lara")
+        self.assertEqual(self.transcriptor4.nombre, "Carolina")
+
+    # Se prueba el campo "apellido" y su correctitud.
+    def test_apellido_trans(self):
+        self.assertEqual(self.transcriptor1.apellido, "Peñaranda")
+        self.assertEqual(self.transcriptor2.apellido, "Ibrahimovic")
+        self.assertEqual(self.transcriptor3.apellido, "Croft")
+        self.assertEqual(self.transcriptor4.apellido, "Chang")
+
+    # Se prueba el campo "correo" y su correctitud.
+    def test_correo_trans(self):
+        self.assertEqual(self.transcriptor1.correo, "ap10@vinotinto.com")
+        self.assertEqual(self.transcriptor2.correo, "theZlatan@cocky.com")
+        self.assertEqual(self.transcriptor3.correo, "tomb_raider@eidos.com")
+        self.assertEqual(self.transcriptor4.correo, "cchang@usb.ve")
+
+    # Se prueba el campo "telefono" y su correctitud.
+    def test_telefono_trans(self):
+        self.assertEqual(self.transcriptor1.telefono, "04143105440")
+        self.assertEqual(self.transcriptor2.telefono, "04241111090")
+        self.assertEqual(self.transcriptor3.telefono, "04168915370")
+        self.assertEqual(self.transcriptor4.telefono, "04128947214")
+
+    # Se prueba el método "__str__" y su correcto funcionamiento.
+    def test_str_method_trans(self):
+        self.assertEqual(self.transcriptor1.nombre, self.transcriptor1.__str__())
+        self.assertEqual(self.transcriptor2.nombre, self.transcriptor2.__str__())
+        self.assertEqual(self.transcriptor3.nombre, self.transcriptor3.__str__())
+        self.assertEqual(self.transcriptor4.nombre, self.transcriptor4.__str__())
+
+    # PRUEBAS DE LA CLASE "propuestos".
+
+    # Se prueba el campo "transcriptor" y su correctitud.
+    def test_propuesto_trans(self):
+        self.assertEqual(self.propuesto1.transcriptor, self.transcriptor1)
+        self.assertEqual(self.propuesto2.transcriptor, self.transcriptor2)
+        self.assertEqual(self.propuesto3.transcriptor, self.transcriptor3)
+        self.assertEqual(self.propuesto4.transcriptor, self.transcriptor4)
+
+    # Se prueba el campo "programa" y su correctitud.
+    def test_propusto_prog(self):
+        self.assertEqual(self.propuesto1.programa, self.transcripcion1)
+        self.assertEqual(self.propuesto2.programa, self.transcripcion2)
+        self.assertEqual(self.propuesto3.programa, self.transcripcion3)
+        self.assertEqual(self.propuesto4.programa, self.transcripcion4)
