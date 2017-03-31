@@ -45,7 +45,7 @@
                     {% elif field.name == "texto" %}
                         <div class="control-group" id="{{field.name}}-state">
                             <div class="input-group {{field.name}}">
-                                <span class="input-group-addon tags-unete" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                                <span class="input-group-addon tags-unete" id=" basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
                             </div>
                             <span class="error" id="{{ field.name }}-icon"></span>
                             <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
@@ -54,7 +54,7 @@
                     {% else %}
                         <div class="control-group" id="{{field.name}}-state">
                             <div class="input-group {{field.name}}">
-                                <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                                <span class="input-group-addon tags-unete can_hide" id="{{field.label}}-label"><b>{{ field.label }}:</b></span>{{ field }}
                             </div>
                             <span class="error" id="{{ field.name }}-icon"></span>
                             <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
@@ -62,6 +62,9 @@
                         </div>
                     {% endif %}
                 {% endfor %}
+
+                <input id="Objetivos" class="obj can_hide" type="checkbox" name="check" value="Generales" title="check"> <b class="can_hide"> Ver Objetivos simples</b> 
+                <input id="Objetivos_especificos" class="obj can_hide" type="checkbox" name="check" value="Especificos" title="check"> <b class="can_hide"> Ver Objetivos Generales/Especificos </b> &nbsp;
 
                 <div class="control-group" >
                     <div class="input-group">
@@ -87,7 +90,7 @@
                         <div class="input-group {{field.campo_adicional}}">
                             <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.campo_adicional }}:</b></span>
                         </div>
-                        <input name="{{field.campo_adicional}}" aria-describedby="basic-addon1" class="form-control can_hide " value="{{field.contenido}}" type="text" title="{{field.campo_adicional}}">
+                        <textarea name="{{field.campo_adicional}}" aria-describedby="basic-addon1" class="form-control can_hide " value="{{field.contenido}}" type="text" title="{{field.campo_adicional}}"> </textarea>
                     </div>
                 {% endfor %}
                 
@@ -98,11 +101,13 @@
                             <option value="ninguna">Otro Campo</option>
                             {% for n in nombres%}
                             <option value="{{n.nombre}}">{{n.nombre}}</option>
-                            {% endfor %}
+                            {% endfor %} &nbsp;
                         </select>
-                        <input class='campo input-sigpae' type="text" name="contenido_campos" title="contenido campos">
+                        <textarea aria-describedby="basic-addon1" class="form-control can_hide campo" cols="40" name="contenido_campos" required="False" rows="10" title="contenido campos"></textarea>
                     </div>
                 </div>
+
+
                 <a id="agregar" class="can_hide">Agregar campo adicional.</a>
                 <a id="agregar_otro">Agregar otro.</a>
 
@@ -205,6 +210,27 @@
                 </div>
             </div>
 
+            <div id="cambio_objetivos" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Advertencia</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Se ha seleccionado la opción de cambiar a objetivos simples.</h4>
+                            <p>Si selecciona aceptar, el contenido del campo de Objetivos Especificos y Objetivos Generales se unira en un solo campo llamado objetivos</p>
+                        </div>
+                        <div class="modal-footer"> 
+                            <button id="unir_obj" type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div id="falloCreado" class="modal fade" role="dialog">
                 <div class="modal-dialog">
 
@@ -236,6 +262,16 @@
     <script>
 
         $(document).ready(function() {
+            $("#objetivos_especificos-state").hide();
+
+            if ($("#id_objetivos_especificos").val() == ""){
+                $("#Objetivos").prop('checked', true);
+            }
+            else {
+                $("#Objetivos_especificos").prop('checked', true);
+                $("#objetivos_especificos-state").show();
+                
+            }
 
             //Verificaciones sobre la validez de los meses del periodo------------------------------
             var periodo = $('#id_periodo').val();
@@ -324,7 +360,21 @@
                     $nuevo_campo.modal('show');
                 }
             });
-            
+
+            $(".obj").on('change', function() {
+                if ($(this).val() == "Especificos") {
+                    $("#Objetivos-label").text("Objetivos Generales");
+                    $("#Objetivos-label").css("font-weight", "Bold");
+                    $("#objetivos_especificos-state").show();
+                }
+                else {
+                    $("#Objetivos-label").text("Objetivos");
+                    var $cambio_objetivos = $('#cambio_objetivos');
+                    $cambio_objetivos.modal('toggle');
+                    $cambio_objetivos.modal('show');
+                }
+            });
+                        
             $campos_adicionales.hide();
             
             $agregar_otro.hide();
@@ -390,6 +440,20 @@
             });
         });
 
+        $("#unir_obj").click(function() { 
+            
+            if ($("#id_objetivos_especificos").val() != "") {    
+                var tmp1 = $("#id_objetivos_generales").val();
+                var tmp2 = $("#id_objetivos_especificos").val();
+                var text = tmp1 + "\n\n" + tmp2;
+
+                $("#id_objetivos_generales").val(text);
+                $("#id_objetivos_especificos").val("");
+            }
+
+            $("#objetivos_especificos-state").hide();
+        });
+
         $('#aceptarNewEntry').click(function() {
             $.ajax({
                 url: '{% url "crearCampo" %}',
@@ -437,7 +501,11 @@
             }
         });
 
-        $('input').on('change', function() {
+        $('.encargado').on('change', function() {
+            $('input').not(this).prop('checked', false);  
+        });
+
+        $('.obj').on('change', function() {
             $('input').not(this).prop('checked', false);  
         });
 

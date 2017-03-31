@@ -30,7 +30,7 @@ class PdfForm(forms.ModelForm):
                 self.fields[key].widget.attrs['required'] = 'False'
 
             elif key == 'fecha_elaboracion' or key == 'año' :
-                self.fields[key].widget.attrs['class'] = 'form-control can_hide'
+                self.fields[key].widget.attrs['class'] = 'form-control can_hide' + " " + key
                 self.fields[key].widget.attrs['readonly'] = True
                 self.fields[key].widget.attrs['aria-describedby'] = "basic-addon1"
                 self.fields[key].required = False
