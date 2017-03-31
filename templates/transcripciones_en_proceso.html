@@ -125,7 +125,6 @@
         $(document).ready(function(){
             {% for p in programas%}
             $("#Transcriptor{{p.id}}").click(function(){
-                alert('entre');
                 $.ajax({
                     url: '{% url "ProponerTranscripcion" %}',
                     data: {
@@ -141,7 +140,13 @@
                                 alert('El programa ha sido propuesto');
                             }
                             else{
-                                alert('la cagaste');
+                                if (!data.completo){
+                                    alert("Los datos que introdujo están incompletos")
+                                }
+                                else{
+                                    
+                                alert('Otro programa con la misma denominacion y fecha de vigencia ya ha sido propuesto');
+                                }
                             }
                     }
                 });
