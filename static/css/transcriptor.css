@@ -11,7 +11,7 @@
 	float: right;
 }
 
-.texto, .requisitos, .objetivos, .sinopticos{
+.estrategias_eval, .estrategias_met, .justificacion, .texto, .requisitos, .objetivos, .sinopticos{
 	width: 100%;
 	display:block;
 }
@@ -66,4 +66,8 @@
 
 #año-state{
 	margin-top: 0px; 
+}
+#id_fecha_elaboracion{
+	margin-bottom: 0;
+
 }

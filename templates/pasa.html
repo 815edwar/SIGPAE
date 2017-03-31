@@ -19,11 +19,8 @@
                     {% for programa in programas %}
                     <tr>
                         <td>
-                            {% if programa.denominacion != None and programa.denominacion != "" %}
-                                <a href="{% url 'ModifyPDF' programa.id %}">{{programa.denominacion}}</a>
-                            {% else %}
-                                <a href="{% url 'ModifyPDF' programa.id %}">{{ pdf_names|lookup:forloop.counter0 }}</a>
-                            {% endif %}
+                            <a href="{% url 'Transcripcion_details' programa.id %}">{{programa.denominacion}}</a>
+                            
                         </td>
                         <td>
                             {% if programa.periodo != None %}
@@ -44,9 +41,7 @@
                             {{ programa.fecha_modificacion }}
                         </td>
                         <td>
-                            {% if programa.pasa%}
-                            <a data-toggle="modal" href="#contactModal{{programa.id}}">Proponer</a>
-                            {% endif %}
+                            
                         </td>
 
                     </tr>
@@ -55,32 +50,7 @@
             </table>
         </div>
     </div>
-    {% for programa in programas%}
-    <div class="modal fade" id="contactModal{{programa.id}}" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-        
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">×</button>
-            <h3>Datos del Transcriptor</h3>
-          </div>
-          <div class="modal-body">
-            <label>Nombres: <input id="nombre{{programa.id}}" type="text" name="nombre"></label>
-            <label>Apellidos: <input id="apellido{{programa.id}}" type="text" name="apellido"></label>
-            <label> Correo: <input id="correo{{programa.id}}" type="text" name="correo"></label>
-              <label>Telefono: <input id="tlf{{programa.id}}" type="text" name="tlf"></label>
-     
-          </div>
-        <div class="modal-footer">
-            <button id="Transcriptor{{programa.id}}" type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
-            <button type="button" data-dismiss="modal">No</button>
-        </div>
-        </div>
-      </div>
-    </div>
-    {% endfor%}
 {% endblock %}
-
 {% block custom_script %}
     
 
@@ -120,35 +90,4 @@
 
         });
     </script>
-
-    <script>
-        $(document).ready(function(){
-            {% for p in programas%}
-            $("#Transcriptor{{p.id}}").click(function(){
-                alert('entre');
-                $.ajax({
-                    url: '{% url "ProponerTranscripcion" %}',
-                    data: {
-                        'nombre' : $('#nombre{{p.id}}').val(),
-                        'apellido': $('#apellido{{p.id}}').val(),
-                        'correo': $('#correo{{p.id}}').val(),
-                        'tlf' : $('#tlf{{p.id}}').val(),
-                        'programa' : {{p.id}}
-                    },
-                    dataType: 'json',
-                    success: function(data){
-                            if(data.creado) {
-                                alert('El programa ha sido propuesto');
-                            }
-                            else{
-                                alert('la cagaste');
-                            }
-                    }
-                });
-            });
-            {% endfor %}
-
-        });
-    </script>
-
-{% endblock %}
+{% endblock%}
