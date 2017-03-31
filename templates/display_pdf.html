@@ -32,7 +32,7 @@
                 {% for field in formulario %}
                     {% if field.name == "periodo" %}
                         <div class= "vigencia-top can_hide">
-                            <h4>Periodo de vigencia</h4>
+                            <h4 id="periodo_vigencia">Periodo de vigencia</h4>
                             <div class="control-group" id="{{field.name}}-state">
                                 <div class="input-group {{field.name}}">
                                     <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
@@ -54,7 +54,7 @@
                     {% else %}
                         <div class="control-group" id="{{field.name}}-state">
                             <div class="input-group {{field.name}}">
-                                <span class="input-group-addon tags-unete can_hide" id="{{field.label}}-label"><b>{{ field.label }}:</b></span>{{ field }}
+                                <span class="input-group-addon tags-unete can_hide fecha" id="{{field.label}}-label"><b>{{ field.label }}:</b></span>{{ field }}
                             </div>
                             <span class="error" id="{{ field.name }}-icon"></span>
                             <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
@@ -272,6 +272,83 @@
                 $("#objetivos_especificos-state").show();
                 
             }
+
+            //Verificaciones sobre la validez de los meses del periodo------------------------------
+            var periodo = $('#id_periodo').val();
+            var fecha = new Date($("#id_fecha_elaboracion").val());
+            if (periodo == 'ene-mar' && ((fecha.getMonth() != 0) && (fecha.getMonth() != 9) && (fecha.getMonth() != 10) && (fecha.getMonth() != 11))){
+                $('#id_periodo').css('background-color','#ea1737');
+                $("#id_fecha_elaboracion").css('background-color','#ea1737');
+                $('#periodo_vigencia').text("Periodo de Vigencia(No corresponde con la fecha)");
+
+            }
+            else if (periodo == 'abr-jul' && ((fecha.getMonth() != 1) && (fecha.getMonth() != 2) && ((fecha.getMonth() != 3 || fecha.getDate() > 15)) )){
+                $('#id_periodo').css('background-color','#ea1737');
+                $("#id_fecha_elaboracion").css('background-color','#ea1737');
+                $('#periodo_vigencia').text("Periodo de Vigencia(No corresponde con la fecha)");
+
+            }
+            else if (periodo == 'sep-dic' && (( fecha.getMonth() < 4 || fecha.getMonth() > 8) && (fecha.getMonth() != '3' || fecha.getDate() <= 15))){
+                $('#id_periodo').css('background-color','#ea1737');
+                $("#id_fecha_elaboracion").css('background-color','#ea1737');
+                $('#periodo_vigencia').text("Periodo de Vigencia(No corresponde con la fecha)");
+
+            }
+            else{
+
+                $('#id_periodo').css('background-color','rgb(255, 255, 255)');
+                $("#id_fecha_elaboracion").css('background-color','rgb(255, 255, 255)');
+                $('#periodo_vigencia').text("Periodo de Vigencia");
+            }
+
+            //Verificacion de validez del ano del periodo---------------------------------------
+            var ano = $('#id_año').val();
+            if (fecha.getMonth() < 9){
+                if (ano != fecha.getFullYear()){
+                    $("#id_año").css('background-color','#ea1737');
+                    $("#id_fecha_elaboracion").css('background-color','#ea1737');
+                    $('#periodo_vigencia').text("Periodo de Vigencia(No corresponde con la fecha)");
+                }else{
+                    if( $('#id_periodo').css('background-color') != 'rgb(255, 255, 255)'){
+                        $("#id_año").css('background-color','rgb(255, 255, 255)');
+                    }else{
+                        $("#id_año").css('background-color','rgb(255, 255, 255)');
+                        $("#id_fecha_elaboracion").css('background-color','rgb(255, 255, 255)');
+                        $('#periodo_vigencia').text("Periodo de Vigencia");
+                        
+                    }
+                }
+
+            }
+            else if (fecha.getMonth() >= 9 && fecha.getMonth() <= 11 ){
+                if (ano != fecha.getFullYear() + 1){
+                    $("#id_año").css('background-color','#ea1737');
+                    $("#id_fecha_elaboracion").css('background-color','#ea1737');
+                    $('#periodo_vigencia').text("Periodo de Vigencia(No corresponde con la fecha)");
+                }else{
+                    if( $('#id_periodo').css('background-color') != 'rgb(255, 255, 255)'){
+                        $("#id_año").css('background-color','rgb(255, 255, 255)');
+                    }else{
+                        $("#id_año").css('background-color','rgb(255, 255, 255)');
+                        $("#id_fecha_elaboracion").css('background-color','rgb(255, 255, 255)');
+                        $('#periodo_vigencia').text("Periodo de Vigencia");
+                        
+                    }
+                }
+
+            }
+
+            else{
+                if( $('#id_periodo').css('background-color') != 'rgb(255, 255, 255)'){
+                    $("#id_año").css('background-color','rgb(255, 255, 255)');
+                }else{
+                    $("#id_año").css('background-color','rgb(255, 255, 255)');
+                    $("#id_fecha_elaboracion").css('background-color','rgb(255, 255, 255)');
+                    $('#periodo_vigencia').text("Periodo de Vigencia");
+                    
+                }
+            }
+            //---------------------------------------------------------------------------------
 
             var $agregar_otro = $('#agregar_otro');
             var $campos_adicionales = $('.campos_adicionales');
@@ -539,8 +616,10 @@
 
         $('#id_fecha_elaboracion').change(function(){
             var fecha = new Date($(this).val());
-            $("#id_periodo").css('background-color','#fff');
-            $(this).css('background-color','#fff');
+            $('#periodo_vigencia').text("Periodo de Vigencia");
+            $("#id_periodo").css('background-color','rgb(255, 255, 255)');
+            $("#id_año").css('background-color','rgb(255, 255, 255)');
+            $(this).css('background-color','rgb(255, 255, 255)');
             
             if (fecha.getMonth() == '0'){
                 $('#id_periodo').val('ene-mar');
@@ -561,30 +640,97 @@
             }
         });
 
+        $('#id_año').change(function(){
+            var fecha = new Date($("#id_fecha_elaboracion").val());
+            var ano = $(this).val();
+            console.log(fecha);
+            
+            if ($("#id_fecha_elaboracion").val() != ""){
+                if (fecha.getMonth() < 9){
+                    if (ano != fecha.getFullYear()){
+                        $(this).css('background-color','#ea1737');
+                        $("#id_fecha_elaboracion").css('background-color','#ea1737');
+                        $('#periodo_vigencia').text("Periodo de Vigencia(No corresponde con la fecha)");
+                    }else{
+                        if( $('#id_periodo').css('background-color') != 'rgb(255, 255, 255)'){
+                            $(this).css('background-color','rgb(255, 255, 255)');
+                        }else{
+                            $(this).css('background-color','rgb(255, 255, 255)');
+                            $("#id_fecha_elaboracion").css('background-color','rgb(255, 255, 255)');
+                            $('#periodo_vigencia').text("Periodo de Vigencia");
+                            
+                        }
+                    }
+
+                }
+                else if (fecha.getMonth() >= 9 && fecha.getMonth() <= 11 ){
+                    if (ano != fecha.getFullYear() + 1){
+                        $(this).css('background-color','#ea1737');
+                        $("#id_fecha_elaboracion").css('background-color','#ea1737');
+                        $('#periodo_vigencia').text("Periodo de Vigencia(No corresponde con la fecha)");
+                    }else{
+                        if( $('#id_periodo').css('background-color') != 'rgb(255, 255, 255)'){
+                            $(this).css('background-color','rgb(255, 255, 255)');
+                        }else{
+                            $(this).css('background-color','rgb(255, 255, 255)');
+                            $("#id_fecha_elaboracion").css('background-color','rgb(255, 255, 255)');
+                            $('#periodo_vigencia').text("Periodo de Vigencia");
+                            
+                        }
+                    }
+
+                }
+
+                else{
+                    if( $('#id_periodo').css('background-color') != 'rgb(255, 255, 255)'){
+                        $(this).css('background-color','rgb(255, 255, 255)');
+                    }else{
+                        $(this).css('background-color','rgb(255, 255, 255)');
+                        $("#id_fecha_elaboracion").css('background-color','rgb(255, 255, 255)');
+                        $('#periodo_vigencia').text("Periodo de Vigencia");
+                        
+                    }
+                }
+            }
+        });
         $('#id_periodo').change(function(){
             var periodo = $(this).val();
             var fecha = new Date($("#id_fecha_elaboracion").val());
-            if (periodo == 'ene-mar' && ((fecha.getMonth() != 0) && (fecha.getMonth() != 9) && (fecha.getMonth() != 10) && (fecha.getMonth() != 11))){
-                $(this).css('background-color','#ea1737');
-                $("#id_fecha_elaboracion").css('background-color','#ea1737');
+            console.log(fecha);
+            if ($("#id_fecha_elaboracion").val() != ""){
+                if (periodo == 'ene-mar' && ((fecha.getMonth() != 0) && (fecha.getMonth() != 9) && (fecha.getMonth() != 10) && (fecha.getMonth() != 11))){
+                    $(this).css('background-color','#ea1737');
+                    $("#id_fecha_elaboracion").css('background-color','#ea1737');
+                    $('#periodo_vigencia').text("Periodo de Vigencia(No corresponde con la fecha)");
 
-            }
-            else if (periodo == 'abr-jul' && ((fecha.getMonth() != 1) && (fecha.getMonth() != 2) && ((fecha.getMonth() != 3 || fecha.getDate() > 15)) )){
-                $(this).css('background-color','#ea1737');
-                $("#id_fecha_elaboracion").css('background-color','#ea1737');
+                }
+                else if (periodo == 'abr-jul' && ((fecha.getMonth() != 1) && (fecha.getMonth() != 2) && ((fecha.getMonth() != 3 || fecha.getDate() > 15)) )){
+                    $(this).css('background-color','#ea1737');
+                    $("#id_fecha_elaboracion").css('background-color','#ea1737');
+                    $('#periodo_vigencia').text("Periodo de Vigencia(No corresponde con la fecha)");
 
-            }
-            else if (periodo == 'sep-dic' && (( fecha.getMonth() < 4 || fecha.getMonth() > 8) && (fecha.getMonth() != '3' || fecha.getDate() <= 15))){
-                $(this).css('background-color','#ea1737');
-                $("#id_fecha_elaboracion").css('background-color','#ea1737');
+                }
+                else if (periodo == 'sep-dic' && (( fecha.getMonth() < 4 || fecha.getMonth() > 8) && (fecha.getMonth() != '3' || fecha.getDate() <= 15))){
+                    $(this).css('background-color','#ea1737');
+                    $("#id_fecha_elaboracion").css('background-color','#ea1737');
+                    $('#periodo_vigencia').text("Periodo de Vigencia(No corresponde con la fecha)");
 
+                }
+                else{
+                    if( $('#id_año').css('background-color') != 'rgb(255, 255, 255)'){
+                        $(this).css('background-color','rgb(255, 255, 255)');
+                    }else{
+                        $(this).css('background-color','rgb(255, 255, 255)');
+                        $("#id_fecha_elaboracion").css('background-color','rgb(255, 255, 255)');
+                        $('#periodo_vigencia').text("Periodo de Vigencia");
+                        
+                    }
+                }
             }
-            else{
-                $(this).css('background-color','#fff');
-                $("#id_fecha_elaboracion").css('background-color','#fff');
-            }
-
         });
+
+
+
 
         $('#id_codigo').change(function(){
             var codigo = $(this).val();
