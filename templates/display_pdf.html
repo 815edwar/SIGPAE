@@ -10,106 +10,99 @@
 </head>
 <body>
     <div class="row">
-        
-    <div id="panel_config" class="col-lg-5 col-md-5 col-xs-5">
-        <button id="config_2" class="boton">Configuracion 2</button>
-        <button id="volver" class="boton" >Configuracion 1</button>
-        <a href="{{request.META.HTTP_REFERER}}"><button id="back" class="boton" >Volver</button></a>
-    </div>
-    <div class="col-lg-7 col-md-7 col-xs-7"></div>
+        <div id="panel_config" class="col-lg-5 col-md-5 col-xs-5">
+            <button id="config_2" class="boton">Configuracion 2</button>
+            <button id="volver" class="boton" >Configuracion 1</button>
+            <a href="{{request.META.HTTP_REFERER}}"><button id="back" class="boton">Volver</button></a>
+        </div>
+        <div class="col-lg-7 col-md-7 col-xs-7"></div>
     </div>
 
 	<div class="row">
 		<div id="documento" class="col-lg-5 col-md-5 col-xs-5">
             <div id="pdf" class="pdfobject-container"></div>
 		</div>
-        <div  class="col-lg-7 col-md-7 col-xs-7 " id="formulario">
+        <div id="formulario" class="col-lg-7 col-md-7 col-sm-7 col-xs-7 ">
             <form id="form" enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-group" role="form" novalidate>
                 {% for field in formulario %}
-                    {% if field.name == "periodo"%}
-                    <div class= "vigencia-top can_hide">
-                    <h4>Periodo de vigencia</h4>
-                    <div class="control-group" id="{{field.name}}-state">
-                        <div class="input-group {{field.name}}">
-                            <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                    {% if field.name == "periodo" %}
+                        <div class= "vigencia-top can_hide">
+                            <h4>Periodo de vigencia</h4>
+                            <div class="control-group" id="{{field.name}}-state">
+                                <div class="input-group {{field.name}}">
+                                    <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                                </div>
+                                <span class="error" id="{{ field.name }}-icon"></span>
+                                <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
+                                {{ field.errors }}
+                            </div>
                         </div>
-                        <span class="error" id="{{ field.name }}-icon"></span>
-                        <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
-                        {{ field.errors }}
-                    </div>
-                    </div>
                     {% elif field.name == "texto" %}
-                    <div class="control-group" id="{{field.name}}-state">
-                        <div class="input-group {{field.name}}">
-                            <span class="input-group-addon tags-unete" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                        <div class="control-group" id="{{field.name}}-state">
+                            <div class="input-group {{field.name}}">
+                                <span class="input-group-addon tags-unete" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                            </div>
+                            <span class="error" id="{{ field.name }}-icon"></span>
+                            <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
+                            {{ field.errors }}
                         </div>
-                        <span class="error" id="{{ field.name }}-icon"></span>
-                        <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
-                        {{ field.errors }}
-                    </div>
                     {% else %}
-                    <div class="control-group" id="{{field.name}}-state">
-                        <div class="input-group {{field.name}}">
-                            <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                        <div class="control-group" id="{{field.name}}-state">
+                            <div class="input-group {{field.name}}">
+                                <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.label }}:</b></span>{{ field }}
+                            </div>
+                            <span class="error" id="{{ field.name }}-icon"></span>
+                            <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
+                            {{ field.errors }}
                         </div>
-                        <span class="error" id="{{ field.name }}-icon"></span>
-                        <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
-                        {{ field.errors }}
-                    </div>
                     {% endif %}
-
                 {% endfor %}
+
                 <div class="control-group" >
                     <div class="input-group">
                         <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>Encargado:</b></span>
                         {% if encargado != None %}
-                        <input aria-describedby="basic-addon1" class="form-control can_hide " value="{{encargado}}" id="encargado" required="False" type="text" readonly>
+                        <input aria-describedby="basic-addon1" class="form-control can_hide " value="{{encargado}}" id="encargado" type="text" readonly title="encargado">
                         {% else %}
-                        <input aria-describedby="basic-addon1" name="encargado1" class="form-control can_hide " id="encargado" value="" required="False" type="text" readonly>
+                        <input aria-describedby="basic-addon1" name="encargado1" class="form-control can_hide " id="encargado" value="" type="text" readonly title="encargado1">
                         {% endif %}
                     </div>
                     <span class="error" id="{{ field.name }}-icon"></span>
                     <span class='error' id='{{field.name}}-error' aria-live="polite"></span>
                     {{ field.errors }}
                 </div>
-
-                <input type="checkbox" class="encargado can_hide" id="Departamento" name="check" value="Departamento"> <b class="can_hide"> Departamento</b>
-                
-                <input type="checkbox" class="encargado can_hide" id="Coordinacion" value="Coordinacion" name="check" value="Coordinacion"><b class="can_hide"> Coordinación</b>
-                
-                <select id="departamentos" name="departamentos" class="dinamica form-control"></select>
-
-                <select id="decanatos" class="dinamica form-control"></select>
-
-                <select id="coordinaciones" name="coordinacion" class="dinamica form-control"></select> 
-                
-                <input type="hidden" name="pdf_id" value="{{ pdf.id }}">
-                
-                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <input id="Departamento" class="encargado can_hide" type="checkbox" name="check" value="Departamento" title="check"> <b class="can_hide"> Departamento</b>
+                <input id="Coordinacion" class="encargado can_hide" type="checkbox" name="check" value="Coordinacion" title="check"><b class="can_hide"> Coordinación</b>
+                <select id="departamentos" class="dinamica form-control" name="departamentos" title="departamentos"></select>
+                <select id="decanatos" class="dinamica form-control" title="decanatos"></select>
+                <select id="coordinaciones" name="coordinacion" class="dinamica form-control" title="coordinacion"></select>
                 
                 {% for field in campos %}
                     <div class="control-group" id="{{field.name}}-state">
                         <div class="input-group {{field.campo_adicional}}">
                             <span class="input-group-addon tags-unete can_hide" id="basic-addon1"><b>{{ field.campo_adicional }}:</b></span>
                         </div>
-                        <input name="{{field.campo_adicional}}" aria-describedby="basic-addon1" class="form-control can_hide " value="{{field.contenido}}" required="False" type="text">
+                        <input name="{{field.campo_adicional}}" aria-describedby="basic-addon1" class="form-control can_hide " value="{{field.contenido}}" type="text" title="{{field.campo_adicional}}">
                     </div>
                 {% endfor %}
                 
                 <div id="formset">
                     <div class="campos_adicionales">
-                        <select name="campo_adicional" class="nombre_campo form-control form-control-sigpae">
+                        <select name="campo_adicional" class="nombre_campo form-control form-control-sigpae" title="campo adicional">
                             <option value="">------------</option>
                             <option value="ninguna">Otro Campo</option>
                             {% for n in nombres%}
                             <option value="{{n.nombre}}">{{n.nombre}}</option>
                             {% endfor %}
                         </select>
-                        <input class='campo input-sigpae' type="text" class="input-sigpae" name="contenido_campos">
+                        <input class='campo input-sigpae' type="text" name="contenido_campos" title="contenido campos">
                     </div>
                 </div>
                 <a id="agregar" class="can_hide">Agregar campo adicional.</a>
-                <a id="agregar_otro">Agregar otro.</a> 
+                <a id="agregar_otro">Agregar otro.</a>
+
+                <input type="hidden" name="pdf_id" value="{{ pdf.id }}">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 
                 <!-- Modal -->
                 <div id="confirmacion" class="modal fade" role="dialog">
@@ -124,9 +117,9 @@
                             <div class="modal-body">
                                 <h3>Este código no se encuentra registrado, en caso de estar seguro de que sea correcto, confírmelo:</h3>
                                 <span>Código</span>
-                                <input id="codigo2" type="text" name="codigo2" value="">
+                                <input id="codigo2" type="text" name="codigo2" value="" title="codigo2">
                                 <span>Siglas</span>
-                                <input id="siglas2" type="text" name="siglas2" value="">
+                                <input id="siglas2" type="text" name="siglas2" value="" title="siglas2">
                                    
                             </div>
                             <div class="modal-footer"> 
@@ -150,21 +143,21 @@
                                 <h4 class="modal-title">Se extrajo este código</h4>
                             </div>
                             <div class="modal-body">
-                                <input id="codigo" type="text" name="codigo" value="{{pdf.codigo}}">
+                                <input id="codigo" type="text" name="codigo" value="{{pdf.codigo}}" title="codigo">
                                 {% if departamento  %}
                                     <h3>Se logró asociar el código al siguiente departamento:</h3> 
-                                    <input id="asociacion" type="text" name="" class="input-sigpae1" value="{{departamento.nombre}}">
+                                    <input id="asociacion" type="text" name="" class="input-sigpae1" value="{{departamento.nombre}}" title="asociacion">
                                 {% elif prefijo %}
                                     <h3>No se logro asociar el codigo a un departamento pero si a:</h3>
-                                    <input id="asociacion_sin_dep" type="text" name="" value="{{prefijo.asociacion}}">
+                                    <input id="asociacion_sin_dep" type="text" name="" value="{{prefijo.asociacion}}" title="asoc. sin dept">
 
                                 {% else %}
                                     <h3>No se pudo asociar el código a ningún departamento, ¿Quiere Proponerlo?</h3>
                                     <button id="si" type="button" class="btn btn-default">Si</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                                     <div id="preForm">
-                                        <input type="text" name="siglas" value="{{siglas}}">
-                                        <select name="asociacion"> 
+                                        <input type="text" name="siglas" value="{{siglas}}" title="siglas">
+                                        <select name="asociacion" title="asociacion">
                                         <option value="">Ninguno</option>
                                         {% for d in departamentos %}
                                             <option value="{{d.nombre}}">{{d.nombre}}</option>
@@ -197,7 +190,7 @@
                             <h4 class="modal-title">Escriba el nuevo campo que desea agregar</h4>
                         </div>
                         <div class="modal-body">
-                            <input id="newEntry" type="text" name="newEntry">
+                            <input id="newEntry" type="text" name="newEntry" title="newEntry">
                         </div>
                         <div class="modal-footer"> 
                             <button id="aceptarNewEntry" type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
@@ -235,21 +228,25 @@
     <script>
 
         $(document).ready(function() {
+
+            var $agregar_otro = $('#agregar_otro');
+            var $campos_adicionales = $('.campos_adicionales');
             
             $(document).on('change', 'select[name="campo_adicional"]', function(){
                 if ($(this).val() == "ninguna") {
-                    $('#nuevo_campo').modal('toggle');
-                    $('#nuevo_campo').modal('show');
-                };
+                    var $nuevo_campo = $('#nuevo_campo');
+                    $nuevo_campo.modal('toggle');
+                    $nuevo_campo.modal('show');
+                }
             });
             
-            $('.campos_adicionales').hide();
+            $campos_adicionales.hide();
             
-            $('#agregar_otro').hide();
-            
-            $('#myModal').modal('toggle');
-            
-            $('#myModal').modal('show');
+            $agregar_otro.hide();
+
+            var $myModal = $('#myModal');
+            $myModal.modal('toggle');
+            $myModal.modal('show');
             
             var asociacion = $('#asociacion').val();
             $('#aceptar').click(function(){
@@ -263,8 +260,9 @@
             $('#preForm').hide();
 
             $('#si').click(function() {
-                $('.aprobado').hide();
-                $('.aprobado').removeAttr( "checked" );
+                var $aprobado = $('.aprobado');
+                $aprobado.hide();
+                $aprobado.removeAttr( "checked" );
                 $('#preForm').show();
             });
 
@@ -290,19 +288,19 @@
             var id = 1;
 
             $('#agregar').click(function(){
-                $('.campos_adicionales').attr('id', 'nombre'+(id).toString());
-                $('.campos_adicionales').show();
+                $campos_adicionales.attr('id', 'nombre'+ (id).toString());
+                $campos_adicionales.show();
                 $('#agregar').hide();
-                $('#agregar_otro').show();
+                $agregar_otro.show();
                 
             });
 
-            $('#agregar_otro').click(function(){
+            $agregar_otro.click(function(){
                 id = id +1;
-                $('#agregar_otro').show();
-                $(".campos_adicionales").first().clone().appendTo( "#formset" );
+                $agregar_otro.show();
+                $campos_adicionales.first().clone().appendTo( "#formset" );
                 $('.campo').last().val('');
-                $('.campos_adicionales').last().attr('id', 'nombre'+(id).toString());
+                $campos_adicionales.last().attr('id', 'nombre'+(id).toString());
                 
             });
 
@@ -348,8 +346,9 @@
                                 });
                             }
                             else{
-                                $('#falloCreado').modal('toggle');
-                                $('#falloCreado').modal('show');                            
+                                var $falloCreado = $('#falloCreado');
+                                $falloCreado.modal('toggle');
+                                $falloCreado.modal('show');
                             }
                     }
                 });
@@ -459,7 +458,7 @@
 
 
         $('#id_codigo').change(function(){
-            codigo = $(this).val();
+            var codigo = $(this).val();
             $.ajax({
                     url: '{% url "siglas" %}',
                     data: {
@@ -470,8 +469,9 @@
                         var respuesta = data.respuesta;
                         var siglas = data.siglas;
                         if (respuesta == ""){
-                            $('#confirmacion').modal('toggle');
-                            $('#confirmacion').modal('show');
+                            var $confirmacion = $('#confirmacion');
+                            $confirmacion.modal('toggle');
+                            $confirmacion.modal('show');
                             $('#siglas2').val(siglas);
                             $('#codigo2').val(codigo);
 
